@@ -164,7 +164,7 @@ func newGetBookOut(book *book.Book) *GetBookOut {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id			path		string				true	"Book ID"
-//	@Success		200						{object}	response.Success{data=GetBookOut}
+//	@Success		200						{object}	response.Success{GetBookOut}
 //	@Failure		default					{object}	response.Error
 //	@Router			/book/{id} [get]
 func (hd *HttpDelivery) GetBook(w http.ResponseWriter, r *http.Request) {
@@ -177,17 +177,17 @@ func (hd *HttpDelivery) GetBook(w http.ResponseWriter, r *http.Request) {
 	response.NewSuccess(hd.logger, w, r, newGetBookOut(book))
 }
 
-type ResponseManyBooks struct {
+type GetAllBooksOut struct {
 	Books []*GetBookOut `json:"books"`
 	Count int64         `json:"count"`
 }
 
-func NewResponseManyBooks(books []*book.Book, count int64) *ResponseManyBooks {
+func newGetAllBooksOut(books []*book.Book, count int64) *GetAllBooksOut {
 	var responseBooks []*GetBookOut
 	for _, book := range books {
 		responseBooks = append(responseBooks, newGetBookOut(book))
 	}
-	return &ResponseManyBooks{Books: responseBooks, Count: count}
+	return &GetAllBooksOut{Books: responseBooks, Count: count}
 }
 
 // GetAllBooks godoc
@@ -201,7 +201,7 @@ func NewResponseManyBooks(books []*book.Book, count int64) *ResponseManyBooks {
 //	@Param			limit					query		int			false	"Limit"
 //	@Param			is_deleted				query		bool		false	"Is deleted"
 //	@Param			search					query		string		false	"Search Title, Description, Author"
-//	@Success		200						{object}	response.Success{data=ResponseManyBooks}
+//	@Success		200						{object}	response.Success{GetAllBooksOut}
 //	@Failure		default					{object}	response.Error
 //	@Router			/book [get]
 func (hd *HttpDelivery) GetAllBooks(w http.ResponseWriter, r *http.Request) {
@@ -214,5 +214,5 @@ func (hd *HttpDelivery) GetAllBooks(w http.ResponseWriter, r *http.Request) {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, NewResponseManyBooks(books, count))
+	response.NewSuccess(hd.logger, w, r, newGetAllBooksOut(books, count))
 }

@@ -10,6 +10,7 @@ import (
 	bookHandler "github.com/nnniyaz/blog/handler/http/book"
 	contactHandler "github.com/nnniyaz/blog/handler/http/contact"
 	"github.com/nnniyaz/blog/handler/http/middleware"
+	projectHandler "github.com/nnniyaz/blog/handler/http/project"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"github.com/nnniyaz/blog/service"
 	httpSwagger "github.com/swaggo/http-swagger"
@@ -24,6 +25,7 @@ type Handler struct {
 	author     *authorHandler.HttpDelivery
 	bio        *bioHandler.HttpDelivery
 	book       *bookHandler.HttpDelivery
+	project    *projectHandler.HttpDelivery
 }
 
 func NewHandler(l logger.Logger, client *mongo.Client, services *service.Service) *Handler {
@@ -34,6 +36,7 @@ func NewHandler(l logger.Logger, client *mongo.Client, services *service.Service
 		author:     authorHandler.NewHttpDelivery(l, services.Author),
 		bio:        bioHandler.NewHttpDelivery(l, services.Bio),
 		book:       bookHandler.NewHttpDelivery(l, services.Book),
+		project:    projectHandler.NewHttpDelivery(l, services.Project),
 	}
 }
 
@@ -88,7 +91,7 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 
 	r.Route("/about", func(r chi.Router) {
 		r.Route("/author", func(r chi.Router) {
-			r.Get("/", h.author.GetAllAuthors)
+			r.With(h.middleware.PaginationParams).Get("/", h.author.GetAllAuthors)
 			r.Post("/", h.author.CreateAuthor)
 			r.Get("/{id}", h.author.GetAuthor)
 			r.Put("/{id}", h.author.UpdateAuthor)
@@ -100,13 +103,14 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 			r.Get("/", h.bio.GetAllBios)
 			r.Post("/", h.bio.CreateBio)
 			r.Get("/{id}", h.bio.GetBio)
+			r.Get("/active", h.bio.GetActiveBio)
 			r.Put("/{id}", h.bio.UpdateBio)
 			r.Delete("/{id}", h.bio.DeleteBio)
 			r.Put("/restore/{id}", h.bio.RestoreBio)
 		})
 
 		r.Route("/contact", func(r chi.Router) {
-			r.Get("/", h.contact.GetAllContacts)
+			r.With(h.middleware.PaginationParams).Get("/", h.contact.GetAllContacts)
 			r.Post("/", h.contact.CreateContact)
 			r.Get("/{id}", h.contact.GetContact)
 			r.Put("/{id}", h.contact.UpdateContact)
@@ -116,11 +120,12 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 	})
 
 	r.Route("/project", func(r chi.Router) {
-		//r.Get("/", h.GetProjects)
-		//r.Post("/", h.CreateProject)
-		//r.Get("/{id}", h.GetProject)
-		//r.Put("/{id}", h.UpdateProject)
-		//r.Delete("/{id}", h.DeleteProject)
+		r.With(h.middleware.PaginationParams).Get("/", h.project.GetAllProjects)
+		r.Post("/", h.project.CreateProject)
+		r.Get("/{id}", h.project.GetProject)
+		r.Put("/{id}", h.project.UpdateProject)
+		r.Delete("/{id}", h.project.DeleteProject)
+		r.Put("/restore/{id}", h.project.RestoreProject)
 	})
 
 	r.Route("/article", func(r chi.Router) {
@@ -133,7 +138,7 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 	})
 
 	r.Route("/book", func(r chi.Router) {
-		r.Get("/", h.book.GetAllBooks)
+		r.With(h.middleware.PaginationParams).Get("/", h.book.GetAllBooks)
 		r.Post("/", h.book.CreateBook)
 		r.Get("/{id}", h.book.GetBook)
 		r.Put("/{id}", h.book.UpdateBook)

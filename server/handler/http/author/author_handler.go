@@ -3,6 +3,7 @@ package authorHandler
 import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
+	"github.com/nnniyaz/blog/domain/author"
 	"github.com/nnniyaz/blog/handler/http/response"
 	"github.com/nnniyaz/blog/pkg/logger"
 	authorService "github.com/nnniyaz/blog/service/author"
@@ -124,6 +125,28 @@ func (hd *HttpDelivery) RestoreAuthor(w http.ResponseWriter, r *http.Request) {
 	response.NewSuccess(hd.logger, w, r, nil)
 }
 
+type GetAuthorOut struct {
+	Id        string `json:"id"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	AvatarUri string `json:"avatarUri"`
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
+	Version   int    `json:"version"`
+}
+
+func newGetAuthorOut(author *author.Author) *GetAuthorOut {
+	return &GetAuthorOut{
+		Id:        author.GetId().String(),
+		FirstName: author.GetFirstName(),
+		LastName:  author.GetLastName(),
+		AvatarUri: author.GetAvatarUri(),
+		CreatedAt: author.GetCreatedAt().String(),
+		UpdatedAt: author.GetUpdatedAt().String(),
+		Version:   author.GetVersion(),
+	}
+}
+
 // GetAuthor godoc
 //
 //	@Summary		Get author
@@ -132,7 +155,7 @@ func (hd *HttpDelivery) RestoreAuthor(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id			path		string				true	"Author ID"
-//	@Success		200						{object}	response.Success
+//	@Success		200						{object}	response.Success{GetAuthorOut}
 //	@Failure		default					{object}	response.Error
 //	@Router			/author/{id} [get]
 func (hd *HttpDelivery) GetAuthor(w http.ResponseWriter, r *http.Request) {
@@ -142,7 +165,23 @@ func (hd *HttpDelivery) GetAuthor(w http.ResponseWriter, r *http.Request) {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, author)
+	response.NewSuccess(hd.logger, w, r, newGetAuthorOut(author))
+}
+
+type GetAuthorsOut struct {
+	Authors []*GetAuthorOut `json:"authors"`
+	Count   int64           `json:"count"`
+}
+
+func newGetAuthorsOut(authors []*author.Author, count int64) *GetAuthorsOut {
+	var out []*GetAuthorOut
+	for _, a := range authors {
+		out = append(out, newGetAuthorOut(a))
+	}
+	return &GetAuthorsOut{
+		Authors: out,
+		Count:   count,
+	}
 }
 
 // GetAllAuthors godoc
@@ -152,14 +191,14 @@ func (hd *HttpDelivery) GetAuthor(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Author
 //	@Accept			json
 //	@Produce		json
-//	@Success		200						{object}	response.Success
+//	@Success		200						{object}	response.Success{GetAuthorsOut}
 //	@Failure		default					{object}	response.Error
 //	@Router			/author [get]
 func (hd *HttpDelivery) GetAllAuthors(w http.ResponseWriter, r *http.Request) {
-	authors, err := hd.service.FindAll(r.Context())
+	authors, count, err := hd.service.FindAll(r.Context())
 	if err != nil {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, authors)
+	response.NewSuccess(hd.logger, w, r, newGetAuthorsOut(authors, count))
 }

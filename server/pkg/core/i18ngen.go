@@ -12,6 +12,7 @@ const (
 	TXT_BIO_IS_EMPTY                       TxtKey = 7
 	TXT_TITLE_OF_BOOK_IS_EMPTY             TxtKey = 8
 	TXT_AUTHOR_OF_BOOK_IS_EMPTY            TxtKey = 9
+	TXT_NAME_OF_PROJECT_IS_EMPTY           TxtKey = 10
 )
 
 var Txts = TxtResource{
@@ -60,6 +61,11 @@ var Txts = TxtResource{
 		RU: `Автор книги пустой`,
 		EN: `Author of book is empty`,
 	},
+	TXT_NAME_OF_PROJECT_IS_EMPTY: MlString{
+		KZ: `Проекттің аты бос`,
+		RU: `Название проекта пустое`,
+		EN: `Name of project is empty`,
+	},
 }
 
 func GetTxtKeyAsString(k TxtKey) string {
@@ -82,6 +88,8 @@ func GetTxtKeyAsString(k TxtKey) string {
 		return "title_of_book_is_empty"
 	case TXT_AUTHOR_OF_BOOK_IS_EMPTY:
 		return "author_of_book_is_empty"
+	case TXT_NAME_OF_PROJECT_IS_EMPTY:
+		return "name_of_project_is_empty"
 
 	default:
 		return ""

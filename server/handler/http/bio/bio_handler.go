@@ -141,6 +141,25 @@ func newGetBioOut(bio *bio.Bio) *GetBioOut {
 	}
 }
 
+// GetActiveBio godoc
+//
+//	@Summary		Get active bio
+//	@Description	This can only be done by the logged-in user.
+//	@Tags			Bio
+//	@Accept			json
+//	@Produce		json
+//	@Success		200						{object}	response.Success{GetBioOut}
+//	@Failure		default					{object}	response.Error
+//	@Router			/bio/active [get]
+func (hd *HttpDelivery) GetActiveBio(w http.ResponseWriter, r *http.Request) {
+	bio, err := hd.service.FindByActive(r.Context())
+	if err != nil {
+		response.NewError(hd.logger, w, r, err)
+		return
+	}
+	response.NewSuccess(hd.logger, w, r, newGetBioOut(bio))
+}
+
 // GetBio godoc
 //
 //	@Summary		Get bio
@@ -162,6 +181,19 @@ func (hd *HttpDelivery) GetBio(w http.ResponseWriter, r *http.Request) {
 	response.NewSuccess(hd.logger, w, r, newGetBioOut(bio))
 }
 
+type GetAllBiosOut struct {
+	Bios  []*GetBioOut `json:"bios"`
+	Count int64        `json:"count"`
+}
+
+func newGetAllBiosOut(bios []*bio.Bio, count int64) *GetAllBiosOut {
+	var responseBios []*GetBioOut
+	for _, bio := range bios {
+		responseBios = append(responseBios, newGetBioOut(bio))
+	}
+	return &GetAllBiosOut{Bios: responseBios, Count: count}
+}
+
 // GetAllBios godoc
 //
 //	@Summary		Get bios
@@ -169,14 +201,14 @@ func (hd *HttpDelivery) GetBio(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Bio
 //	@Accept			json
 //	@Produce		json
-//	@Success		200						{object}	response.Success
+//	@Success		200						{object}	response.Success{GetAllBiosOut}
 //	@Failure		default					{object}	response.Error
 //	@Router			/bio [get]
 func (hd *HttpDelivery) GetAllBios(w http.ResponseWriter, r *http.Request) {
-	bios, err := hd.service.FindAll(r.Context())
+	bios, count, err := hd.service.FindAll(r.Context())
 	if err != nil {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, bios)
+	response.NewSuccess(hd.logger, w, r, newGetAllBiosOut(bios, count))
 }

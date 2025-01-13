@@ -125,7 +125,7 @@ func (hd *HttpDelivery) RestoreContact(w http.ResponseWriter, r *http.Request) {
 	response.NewSuccess(hd.logger, w, r, nil)
 }
 
-type FindContactByIdOut struct {
+type GetContactOut struct {
 	Id        string `json:"id"`
 	Label     string `json:"label"`
 	Link      string `json:"link"`
@@ -134,8 +134,8 @@ type FindContactByIdOut struct {
 	UpdatedAt string `json:"updated_at"`
 }
 
-func newFindContactByIdOut(contact *contact.Contact) *FindContactByIdOut {
-	return &FindContactByIdOut{
+func newGetContactByIdOut(contact *contact.Contact) *GetContactOut {
+	return &GetContactOut{
 		Id:        contact.GetId().String(),
 		Label:     contact.GetLabel(),
 		Link:      contact.GetLink(),
@@ -153,7 +153,7 @@ func newFindContactByIdOut(contact *contact.Contact) *FindContactByIdOut {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		string		true	"Contact ID"
-//	@Success		200		{object}	response.Success
+//	@Success		200		{object}	response.Success{GetContactOut}
 //	@Failure		default	{object}	response.Error
 //	@Router			/contact/{id} [get]
 func (hd *HttpDelivery) GetContact(w http.ResponseWriter, r *http.Request) {
@@ -163,20 +163,20 @@ func (hd *HttpDelivery) GetContact(w http.ResponseWriter, r *http.Request) {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, newFindContactByIdOut(contact))
+	response.NewSuccess(hd.logger, w, r, newGetContactByIdOut(contact))
 }
 
-type FindAllContactsOut struct {
-	Contacts []*FindContactByIdOut `json:"contacts"`
-	Count    int64                 `json:"count"`
+type GetAllContactsOut struct {
+	Contacts []*GetContactOut `json:"contacts"`
+	Count    int64            `json:"count"`
 }
 
-func newFindAllContactsOut(contacts []*contact.Contact, count int64) *FindAllContactsOut {
-	var responseContacts []*FindContactByIdOut
+func newGetAllContactsOut(contacts []*contact.Contact, count int64) *GetAllContactsOut {
+	var responseContacts []*GetContactOut
 	for _, contact := range contacts {
-		responseContacts = append(responseContacts, newFindContactByIdOut(contact))
+		responseContacts = append(responseContacts, newGetContactByIdOut(contact))
 	}
-	return &FindAllContactsOut{Contacts: responseContacts, Count: count}
+	return &GetAllContactsOut{Contacts: responseContacts, Count: count}
 }
 
 // GetAllContacts godoc
@@ -190,7 +190,7 @@ func newFindAllContactsOut(contacts []*contact.Contact, count int64) *FindAllCon
 //	@Param			limit		query		int		false	"Limit"
 //	@Param			isDeleted	query		bool	false	"Is Deleted"
 //	@Param			search		query		string	false	"Search"
-//	@Success		200		{object}	response.Success
+//	@Success		200		{object}	response.Success{GetAllContactsOut}
 //	@Failure		default	{object}	response.Error
 //	@Router			/contact [get]
 func (hd *HttpDelivery) GetAllContacts(w http.ResponseWriter, r *http.Request) {
@@ -203,5 +203,5 @@ func (hd *HttpDelivery) GetAllContacts(w http.ResponseWriter, r *http.Request) {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, newFindAllContactsOut(contacts, total))
+	response.NewSuccess(hd.logger, w, r, newGetAllContactsOut(contacts, total))
 }

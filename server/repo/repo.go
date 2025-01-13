@@ -8,11 +8,13 @@ import (
 	"github.com/nnniyaz/blog/domain/bio"
 	"github.com/nnniyaz/blog/domain/book"
 	"github.com/nnniyaz/blog/domain/contact"
+	"github.com/nnniyaz/blog/domain/project"
 	mongoArticle "github.com/nnniyaz/blog/repo/mongo/article"
 	mongoAuthor "github.com/nnniyaz/blog/repo/mongo/author"
 	mongoBio "github.com/nnniyaz/blog/repo/mongo/bio"
 	mongoBook "github.com/nnniyaz/blog/repo/mongo/book"
 	mongoContact "github.com/nnniyaz/blog/repo/mongo/contact"
+	mongoProject "github.com/nnniyaz/blog/repo/mongo/project"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -40,7 +42,7 @@ type Author interface {
 	Delete(ctx context.Context, id uuid.UUID) error
 	Restore(ctx context.Context, id uuid.UUID) error
 	FindById(ctx context.Context, id uuid.UUID) (*author.Author, error)
-	FindAll(ctx context.Context) ([]*author.Author, error)
+	FindAll(ctx context.Context) ([]*author.Author, int64, error)
 }
 
 type Bio interface {
@@ -50,7 +52,8 @@ type Bio interface {
 	Restore(ctx context.Context, id uuid.UUID) error
 	SetActive(ctx context.Context, id uuid.UUID) error
 	FindById(ctx context.Context, id uuid.UUID) (*bio.Bio, error)
-	FindAll(ctx context.Context) ([]*bio.Bio, error)
+	FindByActive(ctx context.Context) (*bio.Bio, error)
+	FindAll(ctx context.Context) ([]*bio.Bio, int64, error)
 }
 
 type Book interface {
@@ -62,12 +65,22 @@ type Book interface {
 	FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*book.Book, int64, error)
 }
 
+type Project interface {
+	Create(ctx context.Context, project *project.Project) error
+	Update(ctx context.Context, project *project.Project) error
+	Delete(ctx context.Context, id uuid.UUID) error
+	Restore(ctx context.Context, id uuid.UUID) error
+	FindById(ctx context.Context, id uuid.UUID) (*project.Project, error)
+	FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*project.Project, int64, error)
+}
+
 type Repo struct {
 	RepoArticle Article
 	RepoContact Contact
 	RepoAuthor  Author
 	RepoBio     Bio
 	RepoBook    Book
+	RepoProject Project
 }
 
 func NewRepo(client *mongo.Client) *Repo {
@@ -77,5 +90,6 @@ func NewRepo(client *mongo.Client) *Repo {
 		RepoAuthor:  mongoAuthor.NewRepoAuthor(client),
 		RepoBio:     mongoBio.NewRepoBio(client),
 		RepoBook:    mongoBook.NewBookRepo(client),
+		RepoProject: mongoProject.NewProjectRepo(client),
 	}
 }

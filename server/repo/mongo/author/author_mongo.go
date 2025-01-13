@@ -81,20 +81,22 @@ func (r *RepoAuthor) FindById(ctx context.Context, id uuid.UUID) (*author.Author
 	return result.ToAggregate(), nil
 }
 
-func (r *RepoAuthor) FindAll(ctx context.Context) ([]*author.Author, error) {
+func (r *RepoAuthor) FindAll(ctx context.Context) ([]*author.Author, int64, error) {
 	cursor, err := r.Coll().Find(ctx, bson.M{})
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	defer cursor.Close(ctx)
+
+	count, err := r.Coll().CountDocuments(ctx, bson.M{})
 
 	var authors []*author.Author
 	for cursor.Next(ctx) {
 		var author mongoAuthor
 		if err := cursor.Decode(&author); err != nil {
-			return nil, err
+			return nil, 0, err
 		}
 		authors = append(authors, author.ToAggregate())
 	}
-	return authors, nil
+	return authors, count, nil
 }

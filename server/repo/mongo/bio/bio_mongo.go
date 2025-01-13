@@ -92,20 +92,30 @@ func (r *RepoBio) FindById(ctx context.Context, id uuid.UUID) (*bio.Bio, error) 
 	return result.ToAggregate(), nil
 }
 
-func (r *RepoBio) FindAll(ctx context.Context) ([]*bio.Bio, error) {
-	cursor, err := r.Coll().Find(ctx, bson.M{})
-	if err != nil {
+func (r *RepoBio) FindByActive(ctx context.Context) (*bio.Bio, error) {
+	var result mongoBio
+	if err := r.Coll().FindOne(ctx, bson.M{"active": true}).Decode(&result); err != nil {
 		return nil, err
 	}
+	return result.ToAggregate(), nil
+}
+
+func (r *RepoBio) FindAll(ctx context.Context) ([]*bio.Bio, int64, error) {
+	cursor, err := r.Coll().Find(ctx, bson.M{})
+	if err != nil {
+		return nil, 0, err
+	}
 	defer cursor.Close(ctx)
+
+	count, err := r.Coll().CountDocuments(ctx, bson.M{})
 
 	var bios []*bio.Bio
 	for cursor.Next(ctx) {
 		var bio mongoBio
 		if err := cursor.Decode(&bio); err != nil {
-			return nil, err
+			return nil, 0, err
 		}
 		bios = append(bios, bio.ToAggregate())
 	}
-	return bios, nil
+	return bios, count, nil
 }

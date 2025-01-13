@@ -124,7 +124,7 @@ func (hd *HttpDelivery) RestoreArticle(w http.ResponseWriter, r *http.Request) {
 	response.NewSuccess(hd.logger, w, r, nil)
 }
 
-type FindArticleOut struct {
+type GetArticleOut struct {
 	Id        string `json:"id"`
 	Title     string `json:"title"`
 	Content   string `json:"content"`
@@ -134,8 +134,8 @@ type FindArticleOut struct {
 	Version   int    `json:"version"`
 }
 
-func newFindArticleOut(a *article.Article) *FindArticleOut {
-	return &FindArticleOut{
+func newGetArticleOut(a *article.Article) *GetArticleOut {
+	return &GetArticleOut{
 		Id:        a.GetId().String(),
 		Title:     a.GetTitle(),
 		Content:   a.GetContent(),
@@ -154,7 +154,7 @@ func newFindArticleOut(a *article.Article) *FindArticleOut {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		string	true	"Article ID"
-//	@Success		200						{object}	response.Success{FindArticleOut}
+//	@Success		200						{object}	response.Success{GetArticleOut}
 //	@Failure		default					{object}	response.Error
 //	@Router			/article/{id} [get]
 func (hd *HttpDelivery) GetArticle(w http.ResponseWriter, r *http.Request) {
@@ -164,20 +164,20 @@ func (hd *HttpDelivery) GetArticle(w http.ResponseWriter, r *http.Request) {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, newFindArticleOut(result))
+	response.NewSuccess(hd.logger, w, r, newGetArticleOut(result))
 }
 
-type FindAllArticleOut struct {
-	Articles []*FindArticleOut `json:"articles"`
-	Count    int64             `json:"count"`
+type GetAllArticleOut struct {
+	Articles []*GetArticleOut `json:"articles"`
+	Count    int64            `json:"count"`
 }
 
-func newFindAllArticleOut(articles []*article.Article, count int64) *FindAllArticleOut {
-	var out []*FindArticleOut
+func newGetAllArticleOut(articles []*article.Article, count int64) *GetAllArticleOut {
+	var out []*GetArticleOut
 	for _, a := range articles {
-		out = append(out, newFindArticleOut(a))
+		out = append(out, newGetArticleOut(a))
 	}
-	return &FindAllArticleOut{Articles: out, Count: count}
+	return &GetAllArticleOut{Articles: out, Count: count}
 }
 
 // GetAllArticles godoc
@@ -191,7 +191,7 @@ func newFindAllArticleOut(articles []*article.Article, count int64) *FindAllArti
 //	@Param			limit		query		int		false	"Limit"
 //	@Param			is_deleted	query		bool	false	"Is deleted"
 //	@Param			search		query		string	false	"Search"
-//	@Success		200						{object}	response.Success
+//	@Success		200						{object}	response.Success{GetAllArticleOut}
 //	@Failure		default					{object}	response.Error
 //	@Router			/article [get]
 func (hd *HttpDelivery) GetAllArticles(w http.ResponseWriter, r *http.Request) {
@@ -204,5 +204,5 @@ func (hd *HttpDelivery) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, newFindAllArticleOut(articles, count))
+	response.NewSuccess(hd.logger, w, r, newGetAllArticleOut(articles, count))
 }

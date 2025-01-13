@@ -13,7 +13,7 @@ type AuthorService interface {
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*author.Author, error)
-	FindAll(ctx context.Context) ([]*author.Author, error)
+	FindAll(ctx context.Context) ([]*author.Author, int64, error)
 }
 
 type authorService struct {
@@ -74,6 +74,6 @@ func (s *authorService) FindById(ctx context.Context, id string) (*author.Author
 	return s.repo.FindById(ctx, convertedId)
 }
 
-func (s *authorService) FindAll(ctx context.Context) ([]*author.Author, error) {
+func (s *authorService) FindAll(ctx context.Context) ([]*author.Author, int64, error) {
 	return s.repo.FindAll(ctx)
 }
