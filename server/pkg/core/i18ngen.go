@@ -3,26 +3,62 @@
 package core
 
 const (
-	TXT_ARTICLES_TITLE_IS_EMPTY    TxtKey = 1
-	TXT_ARTICLES_TITLE_IS_TOO_LONG TxtKey = 2
-	TXT_ARTICLES_CONTENT_IS_EMPTY  TxtKey = 3
+	TXT_ARTICLES_TITLE_IS_EMPTY            TxtKey = 1
+	TXT_ARTICLES_TITLE_IS_TOO_LONG         TxtKey = 2
+	TXT_ARTICLES_CONTENT_IS_EMPTY          TxtKey = 3
+	TXT_NAME_OF_CONTACT_OR_SOCIAL_IS_EMPTY TxtKey = 4
+	TXT_FIRST_NAME_IS_EMPTY                TxtKey = 5
+	TXT_LAST_NAME_IS_EMPTY                 TxtKey = 6
+	TXT_BIO_IS_EMPTY                       TxtKey = 7
+	TXT_TITLE_OF_BOOK_IS_EMPTY             TxtKey = 8
+	TXT_AUTHOR_OF_BOOK_IS_EMPTY            TxtKey = 9
 )
 
 var Txts = TxtResource{
 	TXT_ARTICLES_TITLE_IS_EMPTY: MlString{
-		KZ: `Заголовок статьи пуст`,
+		KZ: `Мақала тақырыбы бос`,
 		RU: `Заголовок статьи пуст`,
 		EN: `Article title is empty`,
 	},
 	TXT_ARTICLES_TITLE_IS_TOO_LONG: MlString{
-		KZ: `Заголовок статьи слишком длинный`,
+		KZ: `Мақаланың тақырыбы тым ұзын`,
 		RU: `Заголовок статьи слишком длинный`,
 		EN: `Article title is too long`,
 	},
 	TXT_ARTICLES_CONTENT_IS_EMPTY: MlString{
-		KZ: `Содержимое статьи пустое`,
+		KZ: `Мақаланың мазмұны бос`,
 		RU: `Содержимое статьи пустое`,
 		EN: `Article content is empty`,
+	},
+	TXT_NAME_OF_CONTACT_OR_SOCIAL_IS_EMPTY: MlString{
+		KZ: `Контакт немесе социалдық ақпараттың аты бос`,
+		RU: `Название контакта или социальной сети пустое`,
+		EN: `Name of contact or social is empty`,
+	},
+	TXT_FIRST_NAME_IS_EMPTY: MlString{
+		KZ: `Аты бос`,
+		RU: `Имя пустое`,
+		EN: `First name is empty`,
+	},
+	TXT_LAST_NAME_IS_EMPTY: MlString{
+		KZ: `Тегі бос`,
+		RU: `Фамилия пустая`,
+		EN: `Last name is empty`,
+	},
+	TXT_BIO_IS_EMPTY: MlString{
+		KZ: `Биография бос`,
+		RU: `Биография пустая`,
+		EN: `Bio is empty`,
+	},
+	TXT_TITLE_OF_BOOK_IS_EMPTY: MlString{
+		KZ: `Кітаптың атауы бос`,
+		RU: `Название книги пустое`,
+		EN: `Book title is empty`,
+	},
+	TXT_AUTHOR_OF_BOOK_IS_EMPTY: MlString{
+		KZ: `Кітаптың авторы бос`,
+		RU: `Автор книги пустой`,
+		EN: `Author of book is empty`,
 	},
 }
 
@@ -34,6 +70,18 @@ func GetTxtKeyAsString(k TxtKey) string {
 		return "articles_title_is_too_long"
 	case TXT_ARTICLES_CONTENT_IS_EMPTY:
 		return "articles_content_is_empty"
+	case TXT_NAME_OF_CONTACT_OR_SOCIAL_IS_EMPTY:
+		return "name_of_contact_or_social_is_empty"
+	case TXT_FIRST_NAME_IS_EMPTY:
+		return "first_name_is_empty"
+	case TXT_LAST_NAME_IS_EMPTY:
+		return "last_name_is_empty"
+	case TXT_BIO_IS_EMPTY:
+		return "bio_is_empty"
+	case TXT_TITLE_OF_BOOK_IS_EMPTY:
+		return "title_of_book_is_empty"
+	case TXT_AUTHOR_OF_BOOK_IS_EMPTY:
+		return "author_of_book_is_empty"
 
 	default:
 		return ""

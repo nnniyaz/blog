@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/domain/article"
 	"github.com/nnniyaz/blog/domain/base/uuid"
-	"github.com/nnniyaz/blog/pkg/logger"
 	"github.com/nnniyaz/blog/repo"
 )
 
@@ -14,16 +13,15 @@ type ApplicationService interface {
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*article.Article, error)
-	FindAll(ctx context.Context, offset, limit int64, isDeleted bool, title string) ([]*article.Article, int64, error)
+	FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*article.Article, int64, error)
 }
 
 type articleService struct {
-	logger logger.Logger
-	repo   repo.Article
+	repo repo.Article
 }
 
-func NewArticleService(l logger.Logger, r repo.Article) ApplicationService {
-	return &articleService{logger: l, repo: r}
+func NewArticleService(r repo.Article) ApplicationService {
+	return &articleService{repo: r}
 }
 
 func (s *articleService) Create(ctx context.Context, title, content string) error {
@@ -74,6 +72,6 @@ func (s *articleService) FindById(ctx context.Context, id string) (*article.Arti
 	return s.repo.FindById(ctx, convertedId)
 }
 
-func (s *articleService) FindAll(ctx context.Context, offset, limit int64, isDeleted bool, title string) ([]*article.Article, int64, error) {
-	return s.repo.FindAll(ctx, offset, limit, isDeleted, title)
+func (s *articleService) FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*article.Article, int64, error) {
+	return s.repo.FindAll(ctx, offset, limit, isDeleted, search)
 }

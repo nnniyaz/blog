@@ -59,12 +59,18 @@ func (r *RepoArticle) Update(ctx context.Context, article *article.Article) erro
 }
 
 func (r *RepoArticle) Delete(ctx context.Context, id uuid.UUID) error {
-	_, err := r.Coll().UpdateOne(ctx, bson.M{"_id": id}, bson.M{"$set": bson.M{"isDeleted": true}})
+	_, err := r.Coll().UpdateOne(ctx, bson.M{"_id": id}, bson.M{"$set": bson.M{
+		"isDeleted": true,
+		"updatedAt": time.Now(),
+	}})
 	return err
 }
 
 func (r *RepoArticle) Restore(ctx context.Context, id uuid.UUID) error {
-	_, err := r.Coll().UpdateOne(ctx, bson.M{"_id": id}, bson.M{"$set": bson.M{"isDeleted": false}})
+	_, err := r.Coll().UpdateOne(ctx, bson.M{"_id": id}, bson.M{"$set": bson.M{
+		"isDeleted": false,
+		"updatedAt": time.Now(),
+	}})
 	return err
 }
 
@@ -76,14 +82,14 @@ func (r *RepoArticle) FindById(ctx context.Context, id uuid.UUID) (*article.Arti
 	return result.ToAggregate(), nil
 }
 
-func (r *RepoArticle) FindAll(ctx context.Context, offset, limit int64, isDeleted bool, title string) ([]*article.Article, int64, error) {
+func (r *RepoArticle) FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*article.Article, int64, error) {
 	filters := bson.D{
 		{"isDeleted", isDeleted},
 	}
 
-	if title != "" {
+	if search != "" {
 		filters = append(filters, bson.E{"$or", bson.A{
-			bson.M{"title": bson.M{"$regex": title, "$options": "i"}},
+			bson.M{"title": bson.M{"$regex": search, "$options": "i"}},
 		}})
 	}
 

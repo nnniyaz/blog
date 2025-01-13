@@ -1,4 +1,10 @@
 key,KZ,RU,EN
-articles_title_is_empty,Заголовок статьи пуст,Заголовок статьи пуст,Article title is empty
-articles_title_is_too_long,Заголовок статьи слишком длинный,Заголовок статьи слишком длинный,Article title is too long
-articles_content_is_empty,Содержимое статьи пустое,Содержимое статьи пустое,Article content is empty
+articles_title_is_empty,Мақала тақырыбы бос,Заголовок статьи пуст,Article title is empty
+articles_title_is_too_long,Мақаланың тақырыбы тым ұзын,Заголовок статьи слишком длинный,Article title is too long
+articles_content_is_empty,Мақаланың мазмұны бос,Содержимое статьи пустое,Article content is empty
+name_of_contact_or_social_is_empty,Контакт немесе социалдық ақпараттың аты бос,Название контакта или социальной сети пустое,Name of contact or social is empty
+first_name_is_empty,Аты бос,Имя пустое,First name is empty
+last_name_is_empty,Тегі бос,Фамилия пустая,Last name is empty
+bio_is_empty,Биография бос,Биография пустая,Bio is empty
+title_of_book_is_empty,Кітаптың атауы бос,Название книги пустое,Book title is empty
+author_of_book_is_empty,Кітаптың авторы бос,Автор книги пустой,Author of book is empty

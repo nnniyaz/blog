@@ -74,7 +74,7 @@ func main() {
 
 	// --- init handler
 	repos := repo.NewRepo(db)
-	services := service.NewService(repos, cfg, lg, email)
+	services := service.NewService(repos, cfg, email)
 	handlers := hHttp.NewHandler(lg, db, services)
 
 	// --- init server

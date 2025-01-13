@@ -146,9 +146,9 @@ func newFindArticleOut(a *article.Article) *FindArticleOut {
 	}
 }
 
-// FindArticle godoc
+// GetArticle godoc
 //
-//	@Summary		Find article
+//	@Summary		Get article
 //	@Description	This can only be done by the logged-in user.
 //	@Tags			Articles
 //	@Accept			json
@@ -157,7 +157,7 @@ func newFindArticleOut(a *article.Article) *FindArticleOut {
 //	@Success		200						{object}	response.Success{FindArticleOut}
 //	@Failure		default					{object}	response.Error
 //	@Router			/article/{id} [get]
-func (hd *HttpDelivery) FindArticle(w http.ResponseWriter, r *http.Request) {
+func (hd *HttpDelivery) GetArticle(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	result, err := hd.service.FindById(r.Context(), id)
 	if err != nil {
@@ -180,9 +180,9 @@ func newFindAllArticleOut(articles []*article.Article, count int64) *FindAllArti
 	return &FindAllArticleOut{Articles: out, Count: count}
 }
 
-// FindAllArticles godoc
+// GetAllArticles godoc
 //
-//	@Summary		Find all articles
+//	@Summary		Get all articles
 //	@Description	This can only be done by the logged-in user.
 //	@Tags			Articles
 //	@Accept			json
@@ -190,11 +190,11 @@ func newFindAllArticleOut(articles []*article.Article, count int64) *FindAllArti
 //	@Param			offset		query		int		false	"Offset"
 //	@Param			limit		query		int		false	"Limit"
 //	@Param			is_deleted	query		bool	false	"Is deleted"
-//	@Param			search		query		string	false	"Search Title"
+//	@Param			search		query		string	false	"Search"
 //	@Success		200						{object}	response.Success
 //	@Failure		default					{object}	response.Error
 //	@Router			/article [get]
-func (hd *HttpDelivery) FindAllArticles(w http.ResponseWriter, r *http.Request) {
+func (hd *HttpDelivery) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 	offset := r.Context().Value("offset").(int64)
 	limit := r.Context().Value("limit").(int64)
 	isDeleted := r.Context().Value("is_deleted").(bool)
