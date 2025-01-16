@@ -306,6 +306,6 @@ server/go.work
 server/go.work.sum
 
 # env file
-server/.env
+server/config/.env
 server/.env.development
 server/.env.production

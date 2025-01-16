@@ -3,15 +3,15 @@ package main
 import (
 	"context"
 	"errors"
-	server "github.com/nnniyaz/blog"
-	"github.com/nnniyaz/blog/domain/base/config"
-	hHttp "github.com/nnniyaz/blog/handler/http"
+	"github.com/nnniyaz/blog/internal/domain/base/config"
+	hHttp "github.com/nnniyaz/blog/internal/handlers/http"
+	"github.com/nnniyaz/blog/internal/repos"
+	"github.com/nnniyaz/blog/internal/services"
 	"github.com/nnniyaz/blog/pkg/email"
 	"github.com/nnniyaz/blog/pkg/env"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"github.com/nnniyaz/blog/pkg/mongo"
-	"github.com/nnniyaz/blog/repo"
-	"github.com/nnniyaz/blog/service"
+	"github.com/nnniyaz/blog/pkg/server"
 	"go.uber.org/zap"
 	"net/http"
 	"os"
@@ -69,12 +69,12 @@ func main() {
 	// --- init email service
 	email, err := email.New(cfg.GetSmtpHost(), cfg.GetSmtpPort(), cfg.GetSmtpUser(), cfg.GetSmtpPass())
 	if err != nil {
-		lg.Fatal("failed to init email service", zap.Error(err))
+		lg.Fatal("failed to init email services", zap.Error(err))
 	}
 
 	// --- init handler
-	repos := repo.NewRepo(db)
-	services := service.NewService(repos, cfg, email)
+	repos := repos.NewRepo(db)
+	services := services.NewService(repos, cfg, email)
 	handlers := hHttp.NewHandler(lg, db, services)
 
 	// --- init server
