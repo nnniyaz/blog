@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/book"
-	"github.com/nnniyaz/blog/repos"
+	"github.com/nnniyaz/blog/internal/repos"
 )
 
 type BookService interface {
@@ -17,10 +17,10 @@ type BookService interface {
 }
 
 type bookService struct {
-	repo repo.Book
+	repo repos.Book
 }
 
-func NewBookService(repo repo.Book) BookService {
+func NewBookService(repo repos.Book) BookService {
 	return &bookService{repo: repo}
 }
 

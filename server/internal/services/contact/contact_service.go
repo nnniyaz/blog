@@ -37,10 +37,12 @@ func (s *contactService) Update(ctx context.Context, id, label, link string) err
 	if err != nil {
 		return err
 	}
+
 	foundContact, err := s.repo.FindById(ctx, convertedId)
 	if err != nil {
 		return err
 	}
+
 	err = foundContact.Update(label, link)
 	if err != nil {
 		return err

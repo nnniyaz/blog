@@ -4,17 +4,22 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/article"
 	"github.com/nnniyaz/blog/internal/domain/author"
+	"github.com/nnniyaz/blog/internal/domain/base/email"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/bio"
 	"github.com/nnniyaz/blog/internal/domain/book"
 	"github.com/nnniyaz/blog/internal/domain/contact"
 	"github.com/nnniyaz/blog/internal/domain/project"
+	"github.com/nnniyaz/blog/internal/domain/session"
+	"github.com/nnniyaz/blog/internal/domain/user"
 	mongoArticle "github.com/nnniyaz/blog/internal/repos/mongo/article"
 	mongoAuthor "github.com/nnniyaz/blog/internal/repos/mongo/author"
 	mongoBio "github.com/nnniyaz/blog/internal/repos/mongo/bio"
 	mongoBook "github.com/nnniyaz/blog/internal/repos/mongo/book"
 	mongoContact "github.com/nnniyaz/blog/internal/repos/mongo/contact"
 	mongoProject "github.com/nnniyaz/blog/internal/repos/mongo/project"
+	mongoSession "github.com/nnniyaz/blog/internal/repos/mongo/session"
+	mongoUser "github.com/nnniyaz/blog/internal/repos/mongo/user"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -74,6 +79,25 @@ type Project interface {
 	FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*project.Project, int64, error)
 }
 
+type User interface {
+	Create(ctx context.Context, u *user.User) error
+	Update(ctx context.Context, u *user.User) error
+	Delete(ctx context.Context, id uuid.UUID) error
+	Restore(ctx context.Context, id uuid.UUID) error
+	FindById(ctx context.Context, id uuid.UUID) (*user.User, error)
+	FindByEmail(ctx context.Context, email email.Email) (*user.User, error)
+	FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*user.User, int64, error)
+}
+
+type Session interface {
+	Create(ctx context.Context, s *session.Session) error
+	DeleteBySession(ctx context.Context, session uuid.UUID) error
+	DeleteByUserId(ctx context.Context, userId uuid.UUID) error
+	FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error)
+	FindBySession(ctx context.Context, session uuid.UUID) (*session.Session, error)
+	FindByUserId(ctx context.Context, userId uuid.UUID) ([]*session.Session, error)
+}
+
 type Repo struct {
 	RepoArticle Article
 	RepoContact Contact
@@ -81,6 +105,8 @@ type Repo struct {
 	RepoBio     Bio
 	RepoBook    Book
 	RepoProject Project
+	RepoUser    User
+	RepoSession Session
 }
 
 func NewRepo(client *mongo.Client) *Repo {
@@ -91,5 +117,7 @@ func NewRepo(client *mongo.Client) *Repo {
 		RepoBio:     mongoBio.NewRepoBio(client),
 		RepoBook:    mongoBook.NewBookRepo(client),
 		RepoProject: mongoProject.NewProjectRepo(client),
+		RepoUser:    mongoUser.NewUserRepo(client),
+		RepoSession: mongoSession.NewRepoSession(client),
 	}
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/nnniyaz/blog/internal/services/project"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
+	"time"
 )
 
 type HttpDelivery struct {
@@ -153,8 +154,8 @@ func newGetProjectOut(p *project.Project) *GetProjectOut {
 		AppLink:        p.GetAppLink(),
 		SourceCodeLink: p.GetSourceCodeLink(),
 		IsDeleted:      p.GetIsDeleted(),
-		CreatedAt:      p.GetCreatedAt().String(),
-		UpdatedAt:      p.GetUpdatedAt().String(),
+		CreatedAt:      p.GetCreatedAt().Format(time.RFC3339),
+		UpdatedAt:      p.GetUpdatedAt().Format(time.RFC3339),
 	}
 }
 
@@ -208,7 +209,7 @@ func newGetAllProjectsOut(projects []*project.Project, count int64) *GetAllProje
 // @Param			search		query		string		false	"Search"
 // @Success		200		{object}	response.Success{GetAllProjectsOut}
 // @Failure		default	{object}	response.Error
-// @Router			/projects [get]
+// @Router			/project [get]
 func (hd *HttpDelivery) GetAllProjects(w http.ResponseWriter, r *http.Request) {
 	offset := r.Context().Value("offset").(int64)
 	limit := r.Context().Value("limit").(int64)

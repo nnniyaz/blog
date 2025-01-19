@@ -4,24 +4,31 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/base/config"
 	"github.com/nnniyaz/blog/internal/repos"
 	"github.com/nnniyaz/blog/internal/services/article"
+	authService "github.com/nnniyaz/blog/internal/services/auth"
 	"github.com/nnniyaz/blog/internal/services/author"
 	"github.com/nnniyaz/blog/internal/services/bio"
 	"github.com/nnniyaz/blog/internal/services/book"
 	"github.com/nnniyaz/blog/internal/services/contact"
 	"github.com/nnniyaz/blog/internal/services/project"
+	sessionService "github.com/nnniyaz/blog/internal/services/session"
+	userService "github.com/nnniyaz/blog/internal/services/user"
 	"github.com/nnniyaz/blog/pkg/email"
 )
 
 type Service struct {
-	Article articleService.ApplicationService
+	Article articleService.ArticleService
 	Contact contactService.ContactService
 	Author  authorService.AuthorService
 	Bio     bioService.BioService
 	Book    bookService.BookService
 	Project projectService.ProjectService
+	User    userService.UserService
+	Session sessionService.SessionService
+	Auth    authService.AuthService
 }
 
 func NewService(repos *repos.Repo, config *config.Config, emailService email.Email) *Service {
+	session := sessionService.NewSessionService(repos.RepoSession)
 	return &Service{
 		Article: articleService.NewArticleService(repos.RepoArticle),
 		Contact: contactService.NewContactService(repos.RepoContact),
@@ -29,5 +36,7 @@ func NewService(repos *repos.Repo, config *config.Config, emailService email.Ema
 		Bio:     bioService.NewBioService(repos.RepoBio),
 		Book:    bookService.NewBookService(repos.RepoBook),
 		Project: projectService.NewProjectService(repos.RepoProject),
+		User:    userService.NewUserService(repos.RepoUser),
+		Auth:    authService.NewAuthService(repos.RepoUser, session),
 	}
 }

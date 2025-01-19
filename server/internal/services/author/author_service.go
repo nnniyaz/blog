@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/author"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
-	"github.com/nnniyaz/blog/repos"
+	"github.com/nnniyaz/blog/internal/repos"
 )
 
 type AuthorService interface {
@@ -17,10 +17,10 @@ type AuthorService interface {
 }
 
 type authorService struct {
-	repo repo.Author
+	repo repos.Author
 }
 
-func NewAuthorService(repo repo.Author) AuthorService {
+func NewAuthorService(repo repos.Author) AuthorService {
 	return &authorService{repo: repo}
 }
 
@@ -38,16 +38,16 @@ func (s *authorService) Update(ctx context.Context, id, firstName, lastName, ava
 		return err
 	}
 
-	author, err := s.repo.FindById(ctx, convertedId)
+	foundAuthor, err := s.repo.FindById(ctx, convertedId)
 	if err != nil {
 		return err
 	}
 
-	err = author.Update(firstName, lastName, avatarUri)
+	err = foundAuthor.Update(firstName, lastName, avatarUri)
 	if err != nil {
 		return err
 	}
-	return s.repo.Update(ctx, author)
+	return s.repo.Update(ctx, foundAuthor)
 }
 
 func (s *authorService) Delete(ctx context.Context, id string) error {

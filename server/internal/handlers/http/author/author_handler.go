@@ -8,6 +8,7 @@ import (
 	"github.com/nnniyaz/blog/internal/services/author"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
+	"time"
 )
 
 type HttpDelivery struct {
@@ -141,8 +142,8 @@ func newGetAuthorOut(author *author.Author) *GetAuthorOut {
 		FirstName: author.GetFirstName(),
 		LastName:  author.GetLastName(),
 		AvatarUri: author.GetAvatarUri(),
-		CreatedAt: author.GetCreatedAt().String(),
-		UpdatedAt: author.GetUpdatedAt().String(),
+		CreatedAt: author.GetCreatedAt().Format(time.RFC3339),
+		UpdatedAt: author.GetUpdatedAt().Format(time.RFC3339),
 		Version:   author.GetVersion(),
 	}
 }
