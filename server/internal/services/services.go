@@ -9,16 +9,18 @@ import (
 	"github.com/nnniyaz/blog/internal/services/book"
 	"github.com/nnniyaz/blog/internal/services/contact"
 	"github.com/nnniyaz/blog/internal/services/project"
+	userService "github.com/nnniyaz/blog/internal/services/user"
 	"github.com/nnniyaz/blog/pkg/email"
 )
 
 type Service struct {
-	Article articleService.ApplicationService
+	Article articleService.ArticleService
 	Contact contactService.ContactService
 	Author  authorService.AuthorService
 	Bio     bioService.BioService
 	Book    bookService.BookService
 	Project projectService.ProjectService
+	User    userService.UserService
 }
 
 func NewService(repos *repos.Repo, config *config.Config, emailService email.Email) *Service {
@@ -29,5 +31,6 @@ func NewService(repos *repos.Repo, config *config.Config, emailService email.Ema
 		Bio:     bioService.NewBioService(repos.RepoBio),
 		Book:    bookService.NewBookService(repos.RepoBook),
 		Project: projectService.NewProjectService(repos.RepoProject),
+		User:    userService.NewUserService(repos.RepoUser),
 	}
 }
