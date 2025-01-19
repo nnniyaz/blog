@@ -8,6 +8,7 @@ import (
 	"github.com/nnniyaz/blog/internal/services/bio"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
+	"time"
 )
 
 type HttpDelivery struct {
@@ -135,8 +136,8 @@ func newGetBioOut(bio *bio.Bio) *GetBioOut {
 		Id:        bio.GetId().String(),
 		Bio:       bio.GetBio(),
 		Active:    bio.GetActive(),
-		CreatedAt: bio.GetCreatedAt().String(),
-		UpdatedAt: bio.GetUpdatedAt().String(),
+		CreatedAt: bio.GetCreatedAt().Format(time.RFC3339),
+		UpdatedAt: bio.GetUpdatedAt().Format(time.RFC3339),
 		Version:   bio.GetVersion(),
 	}
 }

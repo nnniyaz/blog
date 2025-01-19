@@ -13,10 +13,10 @@ import (
 
 type HttpDelivery struct {
 	logger  logger.Logger
-	service articleService.ApplicationService
+	service articleService.ArticleService
 }
 
-func NewHttpDelivery(l logger.Logger, s articleService.ApplicationService) *HttpDelivery {
+func NewHttpDelivery(l logger.Logger, s articleService.ArticleService) *HttpDelivery {
 	return &HttpDelivery{logger: l, service: s}
 }
 
