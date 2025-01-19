@@ -8,7 +8,7 @@ import (
 )
 
 type SessionService interface {
-	Create(ctx context.Context, userId uuid.UUID, userAgent string) error
+	Create(ctx context.Context, session *session.Session) error
 	DeleteBySession(ctx context.Context, session uuid.UUID) error
 	DeleteByUserId(ctx context.Context, userId uuid.UUID) error
 	FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error)
@@ -24,12 +24,8 @@ func NewSessionService(sessionRepo repos.Session) SessionService {
 	return &sessionService{repo: sessionRepo}
 }
 
-func (s *sessionService) Create(ctx context.Context, userId uuid.UUID, userAgent string) error {
-	newSession, err := session.NewSession(userId, userAgent)
-	if err != nil {
-		return err
-	}
-	return s.repo.Create(ctx, newSession)
+func (s *sessionService) Create(ctx context.Context, session *session.Session) error {
+	return s.repo.Create(ctx, session)
 }
 
 func (s *sessionService) DeleteBySession(ctx context.Context, session uuid.UUID) error {
