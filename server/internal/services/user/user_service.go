@@ -2,6 +2,7 @@ package userService
 
 import (
 	"context"
+	"github.com/nnniyaz/blog/internal/domain/base/email"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/user"
 	"github.com/nnniyaz/blog/internal/repos"
@@ -14,6 +15,7 @@ type UserService interface {
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*user.User, error)
+	FindByEmail(ctx context.Context, email string) (*user.User, error)
 	FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*user.User, int64, error)
 }
 
@@ -83,6 +85,14 @@ func (s *userService) FindById(ctx context.Context, id string) (*user.User, erro
 		return nil, err
 	}
 	return s.repo.FindById(ctx, convertedId)
+}
+
+func (s *userService) FindByEmail(ctx context.Context, rawEmail string) (*user.User, error) {
+	convertedEmail, err := email.NewEmail(rawEmail)
+	if err != nil {
+		return nil, err
+	}
+	return s.repo.FindByEmail(ctx, convertedEmail)
 }
 
 func (s *userService) FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*user.User, int64, error) {

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/article"
 	"github.com/nnniyaz/blog/internal/domain/author"
+	"github.com/nnniyaz/blog/internal/domain/base/email"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/bio"
 	"github.com/nnniyaz/blog/internal/domain/book"
@@ -84,6 +85,7 @@ type User interface {
 	Delete(ctx context.Context, id uuid.UUID) error
 	Restore(ctx context.Context, id uuid.UUID) error
 	FindById(ctx context.Context, id uuid.UUID) (*user.User, error)
+	FindByEmail(ctx context.Context, email email.Email) (*user.User, error)
 	FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*user.User, int64, error)
 }
 

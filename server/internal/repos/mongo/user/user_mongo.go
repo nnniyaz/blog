@@ -2,6 +2,7 @@ package userRepo
 
 import (
 	"context"
+	"github.com/nnniyaz/blog/internal/domain/base/email"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/user"
 	"github.com/nnniyaz/blog/internal/domain/user/valueobject"
@@ -87,6 +88,14 @@ func (r *UserRepo) Restore(ctx context.Context, id uuid.UUID) error {
 func (r *UserRepo) FindById(ctx context.Context, id uuid.UUID) (*user.User, error) {
 	var user userMongo
 	if err := r.Coll().FindOne(ctx, bson.M{"_id": id}).Decode(&user); err != nil {
+		return nil, err
+	}
+	return user.ToAggregate(), nil
+}
+
+func (r *UserRepo) FindByEmail(ctx context.Context, email email.Email) (*user.User, error) {
+	var user userMongo
+	if err := r.Coll().FindOne(ctx, bson.M{"email": email.String()}).Decode(&user); err != nil {
 		return nil, err
 	}
 	return user.ToAggregate(), nil
