@@ -4,6 +4,7 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/base/config"
 	"github.com/nnniyaz/blog/internal/repos"
 	"github.com/nnniyaz/blog/internal/services/article"
+	authService "github.com/nnniyaz/blog/internal/services/auth"
 	"github.com/nnniyaz/blog/internal/services/author"
 	"github.com/nnniyaz/blog/internal/services/bio"
 	"github.com/nnniyaz/blog/internal/services/book"
@@ -23,6 +24,7 @@ type Service struct {
 	Project projectService.ProjectService
 	User    userService.UserService
 	Session sessionService.SessionService
+	Auth    authService.AuthService
 }
 
 func NewService(repos *repos.Repo, config *config.Config, emailService email.Email) *Service {
@@ -35,5 +37,6 @@ func NewService(repos *repos.Repo, config *config.Config, emailService email.Ema
 		Book:    bookService.NewBookService(repos.RepoBook),
 		Project: projectService.NewProjectService(repos.RepoProject),
 		User:    userService.NewUserService(repos.RepoUser),
+		Auth:    authService.NewAuthService(repos.RepoUser, session),
 	}
 }

@@ -18,3 +18,6 @@ title_of_book_is_empty,Кітаптың атауы бос,Название кн�
 author_of_book_is_empty,Кітаптың авторы бос,Автор книги пустой,Author of book is empty
 name_of_project_is_empty,Проекттің аты бос,Название проекта пустое,Name of project is empty
 user_agent_is_empty,User agent бос,User agent пустой,User agent is empty
+user_with_this_email_not_found,Бұндай email-мен пайдаланушы табылмады,Пользователь с таким email не найден,User with this email not found
+user_password_invalid,Құпия сөз дұрыс емес,Неверный пароль,User password invalid
+user_agent_invalid,User agent дұрыс емес,Неверный user agent,User agent invalid

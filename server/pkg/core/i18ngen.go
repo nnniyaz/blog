@@ -22,6 +22,9 @@ const (
 	TXT_AUTHOR_OF_BOOK_IS_EMPTY            TxtKey = 17
 	TXT_NAME_OF_PROJECT_IS_EMPTY           TxtKey = 18
 	TXT_USER_AGENT_IS_EMPTY                TxtKey = 19
+	TXT_USER_WITH_THIS_EMAIL_NOT_FOUND     TxtKey = 20
+	TXT_USER_PASSWORD_INVALID              TxtKey = 21
+	TXT_USER_AGENT_INVALID                 TxtKey = 22
 )
 
 var Txts = TxtResource{
@@ -120,6 +123,21 @@ var Txts = TxtResource{
 		RU: `User agent пустой`,
 		EN: `User agent is empty`,
 	},
+	TXT_USER_WITH_THIS_EMAIL_NOT_FOUND: MlString{
+		KZ: `Бұндай email-мен пайдаланушы табылмады`,
+		RU: `Пользователь с таким email не найден`,
+		EN: `User with this email not found`,
+	},
+	TXT_USER_PASSWORD_INVALID: MlString{
+		KZ: `Құпия сөз дұрыс емес`,
+		RU: `Неверный пароль`,
+		EN: `User password invalid`,
+	},
+	TXT_USER_AGENT_INVALID: MlString{
+		KZ: `User agent дұрыс емес`,
+		RU: `Неверный user agent`,
+		EN: `User agent invalid`,
+	},
 }
 
 func GetTxtKeyAsString(k TxtKey) string {
@@ -162,6 +180,12 @@ func GetTxtKeyAsString(k TxtKey) string {
 		return "name_of_project_is_empty"
 	case TXT_USER_AGENT_IS_EMPTY:
 		return "user_agent_is_empty"
+	case TXT_USER_WITH_THIS_EMAIL_NOT_FOUND:
+		return "user_with_this_email_not_found"
+	case TXT_USER_PASSWORD_INVALID:
+		return "user_password_invalid"
+	case TXT_USER_AGENT_INVALID:
+		return "user_agent_invalid"
 
 	default:
 		return ""
