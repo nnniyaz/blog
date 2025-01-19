@@ -9,6 +9,7 @@ import (
 	"github.com/nnniyaz/blog/internal/services/book"
 	"github.com/nnniyaz/blog/internal/services/contact"
 	"github.com/nnniyaz/blog/internal/services/project"
+	sessionService "github.com/nnniyaz/blog/internal/services/session"
 	userService "github.com/nnniyaz/blog/internal/services/user"
 	"github.com/nnniyaz/blog/pkg/email"
 )
@@ -21,9 +22,11 @@ type Service struct {
 	Book    bookService.BookService
 	Project projectService.ProjectService
 	User    userService.UserService
+	Session sessionService.SessionService
 }
 
 func NewService(repos *repos.Repo, config *config.Config, emailService email.Email) *Service {
+	session := sessionService.NewSessionService(repos.RepoSession)
 	return &Service{
 		Article: articleService.NewArticleService(repos.RepoArticle),
 		Contact: contactService.NewContactService(repos.RepoContact),
