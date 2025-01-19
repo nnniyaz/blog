@@ -1,4 +1,12 @@
 key,KZ,RU,EN
+unknown_error,Белгісіз қате,Неизвестная ошибка,Unknown error
+unauthorized,Құқығы жоқ,Нет доступа,Unauthorized
+wrong_mlstring_format,Мәтіндің түрі дұрыс емес,Неверный формат текста,Wrong mlstring format
+uuid_invalid_length,UUID ұзындығы дұрыс емес,Неверная длина UUID,UUID invalid length
+empty_password,Құпия сөз бос,Пароль пустой,Empty password
+password_too_short,Құпия сөз ұзындығы тым қысқа,Пароль слишком короткий,Password too short
+password_too_long,Құпия сөз ұзындығы тым ұзын,Пароль слишком длинный,Password too long
+invalid_email,Email дұрыс емес,Неверный email,Invalid email
 articles_title_is_empty,Мақала тақырыбы бос,Заголовок статьи пуст,Article title is empty
 articles_title_is_too_long,Мақаланың тақырыбы тым ұзын,Заголовок статьи слишком длинный,Article title is too long
 articles_content_is_empty,Мақаланың мазмұны бос,Содержимое статьи пустое,Article content is empty
@@ -9,3 +17,4 @@ bio_is_empty,Биография бос,Биография пустая,Bio is em
 title_of_book_is_empty,Кітаптың атауы бос,Название книги пустое,Book title is empty
 author_of_book_is_empty,Кітаптың авторы бос,Автор книги пустой,Author of book is empty
 name_of_project_is_empty,Проекттің аты бос,Название проекта пустое,Name of project is empty
+user_agent_is_empty,User agent бос,User agent пустой,User agent is empty

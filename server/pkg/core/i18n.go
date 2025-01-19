@@ -7,6 +7,7 @@ package core
 type Lang string
 
 const (
+	KZ Lang = "KZ"
 	RU Lang = "RU"
 	EN Lang = "EN"
 )
