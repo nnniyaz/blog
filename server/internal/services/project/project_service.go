@@ -33,11 +33,21 @@ func (s *projectService) Create(ctx context.Context, name, description, coverUri
 }
 
 func (s *projectService) Update(ctx context.Context, id, name, description, coverUri, appLink, sourceCodeLink string) error {
-	project, err := project.NewProject(name, description, coverUri, appLink, sourceCodeLink)
+	convertedId, err := uuid.UUIDFromString(id)
 	if err != nil {
 		return err
 	}
-	return s.repo.Update(ctx, project)
+
+	foundProject, err := s.repo.FindById(ctx, convertedId)
+	if err != nil {
+		return err
+	}
+
+	err = foundProject.Update(name, description, coverUri, appLink, sourceCodeLink)
+	if err != nil {
+		return err
+	}
+	return s.repo.Update(ctx, foundProject)
 }
 
 func (s *projectService) Delete(ctx context.Context, id string) error {

@@ -4,10 +4,10 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/article"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
-	"github.com/nnniyaz/blog/repos"
+	"github.com/nnniyaz/blog/internal/repos"
 )
 
-type ApplicationService interface {
+type ArticleService interface {
 	Create(ctx context.Context, title, content string) error
 	Update(ctx context.Context, id, title, content string) error
 	Delete(ctx context.Context, id string) error
@@ -17,10 +17,10 @@ type ApplicationService interface {
 }
 
 type articleService struct {
-	repo repo.Article
+	repo repos.Article
 }
 
-func NewArticleService(r repo.Article) ApplicationService {
+func NewArticleService(r repos.Article) ArticleService {
 	return &articleService{repo: r}
 }
 
@@ -37,10 +37,12 @@ func (s *articleService) Update(ctx context.Context, id, title, content string) 
 	if err != nil {
 		return err
 	}
+
 	foundArticle, err := s.repo.FindById(ctx, convertedId)
 	if err != nil {
 		return err
 	}
+
 	err = foundArticle.Update(title, content)
 	if err != nil {
 		return err

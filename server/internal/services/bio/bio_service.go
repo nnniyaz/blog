@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/bio"
-	"github.com/nnniyaz/blog/repos"
+	"github.com/nnniyaz/blog/internal/repos"
 )
 
 type BioService interface {
@@ -18,10 +18,10 @@ type BioService interface {
 }
 
 type bioService struct {
-	repo repo.Bio
+	repo repos.Bio
 }
 
-func NewBioService(repo repo.Bio) BioService {
+func NewBioService(repo repos.Bio) BioService {
 	return &bioService{repo: repo}
 }
 
@@ -39,16 +39,16 @@ func (s *bioService) Update(ctx context.Context, id, bioContent string) error {
 		return err
 	}
 
-	bio, err := s.repo.FindById(ctx, convertedId)
+	foundBio, err := s.repo.FindById(ctx, convertedId)
 	if err != nil {
 		return err
 	}
 
-	err = bio.Update(bioContent)
+	err = foundBio.Update(bioContent)
 	if err != nil {
 		return err
 	}
-	return s.repo.Update(ctx, bio)
+	return s.repo.Update(ctx, foundBio)
 }
 
 func (s *bioService) Delete(ctx context.Context, id string) error {
