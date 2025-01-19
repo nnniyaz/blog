@@ -21,3 +21,4 @@ user_agent_is_empty,User agent бос,User agent пустой,User agent is empt
 user_with_this_email_not_found,Бұндай email-мен пайдаланушы табылмады,Пользователь с таким email не найден,User with this email not found
 user_password_invalid,Құпия сөз дұрыс емес,Неверный пароль,User password invalid
 user_agent_invalid,User agent дұрыс емес,Неверный user agent,User agent invalid
+user_already_authorized,Пайдаланушы құқығы бар,Пользователь уже авторизован,User already authorized

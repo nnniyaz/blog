@@ -4,7 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/nnniyaz/blog/internal/domain/session/exceptions"
 	"github.com/nnniyaz/blog/internal/handlers/http/response"
+	authService "github.com/nnniyaz/blog/internal/services/auth"
+	"github.com/nnniyaz/blog/pkg/core"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"github.com/nnniyaz/blog/pkg/web"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -13,8 +16,9 @@ import (
 )
 
 type Middleware struct {
-	logger logger.Logger
-	client mongo.Client
+	logger      logger.Logger
+	client      mongo.Client
+	authService authService.AuthService
 }
 
 func New(l logger.Logger, client *mongo.Client) *Middleware {
@@ -107,5 +111,60 @@ func (m *Middleware) WithTransaction(next http.Handler) http.Handler {
 		} else {
 			next.ServeHTTP(w, r)
 		}
+	})
+}
+
+func (m *Middleware) UserAuth(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		session, err := r.Cookie("blog-app-session")
+		if err != nil {
+			response.NewUnauthorized(m.logger, w, r)
+			return
+		}
+
+		requestInfo := r.Context().Value("requestInfo").(web.RequestInfo)
+
+		u, err := m.authService.UserCheck(r.Context(), session.Value, requestInfo.UserAgent.String)
+		if err != nil {
+			response.NewError(m.logger, w, r, err)
+
+			http.SetCookie(w, &http.Cookie{
+				Name:     "blog-app-session",
+				Value:    "",
+				Path:     "/",
+				MaxAge:   -1,
+				Secure:   true,
+				HttpOnly: true,
+				SameSite: http.SameSiteNoneMode,
+			})
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), "sessionKey", session.Value)
+		ctx = context.WithValue(ctx, "user", *u)
+
+		userLang := r.Header.Get("Accept-Language")
+		switch userLang {
+		case "en":
+			ctx = context.WithValue(ctx, "userLang", core.EN)
+		case "ru":
+			ctx = context.WithValue(ctx, "userLang", core.RU)
+		default:
+			ctx = context.WithValue(ctx, "userLang", core.EN)
+		}
+
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+func (m *Middleware) NoAuth(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, err := r.Cookie("blog-app-session")
+		if err == nil {
+			response.NewBad(m.logger, w, r, exceptions.ErrUserAlreadyAuthorized)
+			return
+		}
+
+		next.ServeHTTP(w, r)
 	})
 }

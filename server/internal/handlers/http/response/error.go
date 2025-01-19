@@ -88,7 +88,7 @@ func NewError(l logger.Logger, w http.ResponseWriter, r *http.Request, err error
 		case core.EUNAUTHORIZED:
 			w.WriteHeader(http.StatusUnauthorized)
 			http.SetCookie(w, &http.Cookie{
-				Name:     "ardo-app-session",
+				Name:     "blog-app-session",
 				Value:    "",
 				Path:     "/",
 				HttpOnly: true,
@@ -129,7 +129,7 @@ func NewError(l logger.Logger, w http.ResponseWriter, r *http.Request, err error
 			case core.EUNAUTHORIZED:
 				w.WriteHeader(http.StatusUnauthorized)
 				http.SetCookie(w, &http.Cookie{
-					Name:     "ardo-app-session",
+					Name:     "blog-app-session",
 					Value:    "",
 					Path:     "/",
 					HttpOnly: true,

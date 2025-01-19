@@ -25,6 +25,7 @@ const (
 	TXT_USER_WITH_THIS_EMAIL_NOT_FOUND     TxtKey = 20
 	TXT_USER_PASSWORD_INVALID              TxtKey = 21
 	TXT_USER_AGENT_INVALID                 TxtKey = 22
+	TXT_USER_ALREADY_AUTHORIZED            TxtKey = 23
 )
 
 var Txts = TxtResource{
@@ -138,6 +139,11 @@ var Txts = TxtResource{
 		RU: `Неверный user agent`,
 		EN: `User agent invalid`,
 	},
+	TXT_USER_ALREADY_AUTHORIZED: MlString{
+		KZ: `Пайдаланушы құқығы бар`,
+		RU: `Пользователь уже авторизован`,
+		EN: `User already authorized`,
+	},
 }
 
 func GetTxtKeyAsString(k TxtKey) string {
@@ -186,6 +192,8 @@ func GetTxtKeyAsString(k TxtKey) string {
 		return "user_password_invalid"
 	case TXT_USER_AGENT_INVALID:
 		return "user_agent_invalid"
+	case TXT_USER_ALREADY_AUTHORIZED:
+		return "user_already_authorized"
 
 	default:
 		return ""
