@@ -41,9 +41,9 @@ type userMongo struct {
 	Email     string        `bson:"email"`
 	Password  passwordMongo `bson:"password"`
 	Role      string        `bson:"role"`
-	IsDeleted bool          `bson:"is_deleted"`
-	CreatedAt time.Time     `bson:"created_at"`
-	UpdatedAt time.Time     `bson:"updated_at"`
+	IsDeleted bool          `bson:"isDeleted"`
+	CreatedAt time.Time     `bson:"createdAt"`
+	UpdatedAt time.Time     `bson:"updatedAt"`
 }
 
 func newUserMongo(u user.User) userMongo {
@@ -74,16 +74,16 @@ func (r *UserRepo) Update(ctx context.Context, u *user.User) error {
 
 func (r *UserRepo) Delete(ctx context.Context, id uuid.UUID) error {
 	_, err := r.Coll().UpdateOne(ctx, bson.M{"_id": id}, bson.M{"$set": bson.M{
-		"is_deleted": true,
-		"updated_at": time.Now(),
+		"isDeleted": true,
+		"updatedAt": time.Now(),
 	}})
 	return err
 }
 
 func (r *UserRepo) Restore(ctx context.Context, id uuid.UUID) error {
 	_, err := r.Coll().UpdateOne(ctx, bson.M{"_id": id}, bson.M{"$set": bson.M{
-		"is_deleted": false,
-		"updated_at": time.Now(),
+		"isDeleted": false,
+		"updatedAt": time.Now(),
 	}})
 	return err
 }

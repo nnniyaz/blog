@@ -93,7 +93,7 @@ type Session interface {
 	Create(ctx context.Context, s *session.Session) error
 	DeleteBySession(ctx context.Context, session uuid.UUID) error
 	DeleteByUserId(ctx context.Context, userId uuid.UUID) error
-	FindBySession(ctx context.Context, session uuid.UUID) (*session.Session, error)
+	FindBySessionToken(ctx context.Context, session uuid.UUID) (*session.Session, error)
 	FindByUserId(ctx context.Context, userId uuid.UUID) ([]*session.Session, error)
 	FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error)
 }

@@ -23,25 +23,25 @@ func (r *SessionRepo) Coll() *mongo.Collection {
 }
 
 type mongoSession struct {
-	Id        uuid.UUID `bson:"_id"`
-	UserId    uuid.UUID `bson:"user_id"`
-	Session   uuid.UUID `bson:"session"`
-	UserAgent string    `bson:"user_agent"`
-	CreatedAt time.Time `bson:"created_at"`
+	Id           uuid.UUID `bson:"_id"`
+	UserId       uuid.UUID `bson:"userId"`
+	SessionToken uuid.UUID `bson:"sessionToken"`
+	UserAgent    string    `bson:"userAgent"`
+	CreatedAt    time.Time `bson:"createdAt"`
 }
 
 func newMongoSession(s *session.Session) *mongoSession {
 	return &mongoSession{
-		Id:        s.GetId(),
-		UserId:    s.GetUserId(),
-		Session:   s.GetSession(),
-		UserAgent: s.GetUserAgent().String(),
-		CreatedAt: s.GetCreatedAt(),
+		Id:           s.GetId(),
+		UserId:       s.GetUserId(),
+		SessionToken: s.GetSessionToken(),
+		UserAgent:    s.GetUserAgent().String(),
+		CreatedAt:    s.GetCreatedAt(),
 	}
 }
 
 func (m *mongoSession) ToAggregate() *session.Session {
-	return session.UnmarshalSessionFromDatabase(m.Id, m.UserId, m.Session, m.UserAgent, m.CreatedAt)
+	return session.UnmarshalSessionFromDatabase(m.Id, m.UserId, m.SessionToken, m.UserAgent, m.CreatedAt)
 }
 
 func (r *SessionRepo) Create(ctx context.Context, s *session.Session) error {
@@ -50,18 +50,18 @@ func (r *SessionRepo) Create(ctx context.Context, s *session.Session) error {
 }
 
 func (r *SessionRepo) DeleteBySession(ctx context.Context, session uuid.UUID) error {
-	_, err := r.Coll().DeleteOne(ctx, map[string]interface{}{"session": session})
+	_, err := r.Coll().DeleteOne(ctx, map[string]interface{}{"sessionToken": session})
 	return err
 }
 
 func (r *SessionRepo) DeleteByUserId(ctx context.Context, userId uuid.UUID) error {
-	_, err := r.Coll().DeleteMany(ctx, map[string]interface{}{"user_id": userId})
+	_, err := r.Coll().DeleteMany(ctx, map[string]interface{}{"userId": userId})
 	return err
 }
 
-func (r *SessionRepo) FindBySession(ctx context.Context, session uuid.UUID) (*session.Session, error) {
+func (r *SessionRepo) FindBySessionToken(ctx context.Context, session uuid.UUID) (*session.Session, error) {
 	var s mongoSession
-	err := r.Coll().FindOne(ctx, map[string]interface{}{"session": session}).Decode(&s)
+	err := r.Coll().FindOne(ctx, map[string]interface{}{"sessionToken": session}).Decode(&s)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func (r *SessionRepo) FindBySession(ctx context.Context, session uuid.UUID) (*se
 }
 
 func (r *SessionRepo) FindByUserId(ctx context.Context, userId uuid.UUID) ([]*session.Session, error) {
-	cursor, err := r.Coll().Find(ctx, map[string]interface{}{"user_id": userId})
+	cursor, err := r.Coll().Find(ctx, map[string]interface{}{"userId": userId})
 	if err != nil {
 		return nil, err
 	}
