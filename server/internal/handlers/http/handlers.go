@@ -173,5 +173,20 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 		r.Put("/restore/{id}", h.book.RestoreBook)
 	})
 
+	r.Route("/user", func(r chi.Router) {
+		r.Put("/", h.user.GetUsers)
+		r.Put("/{id}", h.user.GetUser)
+
+		r.Use(h.middleware.UserAuth)
+		r.Use(h.middleware.AdminCheck)
+
+		r.Post("/", h.user.CreateUser)
+		r.Put("/email/{id}", h.user.UpdateUserEmail)
+		r.Put("/password/{id}", h.user.UpdateUserPassword)
+		r.Put("/role/{id}", h.user.UpdateUserRole)
+		r.Delete("/{id}", h.user.DeleteUser)
+		r.Put("/restore/{id}", h.user.RestoreUser)
+	})
+
 	return r
 }

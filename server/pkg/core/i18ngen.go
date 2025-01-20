@@ -27,6 +27,7 @@ const (
 	TXT_USER_AGENT_INVALID                 TxtKey = 22
 	TXT_USER_ALREADY_AUTHORIZED            TxtKey = 23
 	TXT_USER_ROLE_INVALID                  TxtKey = 24
+	TXT_USER_IS_NOT_ADMIN                  TxtKey = 25
 )
 
 var Txts = TxtResource{
@@ -150,6 +151,11 @@ var Txts = TxtResource{
 		RU: `Неверная роль пользователя`,
 		EN: `User role invalid`,
 	},
+	TXT_USER_IS_NOT_ADMIN: MlString{
+		KZ: `Пайдаланушы администратор емес`,
+		RU: `Пользователь не администратор`,
+		EN: `User is not admin`,
+	},
 }
 
 func GetTxtKeyAsString(k TxtKey) string {
@@ -202,6 +208,8 @@ func GetTxtKeyAsString(k TxtKey) string {
 		return "user_already_authorized"
 	case TXT_USER_ROLE_INVALID:
 		return "user_role_invalid"
+	case TXT_USER_IS_NOT_ADMIN:
+		return "user_is_not_admin"
 
 	default:
 		return ""

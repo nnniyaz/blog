@@ -72,6 +72,16 @@ func (u *User) GetUpdatedAt() time.Time {
 	return u.updatedAt
 }
 
+func (u *User) UpdateEmail(rawEmail string) error {
+	convertedEmail, err := email.NewEmail(rawEmail)
+	if err != nil {
+		return err
+	}
+	u.email = convertedEmail
+	u.updatedAt = time.Now()
+	return nil
+}
+
 func (u *User) UpdatePassword(password string) error {
 	convertedPassword, err := valueobject.NewPassword(password)
 	if err != nil {
@@ -82,12 +92,12 @@ func (u *User) UpdatePassword(password string) error {
 	return nil
 }
 
-func (u *User) UpdateEmail(rawEmail string) error {
-	convertedEmail, err := email.NewEmail(rawEmail)
+func (u *User) UpdateRole(role string) error {
+	convertedRole, err := valueobject.NewRole(role)
 	if err != nil {
 		return err
 	}
-	u.email = convertedEmail
+	u.role = convertedRole
 	u.updatedAt = time.Now()
 	return nil
 }
