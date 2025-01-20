@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/nnniyaz/blog/internal/domain/session/exceptions"
+	"github.com/nnniyaz/blog/internal/domain/user"
+	exceptions2 "github.com/nnniyaz/blog/internal/domain/user/exceptions"
+	"github.com/nnniyaz/blog/internal/domain/user/valueobject"
 	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	authService "github.com/nnniyaz/blog/internal/services/auth"
 	"github.com/nnniyaz/blog/pkg/core"
@@ -162,6 +165,18 @@ func (m *Middleware) NoAuth(next http.Handler) http.Handler {
 		_, err := r.Cookie("blog-app-session")
 		if err == nil {
 			response.NewBad(m.logger, w, r, exceptions.ErrUserAlreadyAuthorized)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
+
+func (m *Middleware) AdminCheck(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		u := r.Context().Value("user").(*user.User)
+		if u.GetRole() != valueobject.RoleAdmin {
+			response.NewBad(m.logger, w, r, exceptions2.ErrUserNotAdmin)
 			return
 		}
 

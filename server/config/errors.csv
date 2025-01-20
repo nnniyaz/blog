@@ -22,3 +22,5 @@ user_with_this_email_not_found,Бұндай email-мен пайдаланушы 
 user_password_invalid,Құпия сөз дұрыс емес,Неверный пароль,User password invalid
 user_agent_invalid,User agent дұрыс емес,Неверный user agent,User agent invalid
 user_already_authorized,Пайдаланушы құқығы бар,Пользователь уже авторизован,User already authorized
+user_role_invalid,Пайдаланушы рөлі дұрыс емес,Неверная роль пользователя,User role invalid
+user_is_not_admin,Пайдаланушы администратор емес,Пользователь не администратор,User is not admin

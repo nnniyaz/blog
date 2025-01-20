@@ -40,6 +40,7 @@ type userMongo struct {
 	Id        uuid.UUID     `bson:"_id"`
 	Email     string        `bson:"email"`
 	Password  passwordMongo `bson:"password"`
+	Role      string        `bson:"role"`
 	IsDeleted bool          `bson:"is_deleted"`
 	CreatedAt time.Time     `bson:"created_at"`
 	UpdatedAt time.Time     `bson:"updated_at"`
@@ -50,13 +51,15 @@ func newUserMongo(u user.User) userMongo {
 		Id:        u.GetId(),
 		Email:     u.GetEmail().String(),
 		Password:  newPasswordMongo(u.GetPassword()),
+		Role:      u.GetRole().String(),
+		IsDeleted: u.GetIsDeleted(),
 		CreatedAt: u.GetCreatedAt(),
 		UpdatedAt: u.GetUpdatedAt(),
 	}
 }
 
 func (m *userMongo) ToAggregate() *user.User {
-	return user.UnmarshalUserFromDatabase(m.Id, m.Email, valueobject.UnmarshalPasswordFromDatabase(m.Password.Hash, m.Password.Salt), m.IsDeleted, m.CreatedAt, m.UpdatedAt)
+	return user.UnmarshalUserFromDatabase(m.Id, m.Email, valueobject.UnmarshalPasswordFromDatabase(m.Password.Hash, m.Password.Salt), m.Role, m.IsDeleted, m.CreatedAt, m.UpdatedAt)
 }
 
 func (r *UserRepo) Create(ctx context.Context, u *user.User) error {

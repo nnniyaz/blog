@@ -9,9 +9,10 @@ import (
 )
 
 type UserService interface {
-	Create(ctx context.Context, email, password string) error
+	Create(ctx context.Context, email, password, role string) error
 	UpdateEmail(ctx context.Context, id, email string) error
 	UpdatePassword(ctx context.Context, id, password string) error
+	UpdateRole(ctx context.Context, id, role string) error
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*user.User, error)
@@ -27,8 +28,8 @@ func NewUserService(userRepo repos.User) UserService {
 	return &userService{repo: userRepo}
 }
 
-func (s *userService) Create(ctx context.Context, email, password string) error {
-	u, err := user.NewUser(email, password)
+func (s *userService) Create(ctx context.Context, email, password, role string) error {
+	u, err := user.NewUser(email, password, role)
 	if err != nil {
 		return err
 	}
@@ -57,6 +58,20 @@ func (s *userService) UpdatePassword(ctx context.Context, id, password string) e
 	}
 
 	err = foundUser.UpdatePassword(password)
+	if err != nil {
+		return err
+	}
+	return s.repo.Update(ctx, foundUser)
+}
+
+func (s *userService) UpdateRole(ctx context.Context, id, role string) error {
+	convertedId, err := uuid.UUIDFromString(id)
+	foundUser, err := s.repo.FindById(ctx, convertedId)
+	if err != nil {
+		return err
+	}
+
+	err = foundUser.UpdateRole(role)
 	if err != nil {
 		return err
 	}
