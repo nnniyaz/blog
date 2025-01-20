@@ -14,7 +14,7 @@ type BioService interface {
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*bio.Bio, error)
 	FindByActive(ctx context.Context) (*bio.Bio, error)
-	FindAll(ctx context.Context) ([]*bio.Bio, int64, error)
+	FindAll(ctx context.Context, offset, limit int64) ([]*bio.Bio, int64, error)
 }
 
 type bioService struct {
@@ -87,6 +87,6 @@ func (s *bioService) FindByActive(ctx context.Context) (*bio.Bio, error) {
 	return s.repo.FindByActive(ctx)
 }
 
-func (s *bioService) FindAll(ctx context.Context) ([]*bio.Bio, int64, error) {
-	return s.repo.FindAll(ctx)
+func (s *bioService) FindAll(ctx context.Context, offset, limit int64) ([]*bio.Bio, int64, error) {
+	return s.repo.FindAll(ctx, offset, limit)
 }

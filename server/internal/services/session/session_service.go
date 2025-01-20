@@ -11,9 +11,9 @@ type SessionService interface {
 	Create(ctx context.Context, session *session.Session) error
 	DeleteBySession(ctx context.Context, session uuid.UUID) error
 	DeleteByUserId(ctx context.Context, userId uuid.UUID) error
-	FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error)
 	FindBySession(ctx context.Context, session uuid.UUID) (*session.Session, error)
 	FindByUserId(ctx context.Context, userId uuid.UUID) ([]*session.Session, error)
+	FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error)
 }
 
 type sessionService struct {
@@ -36,14 +36,14 @@ func (s *sessionService) DeleteByUserId(ctx context.Context, userId uuid.UUID) e
 	return s.repo.DeleteByUserId(ctx, userId)
 }
 
-func (s *sessionService) FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error) {
-	return s.repo.FindAll(ctx, offset, limit)
-}
-
 func (s *sessionService) FindBySession(ctx context.Context, session uuid.UUID) (*session.Session, error) {
 	return s.repo.FindBySession(ctx, session)
 }
 
 func (s *sessionService) FindByUserId(ctx context.Context, userId uuid.UUID) ([]*session.Session, error) {
 	return s.repo.FindByUserId(ctx, userId)
+}
+
+func (s *sessionService) FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error) {
+	return s.repo.FindAll(ctx, offset, limit)
 }
