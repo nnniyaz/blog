@@ -10,6 +10,7 @@ import (
 	"github.com/nnniyaz/blog/internal/handlers/http/bio"
 	"github.com/nnniyaz/blog/internal/handlers/http/book"
 	"github.com/nnniyaz/blog/internal/handlers/http/contact"
+	currentUserHandler "github.com/nnniyaz/blog/internal/handlers/http/currentUser"
 	"github.com/nnniyaz/blog/internal/handlers/http/middleware"
 	"github.com/nnniyaz/blog/internal/handlers/http/project"
 	userHandler "github.com/nnniyaz/blog/internal/handlers/http/user"
@@ -21,28 +22,30 @@ import (
 )
 
 type Handler struct {
-	middleware *middleware.Middleware
-	article    *articleHandler.HttpDelivery
-	contact    *contactHandler.HttpDelivery
-	author     *authorHandler.HttpDelivery
-	bio        *bioHandler.HttpDelivery
-	book       *bookHandler.HttpDelivery
-	project    *projectHandler.HttpDelivery
-	user       *userHandler.HttpDelivery
-	auth       *authHandler.HttpDelivery
+	middleware  *middleware.Middleware
+	article     *articleHandler.HttpDelivery
+	contact     *contactHandler.HttpDelivery
+	author      *authorHandler.HttpDelivery
+	bio         *bioHandler.HttpDelivery
+	book        *bookHandler.HttpDelivery
+	project     *projectHandler.HttpDelivery
+	user        *userHandler.HttpDelivery
+	auth        *authHandler.HttpDelivery
+	currentUser *currentUserHandler.HttpDelivery
 }
 
 func NewHandler(l logger.Logger, client *mongo.Client, services *services.Service) *Handler {
 	return &Handler{
-		middleware: middleware.New(l, client),
-		article:    articleHandler.NewHttpDelivery(l, services.Article),
-		contact:    contactHandler.NewHttpDelivery(l, services.Contact),
-		author:     authorHandler.NewHttpDelivery(l, services.Author),
-		bio:        bioHandler.NewHttpDelivery(l, services.Bio),
-		book:       bookHandler.NewHttpDelivery(l, services.Book),
-		project:    projectHandler.NewHttpDelivery(l, services.Project),
-		user:       userHandler.NewHttpDelivery(l, services.User),
-		auth:       authHandler.NewHttpDelivery(l, services.Auth),
+		middleware:  middleware.New(l, client),
+		article:     articleHandler.NewHttpDelivery(l, services.Article),
+		contact:     contactHandler.NewHttpDelivery(l, services.Contact),
+		author:      authorHandler.NewHttpDelivery(l, services.Author),
+		bio:         bioHandler.NewHttpDelivery(l, services.Bio),
+		book:        bookHandler.NewHttpDelivery(l, services.Book),
+		project:     projectHandler.NewHttpDelivery(l, services.Project),
+		user:        userHandler.NewHttpDelivery(l, services.User),
+		auth:        authHandler.NewHttpDelivery(l, services.Auth),
+		currentUser: currentUserHandler.NewHttpDelivery(l, services.User),
 	}
 }
 
@@ -98,6 +101,14 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 	r.Route("/auth", func(r chi.Router) {
 		r.With(h.middleware.NoAuth).Post("/login", h.auth.Login)
 		r.With(h.middleware.UserAuth).Post("/logout", h.auth.Logout)
+	})
+
+	r.Route("/me", func(r chi.Router) {
+		r.Use(h.middleware.UserAuth)
+
+		r.Get("/", h.currentUser.GetCurrentUser)
+		r.Put("/email", h.currentUser.UpdateCurrentUserEmail)
+		r.Put("/password", h.currentUser.UpdateCurrentUserPassword)
 	})
 
 	r.Route("/about", func(r chi.Router) {
