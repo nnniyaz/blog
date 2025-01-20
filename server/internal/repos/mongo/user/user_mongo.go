@@ -108,6 +108,7 @@ func (r *UserRepo) FindAll(ctx context.Context, offset, limit int64, isDeleted b
 	filters := bson.D{
 		{"isDeleted", isDeleted},
 	}
+
 	if search != "" {
 		filters = append(filters, bson.E{"$or", bson.A{
 			bson.M{"email": bson.M{"$regex": search, "$options": "i"}},
@@ -121,6 +122,7 @@ func (r *UserRepo) FindAll(ctx context.Context, offset, limit int64, isDeleted b
 	if err != nil {
 		return nil, 0, err
 	}
+	defer cur.Close(ctx)
 
 	count, err := r.Coll().CountDocuments(ctx, filters)
 	if err != nil {

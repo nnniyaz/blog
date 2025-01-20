@@ -59,31 +59,6 @@ func (r *SessionRepo) DeleteByUserId(ctx context.Context, userId uuid.UUID) erro
 	return err
 }
 
-func (r *SessionRepo) FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error) {
-	cur, err := r.Coll().Find(ctx, bson.D{{}}, &options.FindOptions{
-		Skip:  &offset,
-		Limit: &limit,
-	})
-	if err != nil {
-		return nil, 0, err
-	}
-
-	count, err := r.Coll().CountDocuments(ctx, bson.D{{}})
-	if err != nil {
-		return nil, 0, err
-	}
-
-	var sessions []*session.Session
-	for cur.Next(ctx) {
-		var session mongoSession
-		if err := cur.Decode(&session); err != nil {
-			return nil, 0, err
-		}
-		sessions = append(sessions, session.ToAggregate())
-	}
-	return sessions, count, nil
-}
-
 func (r *SessionRepo) FindBySession(ctx context.Context, session uuid.UUID) (*session.Session, error) {
 	var s mongoSession
 	err := r.Coll().FindOne(ctx, map[string]interface{}{"session": session}).Decode(&s)
@@ -109,4 +84,30 @@ func (r *SessionRepo) FindByUserId(ctx context.Context, userId uuid.UUID) ([]*se
 		sessions = append(sessions, s.ToAggregate())
 	}
 	return sessions, nil
+}
+
+func (r *SessionRepo) FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error) {
+	cur, err := r.Coll().Find(ctx, bson.D{{}}, &options.FindOptions{
+		Skip:  &offset,
+		Limit: &limit,
+	})
+	if err != nil {
+		return nil, 0, err
+	}
+	defer cur.Close(ctx)
+
+	count, err := r.Coll().CountDocuments(ctx, bson.D{{}})
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var sessions []*session.Session
+	for cur.Next(ctx) {
+		var session mongoSession
+		if err := cur.Decode(&session); err != nil {
+			return nil, 0, err
+		}
+		sessions = append(sessions, session.ToAggregate())
+	}
+	return sessions, count, nil
 }

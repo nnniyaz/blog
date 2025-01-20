@@ -6,6 +6,7 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/bio"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"time"
 )
 
@@ -100,14 +101,20 @@ func (r *RepoBio) FindByActive(ctx context.Context) (*bio.Bio, error) {
 	return result.ToAggregate(), nil
 }
 
-func (r *RepoBio) FindAll(ctx context.Context) ([]*bio.Bio, int64, error) {
-	cursor, err := r.Coll().Find(ctx, bson.M{})
+func (r *RepoBio) FindAll(ctx context.Context, offset, limit int64) ([]*bio.Bio, int64, error) {
+	cursor, err := r.Coll().Find(ctx, bson.M{}, &options.FindOptions{
+		Skip:  &offset,
+		Limit: &limit,
+	})
 	if err != nil {
 		return nil, 0, err
 	}
 	defer cursor.Close(ctx)
 
 	count, err := r.Coll().CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return nil, 0, err
+	}
 
 	var bios []*bio.Bio
 	for cursor.Next(ctx) {

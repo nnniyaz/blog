@@ -100,6 +100,7 @@ func (r *RepoArticle) FindAll(ctx context.Context, offset, limit int64, isDelete
 	if err != nil {
 		return nil, 0, err
 	}
+	defer cur.Close(ctx)
 
 	count, err := r.Coll().CountDocuments(ctx, filters)
 	if err != nil {
