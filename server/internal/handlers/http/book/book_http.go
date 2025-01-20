@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/nnniyaz/blog/internal/domain/book"
-	response2 "github.com/nnniyaz/blog/internal/handlers/http/response"
+	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/book"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
@@ -35,22 +35,22 @@ type CreateBookIn struct {
 //	@Tags			Book
 //	@Accept			json
 //	@Produce		json
-//	@Param			data		body		CreateBookIn		true	"Create Book Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			data	body		CreateBookIn	true	"Create Book Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/book [post]
 func (hd *HttpDelivery) CreateBook(w http.ResponseWriter, r *http.Request) {
 	var in CreateBookIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Create(r.Context(), in.Title, in.Description, in.Author, in.CoverUri, in.EBookUri)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type UpdateBookIn struct {
@@ -68,24 +68,24 @@ type UpdateBookIn struct {
 //	@Tags			Book
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Book ID"
-//	@Param			data		body		UpdateBookIn		true	"Update Book Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string			true	"Book ID"
+//	@Param			data	body		UpdateBookIn	true	"Update Book Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/book/{id} [put]
 func (hd *HttpDelivery) UpdateBook(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var in UpdateBookIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Update(r.Context(), id, in.Title, in.Description, in.Author, in.CoverUri, in.EBookUri)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // DeleteBook godoc
@@ -95,18 +95,18 @@ func (hd *HttpDelivery) UpdateBook(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Book
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Book ID"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Book ID"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/book/{id} [delete]
 func (hd *HttpDelivery) DeleteBook(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Delete(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // RestoreBook godoc
@@ -116,18 +116,18 @@ func (hd *HttpDelivery) DeleteBook(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Book
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Book ID"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Book ID"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/book/restore/{id} [put]
 func (hd *HttpDelivery) RestoreBook(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Restore(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type GetBookOut struct {
@@ -163,18 +163,18 @@ func newGetBookOut(book *book.Book) *GetBookOut {
 //	@Tags			Book
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Book ID"
-//	@Success		200						{object}	response.Success{GetBookOut}
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Book ID"
+//	@Success		200		{object}	response.Success{GetBookOut}
+//	@Failure		default	{object}	response.Error
 //	@Router			/book/{id} [get]
 func (hd *HttpDelivery) GetBook(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	book, err := hd.service.FindById(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetBookOut(book))
+	response.NewSuccess(hd.logger, w, r, newGetBookOut(book))
 }
 
 type GetAllBooksOut struct {
@@ -197,12 +197,12 @@ func newGetAllBooksOut(books []*book.Book, count int64) *GetAllBooksOut {
 //	@Tags			Book
 //	@Accept			json
 //	@Produce		json
-//	@Param			offset					query		int			false	"Offset"
-//	@Param			limit					query		int			false	"Limit"
-//	@Param			is_deleted				query		bool		false	"Is deleted"
-//	@Param			search					query		string		false	"Search Title, Description, Author"
-//	@Success		200						{object}	response.Success{GetAllBooksOut}
-//	@Failure		default					{object}	response.Error
+//	@Param			offset		query		int		false	"Offset"
+//	@Param			limit		query		int		false	"Limit"
+//	@Param			is_deleted	query		bool	false	"Is deleted"
+//	@Param			search		query		string	false	"Search Title, Description, Author"
+//	@Success		200			{object}	response.Success{GetAllBooksOut}
+//	@Failure		default		{object}	response.Error
 //	@Router			/book [get]
 func (hd *HttpDelivery) GetAllBooks(w http.ResponseWriter, r *http.Request) {
 	offset := r.Context().Value("offset").(int64)
@@ -211,8 +211,8 @@ func (hd *HttpDelivery) GetAllBooks(w http.ResponseWriter, r *http.Request) {
 	search := r.Context().Value("search").(string)
 	books, count, err := hd.service.FindAll(r.Context(), offset, limit, isDeleted, search)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetAllBooksOut(books, count))
+	response.NewSuccess(hd.logger, w, r, newGetAllBooksOut(books, count))
 }

@@ -20,12 +20,12 @@ import (
 	"time"
 )
 
-//	@title			Scoring System API
+//	@title			Personal Blog API
 //	@version		0.0.1
 //	@description	Detailed info about all endpoints
 
 //	@contact.name	API Support
-//	@contact.url	https://t.me/nassyrovich
+//	@contact.url	https://t.me/niyaznassyrov
 
 //	@host		http://localhost:8080
 //	@schemes	https

@@ -87,8 +87,10 @@ func (u *User) UpdatePassword(password string) error {
 	if err != nil {
 		return err
 	}
+
 	u.password = convertedPassword
 	u.updatedAt = time.Now()
+
 	return nil
 }
 
@@ -97,8 +99,10 @@ func (u *User) UpdateRole(role string) error {
 	if err != nil {
 		return err
 	}
+
 	u.role = convertedRole
 	u.updatedAt = time.Now()
+
 	return nil
 }
 

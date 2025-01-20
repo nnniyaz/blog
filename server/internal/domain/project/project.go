@@ -22,7 +22,7 @@ type Project struct {
 func NewProject(name, description, coverUri, appLink, sourceCodeLink string) (*Project, error) {
 	cleanedName := name
 	if cleanedName == "" {
-		return nil, exceptions.ErrProjectNameIsEmpty
+		return nil, exceptions.ErrProjectNameEmpty
 	}
 
 	return &Project{
@@ -77,7 +77,7 @@ func (p *Project) GetUpdatedAt() time.Time {
 func (p *Project) Update(name, description, coverUri, appLink, sourceCodeLink string) error {
 	cleanedName := name
 	if cleanedName == "" {
-		return exceptions.ErrProjectNameIsEmpty
+		return exceptions.ErrProjectNameEmpty
 	}
 
 	p.name = cleanedName
@@ -86,6 +86,7 @@ func (p *Project) Update(name, description, coverUri, appLink, sourceCodeLink st
 	p.appLink = appLink
 	p.sourceCodeLink = sourceCodeLink
 	p.updatedAt = time.Now()
+
 	return nil
 }
 

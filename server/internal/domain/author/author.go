@@ -20,12 +20,12 @@ type Author struct {
 func NewAuthor(firstName, lastName, avatarUri string) (*Author, error) {
 	cleanedFirstName := strings.TrimSpace(firstName)
 	if cleanedFirstName == "" {
-		return nil, exceptions2.ErrFirstNameIsEmpty
+		return nil, exceptions2.ErrFirstNameEmpty
 	}
 
 	cleanedLastName := strings.TrimSpace(lastName)
 	if cleanedLastName == "" {
-		return nil, exceptions2.ErrLastNameIsEmpty
+		return nil, exceptions2.ErrLastNameEmpty
 	}
 
 	return &Author{
@@ -70,12 +70,12 @@ func (b *Author) GetVersion() int {
 func (b *Author) Update(firstName, lastName, avatarUri string) error {
 	cleanedFirstName := strings.TrimSpace(firstName)
 	if cleanedFirstName == "" {
-		return exceptions2.ErrFirstNameIsEmpty
+		return exceptions2.ErrFirstNameEmpty
 	}
 
 	cleanedLastName := strings.TrimSpace(lastName)
 	if cleanedLastName == "" {
-		return exceptions2.ErrLastNameIsEmpty
+		return exceptions2.ErrLastNameEmpty
 	}
 
 	b.firstName = cleanedFirstName
@@ -83,6 +83,7 @@ func (b *Author) Update(firstName, lastName, avatarUri string) error {
 	b.avatarUri = avatarUri
 	b.updatedAt = time.Now()
 	b.version++
+
 	return nil
 }
 

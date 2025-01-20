@@ -47,7 +47,7 @@ type Author interface {
 	Delete(ctx context.Context, id uuid.UUID) error
 	Restore(ctx context.Context, id uuid.UUID) error
 	FindById(ctx context.Context, id uuid.UUID) (*author.Author, error)
-	FindAll(ctx context.Context) ([]*author.Author, int64, error)
+	FindAll(ctx context.Context, offset, limit int64) ([]*author.Author, int64, error)
 }
 
 type Bio interface {
@@ -58,7 +58,7 @@ type Bio interface {
 	SetActive(ctx context.Context, id uuid.UUID) error
 	FindById(ctx context.Context, id uuid.UUID) (*bio.Bio, error)
 	FindByActive(ctx context.Context) (*bio.Bio, error)
-	FindAll(ctx context.Context) ([]*bio.Bio, int64, error)
+	FindAll(ctx context.Context, offset, limit int64) ([]*bio.Bio, int64, error)
 }
 
 type Book interface {
@@ -93,9 +93,9 @@ type Session interface {
 	Create(ctx context.Context, s *session.Session) error
 	DeleteBySession(ctx context.Context, session uuid.UUID) error
 	DeleteByUserId(ctx context.Context, userId uuid.UUID) error
-	FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error)
-	FindBySession(ctx context.Context, session uuid.UUID) (*session.Session, error)
+	FindBySessionToken(ctx context.Context, session uuid.UUID) (*session.Session, error)
 	FindByUserId(ctx context.Context, userId uuid.UUID) ([]*session.Session, error)
+	FindAll(ctx context.Context, offset, limit int64) ([]*session.Session, int64, error)
 }
 
 type Repo struct {

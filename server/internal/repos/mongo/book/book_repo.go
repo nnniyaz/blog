@@ -90,11 +90,13 @@ func (r *BookRepo) FindAll(ctx context.Context, offset, limit int64, isDeleted b
 	filters := bson.D{
 		{"isDeleted", isDeleted},
 	}
+
 	if search != "" {
 		filters = append(filters, bson.E{"$or", bson.A{
 			bson.M{"title": bson.M{"$regex": search, "$options": "i"}},
 		}})
 	}
+
 	cursor, err := r.Coll().Find(ctx, filters, &options.FindOptions{
 		Skip:  &offset,
 		Limit: &limit,
@@ -117,6 +119,5 @@ func (r *BookRepo) FindAll(ctx context.Context, offset, limit int64, isDeleted b
 		}
 		books = append(books, m.ToAggregate())
 	}
-
 	return books, count, nil
 }

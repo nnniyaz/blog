@@ -78,10 +78,19 @@ func (r *ProjectRepo) Restore(ctx context.Context, id uuid.UUID) error {
 	return err
 }
 
+func (r *ProjectRepo) FindById(ctx context.Context, id uuid.UUID) (*project.Project, error) {
+	var project mongoProject
+	if err := r.Coll().FindOne(ctx, bson.M{"_id": id}).Decode(&project); err != nil {
+		return nil, err
+	}
+	return project.ToAggregate(), nil
+}
+
 func (r *ProjectRepo) FindAll(ctx context.Context, offset, limit int64, isDeleted bool, search string) ([]*project.Project, int64, error) {
 	filters := bson.D{
 		{"isDeleted", isDeleted},
 	}
+
 	if search != "" {
 		filters = append(filters, bson.E{"$or", bson.A{
 			bson.M{"name": bson.M{"$regex": search, "$options": "i"}},
@@ -95,6 +104,7 @@ func (r *ProjectRepo) FindAll(ctx context.Context, offset, limit int64, isDelete
 	if err != nil {
 		return nil, 0, err
 	}
+	defer cur.Close(ctx)
 
 	count, err := r.Coll().CountDocuments(ctx, filters)
 	if err != nil {
@@ -110,12 +120,4 @@ func (r *ProjectRepo) FindAll(ctx context.Context, offset, limit int64, isDelete
 		projects = append(projects, project.ToAggregate())
 	}
 	return projects, count, nil
-}
-
-func (r *ProjectRepo) FindById(ctx context.Context, id uuid.UUID) (*project.Project, error) {
-	var project mongoProject
-	if err := r.Coll().FindOne(ctx, bson.M{"_id": id}).Decode(&project); err != nil {
-		return nil, err
-	}
-	return project.ToAggregate(), nil
 }

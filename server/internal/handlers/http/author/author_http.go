@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/nnniyaz/blog/internal/domain/author"
-	response2 "github.com/nnniyaz/blog/internal/handlers/http/response"
+	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/author"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
@@ -33,22 +33,22 @@ type CreateAuthorIn struct {
 //	@Tags			Author
 //	@Accept			json
 //	@Produce		json
-//	@Param			data		body		CreateAuthorIn		true	"Create Author Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			data	body		CreateAuthorIn	true	"Create Author Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/author [post]
 func (hd *HttpDelivery) CreateAuthor(w http.ResponseWriter, r *http.Request) {
 	var in CreateAuthorIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Create(r.Context(), in.FirstName, in.LastName, in.AvatarUri)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type UpdateAuthorIn struct {
@@ -64,24 +64,24 @@ type UpdateAuthorIn struct {
 //	@Tags			Author
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Author ID"
-//	@Param			data		body		UpdateAuthorIn		true	"Update Author Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string			true	"Author ID"
+//	@Param			data	body		UpdateAuthorIn	true	"Update Author Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/author/{id} [put]
 func (hd *HttpDelivery) UpdateAuthor(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var in UpdateAuthorIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Update(r.Context(), id, in.FirstName, in.LastName, in.AvatarUri)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // DeleteAuthor godoc
@@ -91,18 +91,18 @@ func (hd *HttpDelivery) UpdateAuthor(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Author
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Author ID"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Author ID"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/author/{id} [delete]
 func (hd *HttpDelivery) DeleteAuthor(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Delete(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // RestoreAuthor godoc
@@ -112,18 +112,18 @@ func (hd *HttpDelivery) DeleteAuthor(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Author
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Author ID"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Author ID"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/author/{id} [put]
 func (hd *HttpDelivery) RestoreAuthor(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Restore(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type GetAuthorOut struct {
@@ -155,31 +155,31 @@ func newGetAuthorOut(author *author.Author) *GetAuthorOut {
 //	@Tags			Author
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Author ID"
-//	@Success		200						{object}	response.Success{GetAuthorOut}
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Author ID"
+//	@Success		200		{object}	response.Success{GetAuthorOut}
+//	@Failure		default	{object}	response.Error
 //	@Router			/author/{id} [get]
 func (hd *HttpDelivery) GetAuthor(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	author, err := hd.service.FindById(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetAuthorOut(author))
+	response.NewSuccess(hd.logger, w, r, newGetAuthorOut(author))
 }
 
-type GetAuthorsOut struct {
+type GetAllAuthorsOut struct {
 	Authors []*GetAuthorOut `json:"authors"`
 	Count   int64           `json:"count"`
 }
 
-func newGetAuthorsOut(authors []*author.Author, count int64) *GetAuthorsOut {
+func newGetAuthorsOut(authors []*author.Author, count int64) *GetAllAuthorsOut {
 	var out []*GetAuthorOut
 	for _, a := range authors {
 		out = append(out, newGetAuthorOut(a))
 	}
-	return &GetAuthorsOut{
+	return &GetAllAuthorsOut{
 		Authors: out,
 		Count:   count,
 	}
@@ -192,14 +192,18 @@ func newGetAuthorsOut(authors []*author.Author, count int64) *GetAuthorsOut {
 //	@Tags			Author
 //	@Accept			json
 //	@Produce		json
-//	@Success		200						{object}	response.Success{GetAuthorsOut}
-//	@Failure		default					{object}	response.Error
+//	@Param			offset	query		int	false	"Offset"
+//	@Param			limit	query		int	false	"Limit"
+//	@Success		200		{object}	response.Success{GetAllAuthorsOut}
+//	@Failure		default	{object}	response.Error
 //	@Router			/author [get]
 func (hd *HttpDelivery) GetAllAuthors(w http.ResponseWriter, r *http.Request) {
-	authors, count, err := hd.service.FindAll(r.Context())
+	offset := r.Context().Value("offset").(int64)
+	limit := r.Context().Value("limit").(int64)
+	authors, count, err := hd.service.FindAll(r.Context(), offset, limit)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetAuthorsOut(authors, count))
+	response.NewSuccess(hd.logger, w, r, newGetAuthorsOut(authors, count))
 }

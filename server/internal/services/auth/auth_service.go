@@ -87,7 +87,7 @@ func (a *authService) Login(ctx context.Context, rawEmail, password, userAgent s
 	}
 
 	// Return session id
-	return newSession.GetSession(), nil
+	return newSession.GetSessionToken(), nil
 }
 
 func (a *authService) Logout(ctx context.Context, sessionId string) error {
@@ -98,14 +98,14 @@ func (a *authService) Logout(ctx context.Context, sessionId string) error {
 	return a.sessionService.DeleteBySession(ctx, convertedSessionId)
 }
 
-func (a *authService) UserCheck(ctx context.Context, sessionId string, userAgent string) (*user.User, error) {
-	convertedSessionId, err := uuid.UUIDFromString(sessionId)
+func (a *authService) UserCheck(ctx context.Context, sessionToken string, userAgent string) (*user.User, error) {
+	convertedSessionToken, err := uuid.UUIDFromString(sessionToken)
 	if err != nil {
 		return nil, err
 	}
 
-	// Find session by id
-	session, err := a.sessionService.FindBySession(ctx, convertedSessionId)
+	// Find session by session token
+	session, err := a.sessionService.FindBySessionToken(ctx, convertedSessionToken)
 	if err != nil {
 		return nil, err
 	}

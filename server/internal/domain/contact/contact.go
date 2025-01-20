@@ -19,8 +19,9 @@ type Contact struct {
 func NewContact(label, link string) (*Contact, error) {
 	cleanedLabel := strings.TrimSpace(label)
 	if cleanedLabel == "" {
-		return nil, exceptions2.ErrLabelIsEmpty
+		return nil, exceptions2.ErrLabelEmpty
 	}
+
 	return &Contact{
 		id:        uuid.NewUUID(),
 		label:     cleanedLabel,
@@ -58,11 +59,13 @@ func (c *Contact) GetUpdatedAt() time.Time {
 func (c *Contact) Update(label, link string) error {
 	cleanedLabel := strings.TrimSpace(label)
 	if cleanedLabel == "" {
-		return exceptions2.ErrLabelIsEmpty
+		return exceptions2.ErrLabelEmpty
 	}
+
 	c.label = cleanedLabel
 	c.link = strings.TrimSpace(link)
 	c.updatedAt = time.Now()
+
 	return nil
 }
 

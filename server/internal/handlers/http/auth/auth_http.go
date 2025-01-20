@@ -30,9 +30,9 @@ type LoginIn struct {
 //	@Tags			Authorization
 //	@Accept			json
 //	@Produce		json
-//	@Param			data			body	LoginIn		true	"Login information"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			data	body		LoginIn	true	"Login information"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/auth/login [post]
 func (hd *HttpDelivery) Login(w http.ResponseWriter, r *http.Request) {
 	requestInfo := r.Context().Value("requestInfo").(web.RequestInfo)
@@ -67,8 +67,8 @@ func (hd *HttpDelivery) Login(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Authorization
 //	@Accept			json
 //	@Produce		json
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/auth/logout [post]
 func (hd *HttpDelivery) Logout(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("blog-app-session")
