@@ -32,9 +32,9 @@ type CreateContactIn struct {
 //	@Tags			Contacts
 //	@Accept			json
 //	@Produce		json
-//	@Param			data		body		CreateContactIn		true	"Create Contact Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			data	body		CreateContactIn	true	"Create Contact Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/contact [post]
 func (hd *HttpDelivery) CreateContact(w http.ResponseWriter, r *http.Request) {
 	var in CreateContactIn
@@ -62,10 +62,10 @@ type UpdateContactIn struct {
 //	@Tags			Contacts
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true		"Contact ID"
-//	@Param			data		body		UpdateContactIn		true		"Update Contact Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string			true	"Contact ID"
+//	@Param			data	body		UpdateContactIn	true	"Update Contact Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/contact/{id} [put]
 func (hd *HttpDelivery) UpdateContact(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
@@ -90,7 +90,7 @@ func (hd *HttpDelivery) UpdateContact(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Contacts
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		string		true	"Contact ID"
+//	@Param			id		path		string	true	"Contact ID"
 //	@Success		200		{object}	response.Success
 //	@Failure		default	{object}	response.Error
 //	@Router			/contact/{id} [delete]
@@ -111,7 +111,7 @@ func (hd *HttpDelivery) DeleteContact(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Contacts
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		string		true	"Contact ID"
+//	@Param			id		path		string	true	"Contact ID"
 //	@Success		200		{object}	response.Success
 //	@Failure		default	{object}	response.Error
 //	@Router			/contact/restore/{id} [put]
@@ -152,7 +152,7 @@ func newGetContactByIdOut(contact *contact.Contact) *GetContactOut {
 //	@Tags			Contacts
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		string		true	"Contact ID"
+//	@Param			id		path		string	true	"Contact ID"
 //	@Success		200		{object}	response.Success{GetContactOut}
 //	@Failure		default	{object}	response.Error
 //	@Router			/contact/{id} [get]
@@ -190,8 +190,8 @@ func newGetAllContactsOut(contacts []*contact.Contact, count int64) *GetAllConta
 //	@Param			limit		query		int		false	"Limit"
 //	@Param			isDeleted	query		bool	false	"Is Deleted"
 //	@Param			search		query		string	false	"Search"
-//	@Success		200		{object}	response.Success{GetAllContactsOut}
-//	@Failure		default	{object}	response.Error
+//	@Success		200			{object}	response.Success{GetAllContactsOut}
+//	@Failure		default		{object}	response.Error
 //	@Router			/contact [get]
 func (hd *HttpDelivery) GetAllContacts(w http.ResponseWriter, r *http.Request) {
 	offset := r.Context().Value("offset").(int64)
