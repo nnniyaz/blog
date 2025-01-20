@@ -19,8 +19,9 @@ type Bio struct {
 func NewBio(bio string) (*Bio, error) {
 	cleanedEmptyBio := strings.TrimSpace(bio)
 	if cleanedEmptyBio == "" {
-		return nil, exceptions.ErrBioIsEmpty
+		return nil, exceptions.ErrBioEmpty
 	}
+
 	return &Bio{
 		id:        uuid.NewUUID(),
 		bio:       cleanedEmptyBio,
@@ -58,12 +59,13 @@ func (b *Bio) GetVersion() int {
 func (b *Bio) Update(bio string) error {
 	cleanedEmptyBio := strings.TrimSpace(bio)
 	if cleanedEmptyBio == "" {
-		return exceptions.ErrBioIsEmpty
+		return exceptions.ErrBioEmpty
 	}
 
 	b.bio = cleanedEmptyBio
 	b.updatedAt = time.Now()
 	b.version++
+
 	return nil
 }
 

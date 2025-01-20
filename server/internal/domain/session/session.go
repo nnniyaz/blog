@@ -19,6 +19,7 @@ func NewSession(userId uuid.UUID, userAgent string) (*Session, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return &Session{
 		id:        uuid.NewUUID(),
 		userId:    userId,

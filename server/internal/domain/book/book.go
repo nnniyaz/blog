@@ -22,12 +22,12 @@ type Book struct {
 func NewBook(title, author, description, coverUri, eBookUri string) (*Book, error) {
 	cleanedTitle := strings.TrimSpace(title)
 	if cleanedTitle == "" {
-		return nil, exceptions2.ErrBookTitleIsEmpty
+		return nil, exceptions2.ErrBookTitleEmpty
 	}
 
 	cleanedAuthor := strings.TrimSpace(author)
 	if cleanedAuthor == "" {
-		return nil, exceptions2.ErrBookAuthorIsEmpty
+		return nil, exceptions2.ErrBookAuthorEmpty
 	}
 
 	return &Book{
@@ -82,12 +82,12 @@ func (b *Book) GetUpdatedAt() time.Time {
 func (b *Book) Update(title, author, description, coverUri, eBookUri string) error {
 	cleanedTitle := strings.TrimSpace(title)
 	if cleanedTitle == "" {
-		return exceptions2.ErrBookTitleIsEmpty
+		return exceptions2.ErrBookTitleEmpty
 	}
 
 	cleanedAuthor := strings.TrimSpace(author)
 	if cleanedAuthor == "" {
-		return exceptions2.ErrBookAuthorIsEmpty
+		return exceptions2.ErrBookAuthorEmpty
 	}
 
 	b.title = cleanedTitle
@@ -96,6 +96,7 @@ func (b *Book) Update(title, author, description, coverUri, eBookUri string) err
 	b.coverUri = coverUri
 	b.eBookUri = eBookUri
 	b.updatedAt = time.Now()
+
 	return nil
 }
 

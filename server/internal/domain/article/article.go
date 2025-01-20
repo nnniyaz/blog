@@ -20,16 +20,16 @@ type Article struct {
 func NewArticle(title, content string) (*Article, error) {
 	cleanedTitle := strings.TrimSpace(title)
 	if cleanedTitle == "" {
-		return nil, exceptions2.ErrTitleIsEmpty
+		return nil, exceptions2.ErrTitleEmpty
 	}
 
 	if len(cleanedTitle) > 100 {
-		return nil, exceptions2.ErrTitleIsTooLong
+		return nil, exceptions2.ErrTitleTooLong
 	}
 
 	cleanedContent := strings.TrimSpace(content)
 	if cleanedContent == "" {
-		return nil, exceptions2.ErrContentIsEmpty
+		return nil, exceptions2.ErrContentEmpty
 	}
 
 	return &Article{
@@ -74,16 +74,16 @@ func (a *Article) GetVersion() int {
 func (a *Article) Update(title, content string) error {
 	cleanedTitle := strings.TrimSpace(title)
 	if cleanedTitle == "" {
-		return exceptions2.ErrTitleIsEmpty
+		return exceptions2.ErrTitleEmpty
 	}
 
 	if len(cleanedTitle) > 100 {
-		return exceptions2.ErrTitleIsTooLong
+		return exceptions2.ErrTitleTooLong
 	}
 
 	cleanedContent := strings.TrimSpace(content)
 	if cleanedContent == "" {
-		return exceptions2.ErrContentIsEmpty
+		return exceptions2.ErrContentEmpty
 	}
 
 	a.title = cleanedTitle
