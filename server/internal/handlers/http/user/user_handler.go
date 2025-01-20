@@ -23,6 +23,7 @@ func NewHttpDelivery(logger logger.Logger, service userService.UserService) *Htt
 type CreateUserIn struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	Role     string `json:"role"`
 }
 
 // CreateUser godoc
@@ -42,7 +43,7 @@ func (hd *HttpDelivery) CreateUser(w http.ResponseWriter, r *http.Request) {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	err := hd.service.Create(r.Context(), in.Email, in.Password)
+	err := hd.service.Create(r.Context(), in.Email, in.Password, in.Role)
 	if err != nil {
 		response.NewError(hd.logger, w, r, err)
 		return
@@ -50,7 +51,7 @@ func (hd *HttpDelivery) CreateUser(w http.ResponseWriter, r *http.Request) {
 	response.NewSuccess(hd.logger, w, r, nil)
 }
 
-type UpdateUserIn struct {
+type UpdateUserEmailIn struct {
 	Email string `json:"email"`
 }
 
@@ -62,13 +63,13 @@ type UpdateUserIn struct {
 // @Accept			json
 // @Produce		json
 // @Param			id			path		string				true	"User ID"
-// @Param			data		body		UpdateUserIn		true	"Update User Structure"
+// @Param			data		body		UpdateUserEmailIn		true	"Update User Structure"
 // @Success		200		{object}	response.Success
 // @Failure		default	{object}	response.Error
 // @Router			/user/email/{id} [put]
 func (hd *HttpDelivery) UpdateUserEmail(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	var in UpdateUserIn
+	var in UpdateUserEmailIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
 		response.NewError(hd.logger, w, r, err)
 		return
@@ -93,18 +94,49 @@ type UpdateUserPasswordIn struct {
 // @Accept			json
 // @Produce			json
 // @Param			id			path		string				true	"User ID"
-// @Param			data		body		UpdateUserIn		true	"Update User Structure"
+// @Param			data		body		UpdateUserPasswordIn		true	"Update User Structure"
 // @Success			200			{object}	response.Success
 // @Failure			default		{object}	response.Error
 // @Router			/user/password/{id} [put]
 func (hd *HttpDelivery) UpdateUserPassword(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	var in UpdateUserIn
+	var in UpdateUserPasswordIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	err := hd.service.UpdatePassword(r.Context(), id, in.Email)
+	err := hd.service.UpdatePassword(r.Context(), id, in.Password)
+	if err != nil {
+		response.NewError(hd.logger, w, r, err)
+		return
+	}
+	response.NewSuccess(hd.logger, w, r, nil)
+}
+
+type UpdateUserRoleIn struct {
+	Role string `json:"role"`
+}
+
+// UpdateUserRole godoc
+//
+// @Summary			Update user
+// @Description		This can only be done by the logged-in user.
+// @Tags			User
+// @Accept			json
+// @Produce			json
+// @Param			id			path		string				true	"User ID"
+// @Param			data		body		UpdateUserRoleIn		true	"Update User Structure"
+// @Success			200			{object}	response.Success
+// @Failure			default		{object}	response.Error
+// @Router			/user/role/{id} [put]
+func (hd *HttpDelivery) UpdateUserRole(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	var in UpdateUserRoleIn
+	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
+		response.NewError(hd.logger, w, r, err)
+		return
+	}
+	err := hd.service.UpdateRole(r.Context(), id, in.Role)
 	if err != nil {
 		response.NewError(hd.logger, w, r, err)
 		return
@@ -143,7 +175,7 @@ func (hd *HttpDelivery) DeleteUser(w http.ResponseWriter, r *http.Request) {
 // @Param			id			path		string	true	"User ID"
 // @Success			200			{object}	response.Success
 // @Failure			default		{object}	response.Error
-// @Router			/user/{id}/restore [put]
+// @Router			/user/restore/{id} [put]
 func (hd *HttpDelivery) RestoreUser(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Restore(r.Context(), id)
@@ -165,7 +197,7 @@ type GetUserOut struct {
 func newGetUserOut(u *user.User) *GetUserOut {
 	return &GetUserOut{
 		Id:        u.GetId().String(),
-		Email:     u.GetEmail(),
+		Email:     u.GetEmail().String(),
 		IsDeleted: u.GetIsDeleted(),
 		CreatedAt: u.GetCreatedAt().Format(time.RFC3339),
 		UpdatedAt: u.GetUpdatedAt().Format(time.RFC3339),
