@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/nnniyaz/blog/internal/domain/contact"
-	response2 "github.com/nnniyaz/blog/internal/handlers/http/response"
+	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/contact"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
@@ -39,15 +39,15 @@ type CreateContactIn struct {
 func (hd *HttpDelivery) CreateContact(w http.ResponseWriter, r *http.Request) {
 	var in CreateContactIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Create(r.Context(), in.Label, in.Link)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type UpdateContactIn struct {
@@ -71,16 +71,16 @@ func (hd *HttpDelivery) UpdateContact(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var in UpdateContactIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 
 	err := hd.service.Update(r.Context(), id, in.Label, in.Link)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // DeleteContact godoc
@@ -98,10 +98,10 @@ func (hd *HttpDelivery) DeleteContact(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Delete(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // RestoreContact godoc
@@ -119,19 +119,19 @@ func (hd *HttpDelivery) RestoreContact(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Restore(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type GetContactOut struct {
 	Id        string `json:"id"`
 	Label     string `json:"label"`
 	Link      string `json:"link"`
-	IsDeleted bool   `json:"is_deleted"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	IsDeleted bool   `json:"isDeleted"`
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
 }
 
 func newGetContactByIdOut(contact *contact.Contact) *GetContactOut {
@@ -160,10 +160,10 @@ func (hd *HttpDelivery) GetContact(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	contact, err := hd.service.FindById(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetContactByIdOut(contact))
+	response.NewSuccess(hd.logger, w, r, newGetContactByIdOut(contact))
 }
 
 type GetAllContactsOut struct {
@@ -200,8 +200,8 @@ func (hd *HttpDelivery) GetAllContacts(w http.ResponseWriter, r *http.Request) {
 	search := r.Context().Value("search").(string)
 	contacts, total, err := hd.service.FindAll(r.Context(), offset, limit, isDeleted, search)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetAllContactsOut(contacts, total))
+	response.NewSuccess(hd.logger, w, r, newGetAllContactsOut(contacts, total))
 }

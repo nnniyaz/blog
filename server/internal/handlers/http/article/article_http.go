@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/nnniyaz/blog/internal/domain/article"
-	response2 "github.com/nnniyaz/blog/internal/handlers/http/response"
+	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/article"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
@@ -32,22 +32,22 @@ type CreateArticleIn struct {
 //	@Tags			Articles
 //	@Accept			json
 //	@Produce		json
-//	@Param			data		body		CreateArticleIn		true	"Create Article Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
-//	@Router			/article [get]
+//	@Param			data	body		CreateArticleIn	true	"Create Article Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
+//	@Router			/article [post]
 func (hd *HttpDelivery) CreateArticle(w http.ResponseWriter, r *http.Request) {
 	var in CreateArticleIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Create(r.Context(), in.Title, in.Content)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type UpdateArticleIn struct {
@@ -63,23 +63,23 @@ type UpdateArticleIn struct {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		string			true	"Article ID"
-//	@Param			data		body		UpdateArticleIn		true	"Update Article Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			data	body		UpdateArticleIn	true	"Update Article Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/article/{id} [put]
 func (hd *HttpDelivery) UpdateArticle(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var in UpdateArticleIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Update(r.Context(), id, in.Title, in.Content)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // DeleteArticle godoc
@@ -90,17 +90,17 @@ func (hd *HttpDelivery) UpdateArticle(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		string	true	"Article ID"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/article/{id} [delete]
 func (hd *HttpDelivery) DeleteArticle(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Delete(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // RestoreArticle godoc
@@ -111,17 +111,17 @@ func (hd *HttpDelivery) DeleteArticle(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		string	true	"Article ID"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/article/restore/{id} [put]
 func (hd *HttpDelivery) RestoreArticle(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Restore(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type GetArticleOut struct {
@@ -154,30 +154,30 @@ func newGetArticleOut(a *article.Article) *GetArticleOut {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		string	true	"Article ID"
-//	@Success		200						{object}	response.Success{GetArticleOut}
-//	@Failure		default					{object}	response.Error
+//	@Success		200		{object}	response.Success{GetArticleOut}
+//	@Failure		default	{object}	response.Error
 //	@Router			/article/{id} [get]
 func (hd *HttpDelivery) GetArticle(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	result, err := hd.service.FindById(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetArticleOut(result))
+	response.NewSuccess(hd.logger, w, r, newGetArticleOut(result))
 }
 
-type GetAllArticleOut struct {
+type GetAllArticlesOut struct {
 	Articles []*GetArticleOut `json:"articles"`
 	Count    int64            `json:"count"`
 }
 
-func newGetAllArticleOut(articles []*article.Article, count int64) *GetAllArticleOut {
+func newGetAllArticleOut(articles []*article.Article, count int64) *GetAllArticlesOut {
 	var out []*GetArticleOut
 	for _, a := range articles {
 		out = append(out, newGetArticleOut(a))
 	}
-	return &GetAllArticleOut{Articles: out, Count: count}
+	return &GetAllArticlesOut{Articles: out, Count: count}
 }
 
 // GetAllArticles godoc
@@ -191,8 +191,8 @@ func newGetAllArticleOut(articles []*article.Article, count int64) *GetAllArticl
 //	@Param			limit		query		int		false	"Limit"
 //	@Param			is_deleted	query		bool	false	"Is deleted"
 //	@Param			search		query		string	false	"Search"
-//	@Success		200						{object}	response.Success{GetAllArticleOut}
-//	@Failure		default					{object}	response.Error
+//	@Success		200			{object}	response.Success{GetAllArticlesOut}
+//	@Failure		default		{object}	response.Error
 //	@Router			/article [get]
 func (hd *HttpDelivery) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 	offset := r.Context().Value("offset").(int64)
@@ -201,8 +201,8 @@ func (hd *HttpDelivery) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 	search := r.Context().Value("search").(string)
 	articles, count, err := hd.service.FindAll(r.Context(), offset, limit, isDeleted, search)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetAllArticleOut(articles, count))
+	response.NewSuccess(hd.logger, w, r, newGetAllArticleOut(articles, count))
 }

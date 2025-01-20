@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/nnniyaz/blog/internal/domain/project"
-	response2 "github.com/nnniyaz/blog/internal/handlers/http/response"
+	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/project"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
@@ -33,27 +33,27 @@ type CreateProjectIn struct {
 
 // CreateProject godoc
 //
-// @Summary		Create project
-// @Description	This can only be done by the logged-in user.
-// @Tags			Project
-// @Accept			json
-// @Produce		json
-// @Param			data		body		CreateProjectIn		true	"Create Project Structure"
-// @Success		200		{object}	response.Success
-// @Failure		default	{object}	response.Error
-// @Router			/project [post]
+//	@Summary		Create project
+//	@Description	This can only be done by the logged-in user.
+//	@Tags			Project
+//	@Accept			json
+//	@Produce		json
+//	@Param			data	body		CreateProjectIn	true	"Create Project Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
+//	@Router			/project [post]
 func (hd *HttpDelivery) CreateProject(w http.ResponseWriter, r *http.Request) {
 	var in CreateProjectIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Create(r.Context(), in.Name, in.Description, in.CoverUri, in.AppLink, in.SourceCodeLink)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type UpdateProjectIn struct {
@@ -66,71 +66,71 @@ type UpdateProjectIn struct {
 
 // UpdateProject godoc
 //
-// @Summary		Update project
-// @Description	This can only be done by the logged-in user.
-// @Tags			Project
-// @Accept			json
-// @Produce		json
-// @Param			id			path		string				true	"Project ID"
-// @Param			data		body		UpdateProjectIn		true	"Update Project Structure"
-// @Success		200		{object}	response.Success
-// @Failure		default	{object}	response.Error
-// @Router			/project/{id} [put]
+//	@Summary		Update project
+//	@Description	This can only be done by the logged-in user.
+//	@Tags			Project
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path		string			true	"Project ID"
+//	@Param			data	body		UpdateProjectIn	true	"Update Project Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
+//	@Router			/project/{id} [put]
 func (hd *HttpDelivery) UpdateProject(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var in UpdateProjectIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Update(r.Context(), id, in.Name, in.Description, in.CoverUri, in.AppLink, in.SourceCodeLink)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // DeleteProject godoc
 //
-// @Summary		Delete project
-// @Description	This can only be done by the logged-in user.
-// @Tags			Project
-// @Accept			json
-// @Produce		json
-// @Param			id			path		string	true	"Project ID"
-// @Success		200		{object}	response.Success
-// @Failure		default	{object}	response.Error
-// @Router			/project/{id} [delete]
+//	@Summary		Delete project
+//	@Description	This can only be done by the logged-in user.
+//	@Tags			Project
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path		string	true	"Project ID"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
+//	@Router			/project/{id} [delete]
 func (hd *HttpDelivery) DeleteProject(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Delete(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // RestoreProject godoc
 //
-// @Summary		Restore project
-// @Description	This can only be done by the logged-in user.
-// @Tags			Project
-// @Accept			json
-// @Produce		json
-// @Param			id			path		string	true	"Project ID"
-// @Success		200		{object}	response.Success
-// @Failure		default	{object}	response.Error
-// @Router			/project/restore/{id} [put]
+//	@Summary		Restore project
+//	@Description	This can only be done by the logged-in user.
+//	@Tags			Project
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path		string	true	"Project ID"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
+//	@Router			/project/restore/{id} [put]
 func (hd *HttpDelivery) RestoreProject(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Restore(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type GetProjectOut struct {
@@ -161,23 +161,23 @@ func newGetProjectOut(p *project.Project) *GetProjectOut {
 
 // GetProject godoc
 //
-// @Summary		Find project by ID
-// @Description	This can only be done by the logged-in user.
-// @Tags			Project
-// @Accept			json
-// @Produce		json
-// @Param			id			path		string	true	"Project ID"
-// @Success		200		{object}	response.Success{GetProjectOut}
-// @Failure		default	{object}	response.Error
-// @Router			/project/{id} [get]
+//	@Summary		Find project by ID
+//	@Description	This can only be done by the logged-in user.
+//	@Tags			Project
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path		string	true	"Project ID"
+//	@Success		200		{object}	response.Success{GetProjectOut}
+//	@Failure		default	{object}	response.Error
+//	@Router			/project/{id} [get]
 func (hd *HttpDelivery) GetProject(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	project, err := hd.service.FindById(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetProjectOut(project))
+	response.NewSuccess(hd.logger, w, r, newGetProjectOut(project))
 }
 
 type GetAllProjectsOut struct {
@@ -198,18 +198,18 @@ func newGetAllProjectsOut(projects []*project.Project, count int64) *GetAllProje
 
 // GetAllProjects godoc
 //
-// @Summary		Find all projects
-// @Description	This can only be done by the logged-in user.
-// @Tags			Project
-// @Accept			json
-// @Produce		json
-// @Param			offset		query		int64		false	"Offset"
-// @Param			limit		query		int64		false	"Limit"
-// @Param			isDeleted	query		bool		false	"Is Deleted"
-// @Param			search		query		string		false	"Search"
-// @Success		200		{object}	response.Success{GetAllProjectsOut}
-// @Failure		default	{object}	response.Error
-// @Router			/project [get]
+//	@Summary		Find all projects
+//	@Description	This can only be done by the logged-in user.
+//	@Tags			Project
+//	@Accept			json
+//	@Produce		json
+//	@Param			offset		query		int64	false	"Offset"
+//	@Param			limit		query		int64	false	"Limit"
+//	@Param			isDeleted	query		bool	false	"Is Deleted"
+//	@Param			search		query		string	false	"Search"
+//	@Success		200			{object}	response.Success{GetAllProjectsOut}
+//	@Failure		default		{object}	response.Error
+//	@Router			/project [get]
 func (hd *HttpDelivery) GetAllProjects(w http.ResponseWriter, r *http.Request) {
 	offset := r.Context().Value("offset").(int64)
 	limit := r.Context().Value("limit").(int64)
@@ -217,8 +217,8 @@ func (hd *HttpDelivery) GetAllProjects(w http.ResponseWriter, r *http.Request) {
 	search := r.Context().Value("search").(string)
 	projects, count, err := hd.service.FindAll(r.Context(), offset, limit, isDeleted, search)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetAllProjectsOut(projects, count))
+	response.NewSuccess(hd.logger, w, r, newGetAllProjectsOut(projects, count))
 }

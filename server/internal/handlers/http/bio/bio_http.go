@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/nnniyaz/blog/internal/domain/bio"
-	response2 "github.com/nnniyaz/blog/internal/handlers/http/response"
+	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/bio"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
@@ -31,22 +31,22 @@ type CreateBioIn struct {
 //	@Tags			Bio
 //	@Accept			json
 //	@Produce		json
-//	@Param			data		body		CreateBioIn		true	"Create Bio Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			data	body		CreateBioIn	true	"Create Bio Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/bio [post]
 func (hd *HttpDelivery) CreateBio(w http.ResponseWriter, r *http.Request) {
 	var in CreateBioIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Create(r.Context(), in.Bio)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type UpdateBioIn struct {
@@ -60,24 +60,24 @@ type UpdateBioIn struct {
 //	@Tags			Bio
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string				true	"Bio ID"
-//	@Param			data		body		UpdateBioIn		true	"Update Bio Structure"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string		true	"Bio ID"
+//	@Param			data	body		UpdateBioIn	true	"Update Bio Structure"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/bio/{id} [put]
 func (hd *HttpDelivery) UpdateBio(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var in UpdateBioIn
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
 	err := hd.service.Update(r.Context(), id, in.Bio)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // DeleteBio godoc
@@ -87,18 +87,18 @@ func (hd *HttpDelivery) UpdateBio(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Bio
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string	true	"Bio ID"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Bio ID"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/bio/{id} [delete]
 func (hd *HttpDelivery) DeleteBio(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Delete(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // RestoreBio godoc
@@ -108,18 +108,18 @@ func (hd *HttpDelivery) DeleteBio(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Bio
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string	true	"Bio ID"
-//	@Success		200						{object}	response.Success
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Bio ID"
+//	@Success		200		{object}	response.Success
+//	@Failure		default	{object}	response.Error
 //	@Router			/bio/{id} [put]
 func (hd *HttpDelivery) RestoreBio(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	err := hd.service.Restore(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, nil)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 type GetBioOut struct {
@@ -149,16 +149,16 @@ func newGetBioOut(bio *bio.Bio) *GetBioOut {
 //	@Tags			Bio
 //	@Accept			json
 //	@Produce		json
-//	@Success		200						{object}	response.Success{GetBioOut}
-//	@Failure		default					{object}	response.Error
+//	@Success		200		{object}	response.Success{GetBioOut}
+//	@Failure		default	{object}	response.Error
 //	@Router			/bio/active [get]
 func (hd *HttpDelivery) GetActiveBio(w http.ResponseWriter, r *http.Request) {
 	bio, err := hd.service.FindByActive(r.Context())
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetBioOut(bio))
+	response.NewSuccess(hd.logger, w, r, newGetBioOut(bio))
 }
 
 // GetBio godoc
@@ -168,18 +168,18 @@ func (hd *HttpDelivery) GetActiveBio(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Bio
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		string	true	"Bio ID"
-//	@Success		200						{object}	response.Success{GetBioOut}
-//	@Failure		default					{object}	response.Error
+//	@Param			id		path		string	true	"Bio ID"
+//	@Success		200		{object}	response.Success{GetBioOut}
+//	@Failure		default	{object}	response.Error
 //	@Router			/bio/{id} [get]
 func (hd *HttpDelivery) GetBio(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	bio, err := hd.service.FindById(r.Context(), id)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetBioOut(bio))
+	response.NewSuccess(hd.logger, w, r, newGetBioOut(bio))
 }
 
 type GetAllBiosOut struct {
@@ -202,14 +202,18 @@ func newGetAllBiosOut(bios []*bio.Bio, count int64) *GetAllBiosOut {
 //	@Tags			Bio
 //	@Accept			json
 //	@Produce		json
-//	@Success		200						{object}	response.Success{GetAllBiosOut}
-//	@Failure		default					{object}	response.Error
+//	@Param			offset	query		int	false	"Offset"
+//	@Param			limit	query		int	false	"Limit"
+//	@Success		200		{object}	response.Success{GetAllBiosOut}
+//	@Failure		default	{object}	response.Error
 //	@Router			/bio [get]
 func (hd *HttpDelivery) GetAllBios(w http.ResponseWriter, r *http.Request) {
-	bios, count, err := hd.service.FindAll(r.Context())
+	offset := r.Context().Value("offset").(int64)
+	limit := r.Context().Value("limit").(int64)
+	bios, count, err := hd.service.FindAll(r.Context(), offset, limit)
 	if err != nil {
-		response2.NewError(hd.logger, w, r, err)
+		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response2.NewSuccess(hd.logger, w, r, newGetAllBiosOut(bios, count))
+	response.NewSuccess(hd.logger, w, r, newGetAllBiosOut(bios, count))
 }
