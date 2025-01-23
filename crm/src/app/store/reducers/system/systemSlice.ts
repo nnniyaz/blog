@@ -1,10 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-
-export enum Lang {
-    EN = 'en',
-    KZ = 'kz',
-    RU = 'ru',
-}
+import {Lang} from "../../../../domain/base/mlString/mlString";
 
 export const systemSlice = createSlice({
     name: 'system',
