@@ -1,13 +1,14 @@
 import {Outlet} from 'react-router-dom'
-import {Routes} from "../../domain/base/routes/routes";
-import {useTypedSelector} from "../../lib/hooks/useTypedSelector";
-import {useActions} from "../../lib/hooks/useActions";
 
-import {Lang} from "../../domain/base/mlString/mlString";
+import {Lang} from '../../domain/base/mlString/mlString'
+import {Routes} from '../../domain/base/routes/routes'
+import {useActions} from '../../lib/hooks/useActions'
+import {useTypedSelector} from '../../lib/hooks/useTypedSelector'
+
 
 export const Layout = () => {
-    const {lang} = useTypedSelector(state => state.system);
-    const {changeLang} = useActions();
+    const {lang} = useTypedSelector(state => state.system)
+    const {changeLang} = useActions()
     return (
         <div>
             <h1>Layout</h1>
