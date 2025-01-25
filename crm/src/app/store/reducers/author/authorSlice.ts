@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-import {Author} from '../../../../domain/author'
+import {Author} from '../../../../domain/author/author'
 
 type State = {
     author: Author | null
