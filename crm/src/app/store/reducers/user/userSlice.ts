@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-import {User} from '../../../../domain/user'
+import {User} from '../../../../domain/user/user'
 
 type State = {
     users: User[]

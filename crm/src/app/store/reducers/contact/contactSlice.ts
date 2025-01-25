@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-import {Contact} from '../../../../domain/contact'
+import {Contact} from '../../../../domain/contact/contact'
 
 type State = {
     contacts: Contact[]
