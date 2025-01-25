@@ -1,5 +1,6 @@
-import axios from "axios";
-import {Lang} from "../domain/base/mlString/mlString";
+import axios from 'axios'
+
+import {Lang} from '../domain/base/mlString/mlString'
 
 export enum ApiRoutes {
     // Auth routes
@@ -12,53 +13,53 @@ export enum ApiRoutes {
     ME_UPDATE_PASSWORD = '/me/password',
 
     // Author routes
+    AUTHOR_GET_ALL = '/about/author',
     AUTHOR_GET_BY_ID = '/about/author/:id',
     AUTHOR_CREATE = '/about/author',
     AUTHOR_UPDATE = '/about/author/:id',
     AUTHOR_DELETE = '/about/author/:id',
     AUTHOR_RESTORE = '/about/author/restore/:id',
-    AUTHOR_GET_ALL = '/about/author',
 
     // Bio routes
+    BIO_GET_ALL = '/about/bio',
+    BIO_GET_ACTIVE = '/about/bio/active',
     BIO_GET_BY_ID = '/about/bio/:id',
     BIO_CREATE = '/about/bio',
     BIO_UPDATE = '/about/bio/:id',
     BIO_DELETE = '/about/bio/:id',
     BIO_RESTORE = '/about/bio/restore/:id',
-    BIO_GET_ACTIVE = '/about/bio/active',
-    BIO_GET_ALL = '/about/bio',
 
     // Contact routes
     CONTACT_GET_ALL = '/about/contact',
+    CONTACT_GET_BY_ID = '/about/contact/:id',
     CONTACT_CREATE = '/about/contact',
     CONTACT_UPDATE = '/about/contact/:id',
     CONTACT_DELETE = '/about/contact/:id',
     CONTACT_RESTORE = '/about/contact/restore/:id',
-    CONTACT_GET_BY_ID = '/about/contact/:id',
 
     // Project routes
     PROJECT_GET_ALL = '/about/contact',
+    PROJECT_GET_BY_ID = '/about/contact/:id',
     PROJECT_CREATE = '/about/contact',
     PROJECT_UPDATE = '/about/contact/:id',
     PROJECT_DELETE = '/about/contact/:id',
     PROJECT_RESTORE = '/about/contact/restore/:id',
-    PROJECT_GET_BY_ID = '/about/contact/:id',
 
     // Article routes
     ARTICLE_GET_ALL = '/article',
+    ARTICLE_GET_BY_ID = '/article/:id',
     ARTICLE_CREATE = '/article',
     ARTICLE_UPDATE = '/article/:id',
     ARTICLE_DELETE = '/article/:id',
     ARTICLE_RESTORE = '/article/restore/:id',
-    ARTICLE_GET_BY_ID = '/article/:id',
 
     // Book routes
     BOOK_GET_ALL = '/book',
+    BOOK_GET_BY_ID = '/book/:id',
     BOOK_CREATE = '/book',
     BOOK_UPDATE = '/book/:id',
     BOOK_DELETE = '/book/:id',
     BOOK_RESTORE = '/book/restore/:id',
-    BOOK_GET_BY_ID = '/book/:id',
 
     // User routes
     USER_GET_ALL = '/user',
@@ -72,7 +73,13 @@ export enum ApiRoutes {
 }
 
 const validateStatus = (status: number) => {
-    return (status >= 200 && status < 401) || (status > 401 && status !== 403 && status !== 404 && status < 500);
+    return (status >= 200 && status < 401) || (status > 401 && status !== 403 && status !== 404 && status < 500)
+}
+
+export type Request<T> = {
+    lang: Lang
+    body: T
+    controller?: AbortController
 }
 
 export const $api = (lang: Lang) => axios.create({
@@ -86,7 +93,7 @@ export const $api = (lang: Lang) => axios.create({
     timeout: 120000,
     timeoutErrorMessage: 'Timeout error',
     validateStatus: validateStatus
-});
+})
 
 export const $apiFormData = (lang: Lang) => axios.create({
     // @ts-ignore
@@ -99,4 +106,4 @@ export const $apiFormData = (lang: Lang) => axios.create({
     timeout: 120000,
     timeoutErrorMessage: 'Timeout error',
     validateStatus: validateStatus
-});
+})
