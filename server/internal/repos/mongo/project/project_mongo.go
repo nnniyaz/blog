@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/project"
+	"github.com/nnniyaz/blog/pkg/core"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -23,15 +24,15 @@ func (r *ProjectRepo) Coll() *mongo.Collection {
 }
 
 type mongoProject struct {
-	Id             uuid.UUID `bson:"_id"`
-	Name           string    `bson:"name"`
-	Description    string    `bson:"description"`
-	CoverUri       string    `bson:"coverUri"`
-	AppLink        string    `bson:"appLink"`
-	SourceCodeLink string    `bson:"sourceCodeLink"`
-	IsDeleted      bool      `bson:"isDeleted"`
-	CreatedAt      time.Time `bson:"createdAt"`
-	UpdatedAt      time.Time `bson:"updatedAt"`
+	Id             uuid.UUID     `bson:"_id"`
+	Name           core.MlString `bson:"name"`
+	Description    core.MlString `bson:"description"`
+	CoverUri       string        `bson:"coverUri"`
+	AppLink        string        `bson:"appLink"`
+	SourceCodeLink string        `bson:"sourceCodeLink"`
+	IsDeleted      bool          `bson:"isDeleted"`
+	CreatedAt      time.Time     `bson:"createdAt"`
+	UpdatedAt      time.Time     `bson:"updatedAt"`
 }
 
 func newFromProject(project *project.Project) *mongoProject {

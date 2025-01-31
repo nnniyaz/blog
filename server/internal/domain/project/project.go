@@ -2,15 +2,14 @@ package project
 
 import (
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
-	"github.com/nnniyaz/blog/internal/domain/project/exceptions"
-	"strings"
+	"github.com/nnniyaz/blog/pkg/core"
 	"time"
 )
 
 type Project struct {
 	id             uuid.UUID
-	name           string
-	description    string
+	name           core.MlString
+	description    core.MlString
 	coverUri       string
 	appLink        string
 	sourceCodeLink string
@@ -19,16 +18,16 @@ type Project struct {
 	updatedAt      time.Time
 }
 
-func NewProject(name, description, coverUri, appLink, sourceCodeLink string) (*Project, error) {
-	cleanedName := name
-	if cleanedName == "" {
-		return nil, exceptions.ErrProjectNameEmpty
+func NewProject(name, description core.MlString, coverUri, appLink, sourceCodeLink string) (*Project, error) {
+	cleanedName, err := name.Clean()
+	if err != nil {
+		return nil, err
 	}
 
 	return &Project{
 		id:             uuid.NewUUID(),
 		name:           cleanedName,
-		description:    strings.TrimSpace(description),
+		description:    description,
 		coverUri:       coverUri,
 		appLink:        appLink,
 		sourceCodeLink: sourceCodeLink,
@@ -42,11 +41,11 @@ func (p *Project) GetId() uuid.UUID {
 	return p.id
 }
 
-func (p *Project) GetName() string {
+func (p *Project) GetName() core.MlString {
 	return p.name
 }
 
-func (p *Project) GetDescription() string {
+func (p *Project) GetDescription() core.MlString {
 	return p.description
 }
 
@@ -74,14 +73,19 @@ func (p *Project) GetUpdatedAt() time.Time {
 	return p.updatedAt
 }
 
-func (p *Project) Update(name, description, coverUri, appLink, sourceCodeLink string) error {
-	cleanedName := name
-	if cleanedName == "" {
-		return exceptions.ErrProjectNameEmpty
+func (p *Project) Update(name, description core.MlString, coverUri, appLink, sourceCodeLink string) error {
+	cleanedName, err := name.Clean()
+	if err != nil {
+		return err
 	}
 
+	cleanedDescription, err := description.Clean()
+	if err != nil {
+		return err
+	}
+
+	p.description = cleanedDescription
 	p.name = cleanedName
-	p.description = strings.TrimSpace(description)
 	p.coverUri = coverUri
 	p.appLink = appLink
 	p.sourceCodeLink = sourceCodeLink
@@ -90,7 +94,7 @@ func (p *Project) Update(name, description, coverUri, appLink, sourceCodeLink st
 	return nil
 }
 
-func UnmarshalProjectFromDatabase(id uuid.UUID, name, description, coverUri, appLink, sourceCodeLink string, isDeleted bool, createdAt, updatedAt time.Time) *Project {
+func UnmarshalProjectFromDatabase(id uuid.UUID, name, description core.MlString, coverUri, appLink, sourceCodeLink string, isDeleted bool, createdAt, updatedAt time.Time) *Project {
 	return &Project{
 		id:             id,
 		name:           name,

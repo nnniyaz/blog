@@ -6,6 +6,7 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/project"
 	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/project"
+	"github.com/nnniyaz/blog/pkg/core"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
 	"time"
@@ -24,11 +25,11 @@ func NewHttpDelivery(logger logger.Logger, service projectService.ProjectService
 }
 
 type CreateProjectIn struct {
-	Name           string `json:"name"`
-	Description    string `json:"description"`
-	CoverUri       string `json:"coverUri"`
-	AppLink        string `json:"appLink"`
-	SourceCodeLink string `json:"sourceCodeLink"`
+	Name           core.MlString `json:"name"`
+	Description    core.MlString `json:"description"`
+	CoverUri       string        `json:"coverUri"`
+	AppLink        string        `json:"appLink"`
+	SourceCodeLink string        `json:"sourceCodeLink"`
 }
 
 // CreateProject godoc
@@ -57,11 +58,11 @@ func (hd *HttpDelivery) CreateProject(w http.ResponseWriter, r *http.Request) {
 }
 
 type UpdateProjectIn struct {
-	Name           string `json:"name"`
-	Description    string `json:"description"`
-	CoverUri       string `json:"coverUri"`
-	AppLink        string `json:"appLink"`
-	SourceCodeLink string `json:"sourceCodeLink"`
+	Name           core.MlString `json:"name"`
+	Description    core.MlString `json:"description"`
+	CoverUri       string        `json:"coverUri"`
+	AppLink        string        `json:"appLink"`
+	SourceCodeLink string        `json:"sourceCodeLink"`
 }
 
 // UpdateProject godoc
@@ -134,15 +135,15 @@ func (hd *HttpDelivery) RestoreProject(w http.ResponseWriter, r *http.Request) {
 }
 
 type GetProjectOut struct {
-	Id             string `json:"id"`
-	Name           string `json:"name"`
-	Description    string `json:"description"`
-	CoverUri       string `json:"coverUri"`
-	AppLink        string `json:"appLink"`
-	SourceCodeLink string `json:"sourceCodeLink"`
-	IsDeleted      bool   `json:"isDeleted"`
-	CreatedAt      string `json:"createdAt"`
-	UpdatedAt      string `json:"updatedAt"`
+	Id             string        `json:"id"`
+	Name           core.MlString `json:"name"`
+	Description    core.MlString `json:"description"`
+	CoverUri       string        `json:"coverUri"`
+	AppLink        string        `json:"appLink"`
+	SourceCodeLink string        `json:"sourceCodeLink"`
+	IsDeleted      bool          `json:"isDeleted"`
+	CreatedAt      string        `json:"createdAt"`
+	UpdatedAt      string        `json:"updatedAt"`
 }
 
 func newGetProjectOut(p *project.Project) *GetProjectOut {
