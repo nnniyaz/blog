@@ -5,11 +5,12 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/book"
 	"github.com/nnniyaz/blog/internal/repos"
+	"github.com/nnniyaz/blog/pkg/core"
 )
 
 type BookService interface {
-	Create(ctx context.Context, title, description, author, coverUri, eBookUri string) error
-	Update(ctx context.Context, id, title, description, author, coverUri, eBookUri string) error
+	Create(ctx context.Context, title, description, author core.MlString, coverUri, eBookUri string) error
+	Update(ctx context.Context, id string, title, description, author core.MlString, coverUri, eBookUri string) error
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*book.Book, error)
@@ -24,7 +25,7 @@ func NewBookService(repo repos.Book) BookService {
 	return &bookService{repo: repo}
 }
 
-func (s *bookService) Create(ctx context.Context, title, description, author, coverUri, eBookUri string) error {
+func (s *bookService) Create(ctx context.Context, title, description, author core.MlString, coverUri, eBookUri string) error {
 	newBook, err := book.NewBook(title, description, author, coverUri, eBookUri)
 	if err != nil {
 		return err
@@ -32,7 +33,7 @@ func (s *bookService) Create(ctx context.Context, title, description, author, co
 	return s.repo.Create(ctx, newBook)
 }
 
-func (s *bookService) Update(ctx context.Context, id, title, description, author, coverUri, eBookUri string) error {
+func (s *bookService) Update(ctx context.Context, id string, title, description, author core.MlString, coverUri, eBookUri string) error {
 	convertedId, err := uuid.UUIDFromString(id)
 	if err != nil {
 		return err

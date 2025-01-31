@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/book"
+	"github.com/nnniyaz/blog/pkg/core"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -23,15 +24,15 @@ func (r *BookRepo) Coll() *mongo.Collection {
 }
 
 type mongoBook struct {
-	Id          uuid.UUID `bson:"_id"`
-	Title       string    `bson:"title"`
-	Author      string    `bson:"author"`
-	Description string    `bson:"description"`
-	CoverUri    string    `bson:"coverUri"`
-	EBookUri    string    `bson:"eBookUri"`
-	IsDeleted   bool      `bson:"isDeleted"`
-	CreatedAt   time.Time `bson:"createdAt"`
-	UpdatedAt   time.Time `bson:"updatedAt"`
+	Id          uuid.UUID     `bson:"_id"`
+	Title       core.MlString `bson:"title"`
+	Author      core.MlString `bson:"author"`
+	Description core.MlString `bson:"description"`
+	CoverUri    string        `bson:"coverUri"`
+	EBookUri    string        `bson:"eBookUri"`
+	IsDeleted   bool          `bson:"isDeleted"`
+	CreatedAt   time.Time     `bson:"createdAt"`
+	UpdatedAt   time.Time     `bson:"updatedAt"`
 }
 
 func newFromBook(book *book.Book) *mongoBook {
