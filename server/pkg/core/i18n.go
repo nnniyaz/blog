@@ -49,6 +49,18 @@ func (m MlString) GetByLangOrEmpty(lang Lang) string {
 	return ""
 }
 
+func (m MlString) Clean() (MlString, error) {
+	if m.IsEmpty() {
+		return nil, ErrEmptyMlString
+	}
+	mMap := map[Lang]string(m)
+	cleaned := make(MlString)
+	for k, v := range mMap {
+		cleaned[k] = v
+	}
+	return cleaned, nil
+}
+
 // ----------------------------------------------------------------------------
 // TxtResource
 // ----------------------------------------------------------------------------

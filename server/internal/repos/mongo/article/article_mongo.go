@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/article"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
+	"github.com/nnniyaz/blog/pkg/core"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -23,13 +24,13 @@ func (r *RepoArticle) Coll() *mongo.Collection {
 }
 
 type mongoArticle struct {
-	Id        uuid.UUID `bson:"_id"`
-	Title     string    `bson:"title"`
-	Content   string    `bson:"content"`
-	IsDeleted bool      `bson:"isDeleted"`
-	CreatedAt time.Time `bson:"createdAt"`
-	UpdatedAt time.Time `bson:"updatedAt"`
-	Version   int       `bson:"version"`
+	Id        uuid.UUID     `bson:"_id"`
+	Title     core.MlString `bson:"title"`
+	Content   core.MlString `bson:"content"`
+	IsDeleted bool          `bson:"isDeleted"`
+	CreatedAt time.Time     `bson:"createdAt"`
+	UpdatedAt time.Time     `bson:"updatedAt"`
+	Version   int           `bson:"version"`
 }
 
 func newFromArticle(article *article.Article) *mongoArticle {
