@@ -6,6 +6,7 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/contact"
 	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/contact"
+	"github.com/nnniyaz/blog/pkg/core"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
 	"time"
@@ -21,8 +22,8 @@ func NewHttpDelivery(l logger.Logger, s contactService.ContactService) *HttpDeli
 }
 
 type CreateContactIn struct {
-	Label string `json:"label"`
-	Link  string `json:"link"`
+	Label core.MlString `json:"label"`
+	Link  string        `json:"link"`
 }
 
 // CreateContact godoc
@@ -51,8 +52,8 @@ func (hd *HttpDelivery) CreateContact(w http.ResponseWriter, r *http.Request) {
 }
 
 type UpdateContactIn struct {
-	Label string `json:"label"`
-	Link  string `json:"link"`
+	Label core.MlString `json:"label"`
+	Link  string        `json:"link"`
 }
 
 // UpdateContact godoc
@@ -126,12 +127,12 @@ func (hd *HttpDelivery) RestoreContact(w http.ResponseWriter, r *http.Request) {
 }
 
 type GetContactOut struct {
-	Id        string `json:"id"`
-	Label     string `json:"label"`
-	Link      string `json:"link"`
-	IsDeleted bool   `json:"isDeleted"`
-	CreatedAt string `json:"createdAt"`
-	UpdatedAt string `json:"updatedAt"`
+	Id        string        `json:"id"`
+	Label     core.MlString `json:"label"`
+	Link      string        `json:"link"`
+	IsDeleted bool          `json:"isDeleted"`
+	CreatedAt string        `json:"createdAt"`
+	UpdatedAt string        `json:"updatedAt"`
 }
 
 func newGetContactByIdOut(contact *contact.Contact) *GetContactOut {

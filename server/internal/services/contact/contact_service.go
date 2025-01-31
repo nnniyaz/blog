@@ -5,11 +5,12 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/contact"
 	"github.com/nnniyaz/blog/internal/repos"
+	"github.com/nnniyaz/blog/pkg/core"
 )
 
 type ContactService interface {
-	Create(ctx context.Context, label, link string) error
-	Update(ctx context.Context, id string, label, link string) error
+	Create(ctx context.Context, label core.MlString, link string) error
+	Update(ctx context.Context, id string, label core.MlString, link string) error
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*contact.Contact, error)
@@ -24,7 +25,7 @@ func NewContactService(r repos.Contact) ContactService {
 	return &contactService{repo: r}
 }
 
-func (s *contactService) Create(ctx context.Context, label, link string) error {
+func (s *contactService) Create(ctx context.Context, label core.MlString, link string) error {
 	newContact, err := contact.NewContact(label, link)
 	if err != nil {
 		return err
@@ -32,7 +33,7 @@ func (s *contactService) Create(ctx context.Context, label, link string) error {
 	return s.repo.Create(ctx, newContact)
 }
 
-func (s *contactService) Update(ctx context.Context, id, label, link string) error {
+func (s *contactService) Update(ctx context.Context, id string, label core.MlString, link string) error {
 	convertedId, err := uuid.UUIDFromString(id)
 	if err != nil {
 		return err

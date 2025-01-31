@@ -6,6 +6,7 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/article"
 	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/article"
+	"github.com/nnniyaz/blog/pkg/core"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
 	"time"
@@ -21,8 +22,8 @@ func NewHttpDelivery(l logger.Logger, s articleService.ArticleService) *HttpDeli
 }
 
 type CreateArticleIn struct {
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	Title   core.MlString `json:"title"`
+	Content core.MlString `json:"content"`
 }
 
 // CreateArticle godoc
@@ -51,8 +52,8 @@ func (hd *HttpDelivery) CreateArticle(w http.ResponseWriter, r *http.Request) {
 }
 
 type UpdateArticleIn struct {
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	Title   core.MlString `json:"title"`
+	Content core.MlString `json:"content"`
 }
 
 // UpdateArticle godoc
@@ -125,13 +126,13 @@ func (hd *HttpDelivery) RestoreArticle(w http.ResponseWriter, r *http.Request) {
 }
 
 type GetArticleOut struct {
-	Id        string `json:"id"`
-	Title     string `json:"title"`
-	Content   string `json:"content"`
-	IsDeleted bool   `json:"isDeleted"`
-	CreatedAt string `json:"createdAt"`
-	UpdatedAt string `json:"updatedAt"`
-	Version   int    `json:"version"`
+	Id        string        `json:"id"`
+	Title     core.MlString `json:"title"`
+	Content   core.MlString `json:"content"`
+	IsDeleted bool          `json:"isDeleted"`
+	CreatedAt string        `json:"createdAt"`
+	UpdatedAt string        `json:"updatedAt"`
+	Version   int           `json:"version"`
 }
 
 func newGetArticleOut(a *article.Article) *GetArticleOut {

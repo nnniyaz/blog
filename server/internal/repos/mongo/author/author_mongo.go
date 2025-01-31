@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/author"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
+	"github.com/nnniyaz/blog/pkg/core"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -23,13 +24,13 @@ func (r *RepoAuthor) Coll() *mongo.Collection {
 }
 
 type mongoAuthor struct {
-	Id        uuid.UUID `bson:"_id"`
-	FirstName string    `bson:"firstName"`
-	LastName  string    `bson:"lastName"`
-	AvatarUri string    `bson:"avatarUri"`
-	CreatedAt time.Time `bson:"createdAt"`
-	UpdatedAt time.Time `bson:"updatedAt"`
-	Version   int       `bson:"version"`
+	Id        uuid.UUID     `bson:"_id"`
+	FirstName core.MlString `bson:"firstName"`
+	LastName  core.MlString `bson:"lastName"`
+	AvatarUri string        `bson:"avatarUri"`
+	CreatedAt time.Time     `bson:"createdAt"`
+	UpdatedAt time.Time     `bson:"updatedAt"`
+	Version   int           `bson:"version"`
 }
 
 func newFromAuthor(author *author.Author) *mongoAuthor {

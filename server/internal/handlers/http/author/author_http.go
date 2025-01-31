@@ -6,6 +6,7 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/author"
 	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/author"
+	"github.com/nnniyaz/blog/pkg/core"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
 	"time"
@@ -127,13 +128,13 @@ func (hd *HttpDelivery) RestoreAuthor(w http.ResponseWriter, r *http.Request) {
 }
 
 type GetAuthorOut struct {
-	Id        string `json:"id"`
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	AvatarUri string `json:"avatarUri"`
-	CreatedAt string `json:"createdAt"`
-	UpdatedAt string `json:"updatedAt"`
-	Version   int    `json:"version"`
+	Id        string        `json:"id"`
+	FirstName core.MlString `json:"firstName"`
+	LastName  core.MlString `json:"lastName"`
+	AvatarUri string        `json:"avatarUri"`
+	CreatedAt string        `json:"createdAt"`
+	UpdatedAt string        `json:"updatedAt"`
+	Version   int           `json:"version"`
 }
 
 func newGetAuthorOut(author *author.Author) *GetAuthorOut {

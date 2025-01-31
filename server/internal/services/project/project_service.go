@@ -5,11 +5,12 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/project"
 	"github.com/nnniyaz/blog/internal/repos"
+	"github.com/nnniyaz/blog/pkg/core"
 )
 
 type ProjectService interface {
-	Create(ctx context.Context, name, description, coverUri, appLink, sourceCodeLink string) error
-	Update(ctx context.Context, id, name, description, coverUri, appLink, sourceCodeLink string) error
+	Create(ctx context.Context, name, description core.MlString, coverUri, appLink, sourceCodeLink string) error
+	Update(ctx context.Context, id string, name, description core.MlString, coverUri, appLink, sourceCodeLink string) error
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*project.Project, error)
@@ -24,7 +25,7 @@ func NewProjectService(projectRepo repos.Project) ProjectService {
 	return &projectService{repo: projectRepo}
 }
 
-func (s *projectService) Create(ctx context.Context, name, description, coverUri, appLink, sourceCodeLink string) error {
+func (s *projectService) Create(ctx context.Context, name, description core.MlString, coverUri, appLink, sourceCodeLink string) error {
 	project, err := project.NewProject(name, description, coverUri, appLink, sourceCodeLink)
 	if err != nil {
 		return err
@@ -32,7 +33,7 @@ func (s *projectService) Create(ctx context.Context, name, description, coverUri
 	return s.repo.Create(ctx, project)
 }
 
-func (s *projectService) Update(ctx context.Context, id, name, description, coverUri, appLink, sourceCodeLink string) error {
+func (s *projectService) Update(ctx context.Context, id string, name, description core.MlString, coverUri, appLink, sourceCodeLink string) error {
 	convertedId, err := uuid.UUIDFromString(id)
 	if err != nil {
 		return err

@@ -1,31 +1,30 @@
 package author
 
 import (
-	exceptions2 "github.com/nnniyaz/blog/internal/domain/author/exceptions"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
-	"strings"
+	"github.com/nnniyaz/blog/pkg/core"
 	"time"
 )
 
 type Author struct {
 	id        uuid.UUID
-	firstName string
-	lastName  string
+	firstName core.MlString
+	lastName  core.MlString
 	avatarUri string
 	createdAt time.Time
 	updatedAt time.Time
 	version   int
 }
 
-func NewAuthor(firstName, lastName, avatarUri string) (*Author, error) {
-	cleanedFirstName := strings.TrimSpace(firstName)
-	if cleanedFirstName == "" {
-		return nil, exceptions2.ErrFirstNameEmpty
+func NewAuthor(firstName, lastName core.MlString, avatarUri string) (*Author, error) {
+	cleanedFirstName, err := firstName.Clean()
+	if err != nil {
+		return nil, err
 	}
 
-	cleanedLastName := strings.TrimSpace(lastName)
-	if cleanedLastName == "" {
-		return nil, exceptions2.ErrLastNameEmpty
+	cleanedLastName, err := lastName.Clean()
+	if err != nil {
+		return nil, err
 	}
 
 	return &Author{
@@ -43,11 +42,11 @@ func (b *Author) GetId() uuid.UUID {
 	return b.id
 }
 
-func (b *Author) GetFirstName() string {
+func (b *Author) GetFirstName() core.MlString {
 	return b.firstName
 }
 
-func (b *Author) GetLastName() string {
+func (b *Author) GetLastName() core.MlString {
 	return b.lastName
 }
 
@@ -67,15 +66,15 @@ func (b *Author) GetVersion() int {
 	return b.version
 }
 
-func (b *Author) Update(firstName, lastName, avatarUri string) error {
-	cleanedFirstName := strings.TrimSpace(firstName)
-	if cleanedFirstName == "" {
-		return exceptions2.ErrFirstNameEmpty
+func (b *Author) Update(firstName, lastName core.MlString, avatarUri string) error {
+	cleanedFirstName, err := firstName.Clean()
+	if err != nil {
+		return err
 	}
 
-	cleanedLastName := strings.TrimSpace(lastName)
-	if cleanedLastName == "" {
-		return exceptions2.ErrLastNameEmpty
+	cleanedLastName, err := lastName.Clean()
+	if err != nil {
+		return nil
 	}
 
 	b.firstName = cleanedFirstName
@@ -87,7 +86,7 @@ func (b *Author) Update(firstName, lastName, avatarUri string) error {
 	return nil
 }
 
-func UnmarshalAuthorFromDatabase(id uuid.UUID, firstName, lastName, avatarUri string, createdAt, updatedAt time.Time, version int) *Author {
+func UnmarshalAuthorFromDatabase(id uuid.UUID, firstName, lastName core.MlString, avatarUri string, createdAt, updatedAt time.Time, version int) *Author {
 	return &Author{
 		id:        id,
 		firstName: firstName,

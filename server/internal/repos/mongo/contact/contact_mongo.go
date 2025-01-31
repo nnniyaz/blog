@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/contact"
+	"github.com/nnniyaz/blog/pkg/core"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -23,12 +24,12 @@ func (r *RepoContact) Coll() *mongo.Collection {
 }
 
 type mongoContact struct {
-	Id        uuid.UUID `bson:"_id"`
-	Label     string    `bson:"label"`
-	Link      string    `bson:"link"`
-	IsDeleted bool      `bson:"isDeleted"`
-	CreatedAt time.Time `bson:"createdAt"`
-	UpdatedAt time.Time `bson:"updatedAt"`
+	Id        uuid.UUID     `bson:"_id"`
+	Label     core.MlString `bson:"label"`
+	Link      string        `bson:"link"`
+	IsDeleted bool          `bson:"isDeleted"`
+	CreatedAt time.Time     `bson:"createdAt"`
+	UpdatedAt time.Time     `bson:"updatedAt"`
 }
 
 func newFromContact(contact *contact.Contact) *mongoContact {

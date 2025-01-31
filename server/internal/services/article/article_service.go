@@ -5,11 +5,12 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/article"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/repos"
+	"github.com/nnniyaz/blog/pkg/core"
 )
 
 type ArticleService interface {
-	Create(ctx context.Context, title, content string) error
-	Update(ctx context.Context, id, title, content string) error
+	Create(ctx context.Context, title, content core.MlString) error
+	Update(ctx context.Context, id string, title, content core.MlString) error
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*article.Article, error)
@@ -24,7 +25,7 @@ func NewArticleService(r repos.Article) ArticleService {
 	return &articleService{repo: r}
 }
 
-func (s *articleService) Create(ctx context.Context, title, content string) error {
+func (s *articleService) Create(ctx context.Context, title, content core.MlString) error {
 	newArticle, err := article.NewArticle(title, content)
 	if err != nil {
 		return err
@@ -32,7 +33,7 @@ func (s *articleService) Create(ctx context.Context, title, content string) erro
 	return s.repo.Create(ctx, newArticle)
 }
 
-func (s *articleService) Update(ctx context.Context, id, title, content string) error {
+func (s *articleService) Update(ctx context.Context, id string, title, content core.MlString) error {
 	convertedId, err := uuid.UUIDFromString(id)
 	if err != nil {
 		return err

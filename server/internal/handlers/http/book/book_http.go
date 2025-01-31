@@ -6,6 +6,7 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/book"
 	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/book"
+	"github.com/nnniyaz/blog/pkg/core"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
 	"time"
@@ -21,11 +22,11 @@ func NewHttpDelivery(l logger.Logger, s bookService.BookService) *HttpDelivery {
 }
 
 type CreateBookIn struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Author      string `json:"author"`
-	CoverUri    string `json:"coverUri"`
-	EBookUri    string `json:"eBookUri"`
+	Title       core.MlString `json:"title"`
+	Description core.MlString `json:"description"`
+	Author      core.MlString `json:"author"`
+	CoverUri    string        `json:"coverUri"`
+	EBookUri    string        `json:"eBookUri"`
 }
 
 // CreateBook godoc
@@ -54,11 +55,11 @@ func (hd *HttpDelivery) CreateBook(w http.ResponseWriter, r *http.Request) {
 }
 
 type UpdateBookIn struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Author      string `json:"author"`
-	CoverUri    string `json:"coverUri"`
-	EBookUri    string `json:"eBookUri"`
+	Title       core.MlString `json:"title"`
+	Description core.MlString `json:"description"`
+	Author      core.MlString `json:"author"`
+	CoverUri    string        `json:"coverUri"`
+	EBookUri    string        `json:"eBookUri"`
 }
 
 // UpdateBook godoc
@@ -131,15 +132,15 @@ func (hd *HttpDelivery) RestoreBook(w http.ResponseWriter, r *http.Request) {
 }
 
 type GetBookOut struct {
-	Id          string `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Author      string `json:"author"`
-	CoverUri    string `json:"coverUri"`
-	EBookUri    string `json:"eBookUri"`
-	IsDeleted   bool   `json:"isDeleted"`
-	CreatedAt   string `json:"createdAt"`
-	UpdatedAt   string `json:"updatedAt"`
+	Id          string        `json:"id"`
+	Title       core.MlString `json:"title"`
+	Description core.MlString `json:"description"`
+	Author      core.MlString `json:"author"`
+	CoverUri    string        `json:"coverUri"`
+	EBookUri    string        `json:"eBookUri"`
+	IsDeleted   bool          `json:"isDeleted"`
+	CreatedAt   string        `json:"createdAt"`
+	UpdatedAt   string        `json:"updatedAt"`
 }
 
 func newGetBookOut(book *book.Book) *GetBookOut {

@@ -1,40 +1,43 @@
 package article
 
 import (
-	exceptions2 "github.com/nnniyaz/blog/internal/domain/article/exceptions"
+	"github.com/nnniyaz/blog/internal/domain/article/exceptions"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
-	"strings"
+	"github.com/nnniyaz/blog/pkg/core"
 	"time"
 )
 
 type Article struct {
 	id        uuid.UUID
-	title     string
-	content   string
+	title     core.MlString
+	content   core.MlString
 	isDeleted bool
 	createdAt time.Time
 	updatedAt time.Time
 	version   int
 }
 
-func NewArticle(title, content string) (*Article, error) {
-	cleanedTitle := strings.TrimSpace(title)
-	if cleanedTitle == "" {
-		return nil, exceptions2.ErrTitleEmpty
+func NewArticle(title, content core.MlString) (*Article, error) {
+	cleanedTitle, err := title.Clean()
+	if err != nil {
+		return nil, err
 	}
 
-	if len(cleanedTitle) > 100 {
-		return nil, exceptions2.ErrTitleTooLong
+	mMap := map[core.Lang]string(cleanedTitle)
+	for _, v := range mMap {
+		if len(v) > 100 {
+			return nil, exceptions.ErrTitleTooLong
+		}
 	}
 
-	cleanedContent := strings.TrimSpace(content)
-	if cleanedContent == "" {
-		return nil, exceptions2.ErrContentEmpty
+	cleanedContent, err := content.Clean()
+	if err != nil {
+		return nil, err
 	}
 
 	return &Article{
 		id:        uuid.NewUUID(),
-		title:     strings.TrimSpace(cleanedTitle),
+		title:     cleanedTitle,
 		content:   cleanedContent,
 		isDeleted: false,
 		createdAt: time.Now(),
@@ -47,11 +50,11 @@ func (a *Article) GetId() uuid.UUID {
 	return a.id
 }
 
-func (a *Article) GetTitle() string {
+func (a *Article) GetTitle() core.MlString {
 	return a.title
 }
 
-func (a *Article) GetContent() string {
+func (a *Article) GetContent() core.MlString {
 	return a.content
 }
 
@@ -71,19 +74,22 @@ func (a *Article) GetVersion() int {
 	return a.version
 }
 
-func (a *Article) Update(title, content string) error {
-	cleanedTitle := strings.TrimSpace(title)
-	if cleanedTitle == "" {
-		return exceptions2.ErrTitleEmpty
+func (a *Article) Update(title, content core.MlString) error {
+	cleanedTitle, err := title.Clean()
+	if err != nil {
+		return err
 	}
 
-	if len(cleanedTitle) > 100 {
-		return exceptions2.ErrTitleTooLong
+	mMap := map[core.Lang]string(cleanedTitle)
+	for _, v := range mMap {
+		if len(v) > 100 {
+			return exceptions.ErrTitleTooLong
+		}
 	}
 
-	cleanedContent := strings.TrimSpace(content)
-	if cleanedContent == "" {
-		return exceptions2.ErrContentEmpty
+	cleanedContent, err := content.Clean()
+	if err != nil {
+		return err
 	}
 
 	a.title = cleanedTitle
@@ -94,7 +100,7 @@ func (a *Article) Update(title, content string) error {
 	return nil
 }
 
-func UnmarshalArticleFromDatabase(id uuid.UUID, title, content string, isDeleted bool, createdAt, updatedAt time.Time, version int) *Article {
+func UnmarshalArticleFromDatabase(id uuid.UUID, title, content core.MlString, isDeleted bool, createdAt, updatedAt time.Time, version int) *Article {
 	return &Article{
 		id:        id,
 		title:     title,

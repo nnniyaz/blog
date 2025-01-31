@@ -5,11 +5,12 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/author"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/repos"
+	"github.com/nnniyaz/blog/pkg/core"
 )
 
 type AuthorService interface {
-	Create(ctx context.Context, firstName, lastName, avatarUri string) error
-	Update(ctx context.Context, id, firstName, lastName, avatarUri string) error
+	Create(ctx context.Context, firstName, lastName core.MlString, avatarUri string) error
+	Update(ctx context.Context, id string, firstName, lastName core.MlString, avatarUri string) error
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*author.Author, error)
@@ -24,7 +25,7 @@ func NewAuthorService(repo repos.Author) AuthorService {
 	return &authorService{repo: repo}
 }
 
-func (s *authorService) Create(ctx context.Context, firstName, lastName, avatarUri string) error {
+func (s *authorService) Create(ctx context.Context, firstName, lastName core.MlString, avatarUri string) error {
 	newAuthor, err := author.NewAuthor(firstName, lastName, avatarUri)
 	if err != nil {
 		return err
@@ -32,7 +33,7 @@ func (s *authorService) Create(ctx context.Context, firstName, lastName, avatarU
 	return s.repo.Create(ctx, newAuthor)
 }
 
-func (s *authorService) Update(ctx context.Context, id, firstName, lastName, avatarUri string) error {
+func (s *authorService) Update(ctx context.Context, id string, firstName, lastName core.MlString, avatarUri string) error {
 	convertedId, err := uuid.UUIDFromString(id)
 	if err != nil {
 		return err
