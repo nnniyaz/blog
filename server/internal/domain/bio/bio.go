@@ -2,24 +2,23 @@ package bio
 
 import (
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
-	"github.com/nnniyaz/blog/internal/domain/bio/exceptions"
-	"strings"
+	"github.com/nnniyaz/blog/pkg/core"
 	"time"
 )
 
 type Bio struct {
 	id        uuid.UUID
-	bio       string
+	bio       core.MlString
 	active    bool
 	createdAt time.Time
 	updatedAt time.Time
 	version   int
 }
 
-func NewBio(bio string) (*Bio, error) {
-	cleanedEmptyBio := strings.TrimSpace(bio)
-	if cleanedEmptyBio == "" {
-		return nil, exceptions.ErrBioEmpty
+func NewBio(bio core.MlString) (*Bio, error) {
+	cleanedEmptyBio, err := bio.Clean()
+	if err != nil {
+		return nil, err
 	}
 
 	return &Bio{
@@ -36,7 +35,7 @@ func (b *Bio) GetId() uuid.UUID {
 	return b.id
 }
 
-func (b *Bio) GetBio() string {
+func (b *Bio) GetBio() core.MlString {
 	return b.bio
 }
 
@@ -56,10 +55,10 @@ func (b *Bio) GetVersion() int {
 	return b.version
 }
 
-func (b *Bio) Update(bio string) error {
-	cleanedEmptyBio := strings.TrimSpace(bio)
-	if cleanedEmptyBio == "" {
-		return exceptions.ErrBioEmpty
+func (b *Bio) Update(bio core.MlString) error {
+	cleanedEmptyBio, err := bio.Clean()
+	if err != nil {
+		return err
 	}
 
 	b.bio = cleanedEmptyBio
@@ -69,7 +68,7 @@ func (b *Bio) Update(bio string) error {
 	return nil
 }
 
-func UnmarshalBioFromDatabase(id uuid.UUID, bio string, active bool, createdAt, updatedAt time.Time, version int) *Bio {
+func UnmarshalBioFromDatabase(id uuid.UUID, bio core.MlString, active bool, createdAt, updatedAt time.Time, version int) *Bio {
 	return &Bio{
 		id:        id,
 		bio:       bio,

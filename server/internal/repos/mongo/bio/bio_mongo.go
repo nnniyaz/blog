@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/bio"
+	"github.com/nnniyaz/blog/pkg/core"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -23,12 +24,12 @@ func (r *RepoBio) Coll() *mongo.Collection {
 }
 
 type mongoBio struct {
-	Id        uuid.UUID `bson:"_id"`
-	Bio       string    `bson:"bio"`
-	Active    bool      `bson:"active"`
-	CreatedAt time.Time `bson:"createdAt"`
-	UpdatedAt time.Time `bson:"updatedAt"`
-	Version   int       `bson:"version"`
+	Id        uuid.UUID     `bson:"_id"`
+	Bio       core.MlString `bson:"bio"`
+	Active    bool          `bson:"active"`
+	CreatedAt time.Time     `bson:"createdAt"`
+	UpdatedAt time.Time     `bson:"updatedAt"`
+	Version   int           `bson:"version"`
 }
 
 func newFromBio(bio *bio.Bio) *mongoBio {

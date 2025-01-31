@@ -5,11 +5,12 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/bio"
 	"github.com/nnniyaz/blog/internal/repos"
+	"github.com/nnniyaz/blog/pkg/core"
 )
 
 type BioService interface {
-	Create(ctx context.Context, bio string) error
-	Update(ctx context.Context, id, bio string) error
+	Create(ctx context.Context, bio core.MlString) error
+	Update(ctx context.Context, id string, bio core.MlString) error
 	Delete(ctx context.Context, id string) error
 	Restore(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (*bio.Bio, error)
@@ -25,7 +26,7 @@ func NewBioService(repo repos.Bio) BioService {
 	return &bioService{repo: repo}
 }
 
-func (s *bioService) Create(ctx context.Context, bioContent string) error {
+func (s *bioService) Create(ctx context.Context, bioContent core.MlString) error {
 	newBio, err := bio.NewBio(bioContent)
 	if err != nil {
 		return err
@@ -33,7 +34,7 @@ func (s *bioService) Create(ctx context.Context, bioContent string) error {
 	return s.repo.Create(ctx, newBio)
 }
 
-func (s *bioService) Update(ctx context.Context, id, bioContent string) error {
+func (s *bioService) Update(ctx context.Context, id string, bioContent core.MlString) error {
 	convertedId, err := uuid.UUIDFromString(id)
 	if err != nil {
 		return err

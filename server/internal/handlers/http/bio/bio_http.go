@@ -6,6 +6,7 @@ import (
 	"github.com/nnniyaz/blog/internal/domain/bio"
 	"github.com/nnniyaz/blog/internal/handlers/http/response"
 	"github.com/nnniyaz/blog/internal/services/bio"
+	"github.com/nnniyaz/blog/pkg/core"
 	"github.com/nnniyaz/blog/pkg/logger"
 	"net/http"
 	"time"
@@ -21,7 +22,7 @@ func NewHttpDelivery(l logger.Logger, s bioService.BioService) *HttpDelivery {
 }
 
 type CreateBioIn struct {
-	Bio string `json:"bio"`
+	Bio core.MlString `json:"bio"`
 }
 
 // CreateBio godoc
@@ -50,7 +51,7 @@ func (hd *HttpDelivery) CreateBio(w http.ResponseWriter, r *http.Request) {
 }
 
 type UpdateBioIn struct {
-	Bio string `json:"bio"`
+	Bio core.MlString `json:"bio"`
 }
 
 // UpdateBio godoc
@@ -123,12 +124,12 @@ func (hd *HttpDelivery) RestoreBio(w http.ResponseWriter, r *http.Request) {
 }
 
 type GetBioOut struct {
-	Id        string `json:"id"`
-	Bio       string `json:"bio"`
-	Active    bool   `json:"active"`
-	CreatedAt string `json:"createdAt"`
-	UpdatedAt string `json:"updatedAt"`
-	Version   int    `json:"version"`
+	Id        string        `json:"id"`
+	Bio       core.MlString `json:"bio"`
+	Active    bool          `json:"active"`
+	CreatedAt string        `json:"createdAt"`
+	UpdatedAt string        `json:"updatedAt"`
+	Version   int           `json:"version"`
 }
 
 func newGetBioOut(bio *bio.Bio) *GetBioOut {
