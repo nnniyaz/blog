@@ -22,9 +22,9 @@ func NewHttpDelivery(l logger.Logger, s authorService.AuthorService) *HttpDelive
 }
 
 type CreateAuthorIn struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	AvatarUri string `json:"avatarUri"`
+	FirstName core.MlString `json:"firstName"`
+	LastName  core.MlString `json:"lastName"`
+	AvatarUri string        `json:"avatarUri"`
 }
 
 // CreateAuthor godoc
@@ -53,9 +53,9 @@ func (hd *HttpDelivery) CreateAuthor(w http.ResponseWriter, r *http.Request) {
 }
 
 type UpdateAuthorIn struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	AvatarUri string `json:"avatarUri"`
+	FirstName core.MlString `json:"firstName"`
+	LastName  core.MlString `json:"lastName"`
+	AvatarUri string        `json:"avatarUri"`
 }
 
 // UpdateAuthor godoc

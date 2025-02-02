@@ -3,6 +3,10 @@ package main
 import (
 	"context"
 	"errors"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/nnniyaz/blog/internal/domain/base/config"
 	hHttp "github.com/nnniyaz/blog/internal/handlers/http"
 	"github.com/nnniyaz/blog/internal/repos"
@@ -50,6 +54,13 @@ func main() {
 		env.MustGetEnvAsInt("SMTP_PORT"),
 		env.MustGetEnv("SMTP_USER"),
 		env.MustGetEnv("SMTP_PASS"),
+		env.MustGetEnv("SPACE_BUCKET"),
+		env.MustGetEnv("SPACE_KEY"),
+		env.MustGetEnv("SPACE_SECRET"),
+		env.MustGetEnv("SPACE_ENDPOINT"),
+		env.MustGetEnv("SPACE_REGION"),
+		env.MustGetEnv("SPACE_NAME"),
+		env.MustGetEnv("SPACE_HOST"),
 	)
 
 	// --- init logger
@@ -66,6 +77,19 @@ func main() {
 		return
 	}
 
+	// --- init s3 client
+	s3Config := &aws.Config{
+		Credentials: credentials.NewStaticCredentials(cfg.GetSpaceKey(), cfg.GetSpaceSecret(), ""),
+		Endpoint:    aws.String(cfg.GetSpaceEndPoint()),
+		Region:      aws.String(cfg.GetSpaceRegion()),
+	}
+	newSession, err := session.NewSession(s3Config)
+	if err != nil {
+		lg.Fatal("failed to init s3 session", zap.Error(err))
+		return
+	}
+	s3Client := s3.New(newSession)
+
 	// --- init email service
 	email, err := email.New(cfg.GetSmtpHost(), cfg.GetSmtpPort(), cfg.GetSmtpUser(), cfg.GetSmtpPass())
 	if err != nil {
@@ -74,7 +98,7 @@ func main() {
 
 	// --- init handler
 	repos := repos.NewRepo(db)
-	services := services.NewService(repos, cfg, email)
+	services := services.NewService(repos, cfg, s3Client, email)
 	handlers := hHttp.NewHandler(lg, db, services)
 
 	// --- init server

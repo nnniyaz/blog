@@ -13,6 +13,7 @@ import (
 	currentUserHandler "github.com/nnniyaz/blog/internal/handlers/http/currentUser"
 	"github.com/nnniyaz/blog/internal/handlers/http/middleware"
 	"github.com/nnniyaz/blog/internal/handlers/http/project"
+	uploadHandler "github.com/nnniyaz/blog/internal/handlers/http/upload"
 	userHandler "github.com/nnniyaz/blog/internal/handlers/http/user"
 	"github.com/nnniyaz/blog/internal/services"
 	"github.com/nnniyaz/blog/pkg/logger"
@@ -32,6 +33,7 @@ type Handler struct {
 	user        *userHandler.HttpDelivery
 	auth        *authHandler.HttpDelivery
 	currentUser *currentUserHandler.HttpDelivery
+	upload      *uploadHandler.HttpDelivery
 }
 
 func NewHandler(l logger.Logger, client *mongo.Client, services *services.Service) *Handler {
@@ -46,6 +48,7 @@ func NewHandler(l logger.Logger, client *mongo.Client, services *services.Servic
 		user:        userHandler.NewHttpDelivery(l, services.User),
 		auth:        authHandler.NewHttpDelivery(l, services.Auth),
 		currentUser: currentUserHandler.NewHttpDelivery(l, services.User),
+		upload:      uploadHandler.NewHttpDelivery(l, services.Upload),
 	}
 }
 
@@ -109,6 +112,15 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 		r.Get("/", h.currentUser.GetCurrentUser)
 		r.Put("/email", h.currentUser.UpdateCurrentUserEmail)
 		r.Put("/password", h.currentUser.UpdateCurrentUserPassword)
+	})
+
+	r.Route("/upload", func(r chi.Router) {
+		r.Use(h.middleware.UserAuth)
+
+		r.Post("/author-avatar", h.upload.UploadAuthor)
+		r.Post("/project", h.upload.UploadProject)
+		r.Post("/article", h.upload.UploadArticle)
+		r.Post("/book", h.upload.UploadBook)
 	})
 
 	r.Route("/about", func(r chi.Router) {

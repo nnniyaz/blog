@@ -28,6 +28,7 @@ const (
 	TXT_USER_ALREADY_AUTHORIZED            TxtKey = 23
 	TXT_USER_ROLE_INVALID                  TxtKey = 24
 	TXT_USER_IS_NOT_ADMIN                  TxtKey = 25
+	TXT_MAX_FILE_SIZE_IS_5MB               TxtKey = 26
 )
 
 var Txts = TxtResource{
@@ -156,6 +157,11 @@ var Txts = TxtResource{
 		RU: `Пользователь не администратор`,
 		EN: `User is not admin`,
 	},
+	TXT_MAX_FILE_SIZE_IS_5MB: MlString{
+		KZ: `Файлдың ең үлкен өлшемі 5 МБ`,
+		RU: `Максимальный размер файла 5 МБ`,
+		EN: `Max file size is 5 MB`,
+	},
 }
 
 func GetTxtKeyAsString(k TxtKey) string {
@@ -210,6 +216,8 @@ func GetTxtKeyAsString(k TxtKey) string {
 		return "user_role_invalid"
 	case TXT_USER_IS_NOT_ADMIN:
 		return "user_is_not_admin"
+	case TXT_MAX_FILE_SIZE_IS_5MB:
+		return "max_file_size_is_5mb"
 
 	default:
 		return ""
