@@ -1,5 +1,5 @@
 export type SuccessResponse<T> = {
-    success: true,
+    success: true
     data: T
 }
 

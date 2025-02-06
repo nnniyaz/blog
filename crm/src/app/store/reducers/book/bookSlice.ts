@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import {Book} from '../../../../domain/book/book'
+import { Book } from '@domain/book/book'
 
 type State = {
     books: Book[]
@@ -13,7 +13,7 @@ const initialState: State = {
     books: [],
     isLoadingGetBooks: false,
     selectedBook: null,
-    isLoadingGetSelectedBook: false
+    isLoadingGetSelectedBook: false,
 }
 
 type SetBooksAction = {
@@ -22,17 +22,17 @@ type SetBooksAction = {
 }
 
 type SetIsLoadingGetBooksAction = {
-    type: string,
+    type: string
     payload: boolean
 }
 
 type SetSelectedBookAction = {
-    type: string,
+    type: string
     payload: Book | null
 }
 
 type SetIsLoadingGetSelectedBookAction = {
-    type: string,
+    type: string
     payload: boolean
 }
 
@@ -49,10 +49,13 @@ export const bookSlice = createSlice({
         setSelectedBook(state, action: SetSelectedBookAction) {
             state.selectedBook = action.payload
         },
-        setIsLoadingGetSelectedBook(state, action: SetIsLoadingGetSelectedBookAction) {
+        setIsLoadingGetSelectedBook(
+            state,
+            action: SetIsLoadingGetSelectedBookAction,
+        ) {
             state.isLoadingGetSelectedBook = action.payload
         },
-    }
+    },
 })
 
 export default bookSlice.reducer

@@ -1,11 +1,14 @@
-import {useDispatch} from 'react-redux'
-import {bindActionCreators} from 'redux'
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import {systemSlice} from '../../app/store/reducers/system/systemSlice'
+import { systemSlice } from '@app/store/reducers/system/systemSlice'
 
 export const useActions = () => {
     const dispatch = useDispatch()
-    return bindActionCreators({
-        ...systemSlice.actions
-    }, dispatch)
+    return bindActionCreators(
+        {
+            ...systemSlice.actions,
+        },
+        dispatch,
+    )
 }

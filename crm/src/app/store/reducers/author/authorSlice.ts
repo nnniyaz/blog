@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import {Author} from '../../../../domain/author/author'
+import { Author } from '@domain/author/author'
 
 type State = {
     author: Author | null
@@ -9,7 +9,7 @@ type State = {
 
 const initialState: State = {
     author: null,
-    isLoadingGetAuthor: false
+    isLoadingGetAuthor: false,
 }
 
 type SetAuthorAction = {
@@ -31,8 +31,8 @@ export const authorSlice = createSlice({
         },
         setIsLoadingGetAuthor: (state, action: SetIsLoadingGetAuthorAction) => {
             state.isLoadingGetAuthor = action.payload
-        }
-    }
+        },
+    },
 })
 
 export default authorSlice.reducer

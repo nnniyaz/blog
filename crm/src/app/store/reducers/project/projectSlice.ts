@@ -1,38 +1,38 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import {Project} from '../../../../domain/project/project'
+import { Project } from '@domain/project/project'
 
 type State = {
-    projects: Project[],
-    isLoadingGetProjects: boolean,
-    selectedProject: Project | null,
-    isLoadingGetSelectedProject: boolean,
+    projects: Project[]
+    isLoadingGetProjects: boolean
+    selectedProject: Project | null
+    isLoadingGetSelectedProject: boolean
 }
 
 const initialState: State = {
     projects: [],
     isLoadingGetProjects: false,
     selectedProject: null,
-    isLoadingGetSelectedProject: false
+    isLoadingGetSelectedProject: false,
 }
 
 type SetProjectsAction = {
-    type: string,
+    type: string
     payload: Project[]
 }
 
 type SetIsLoadingGetProjectsAction = {
-    type: string,
+    type: string
     payload: boolean
 }
 
 type SetSelectedProjectAction = {
-    type: string,
+    type: string
     payload: Project | null
 }
 
 type SetIsLoadingGetSelectedProjectAction = {
-    type: string,
+    type: string
     payload: boolean
 }
 
@@ -43,16 +43,22 @@ export const projectSlice = createSlice({
         setProjects: (state, action: SetProjectsAction) => {
             state.projects = action.payload
         },
-        setIsLoadingGetProjects: (state, action: SetIsLoadingGetProjectsAction) => {
+        setIsLoadingGetProjects: (
+            state,
+            action: SetIsLoadingGetProjectsAction,
+        ) => {
             state.isLoadingGetProjects = action.payload
         },
         setSelectedProject: (state, action: SetSelectedProjectAction) => {
             state.selectedProject = action.payload
         },
-        setIsLoadingGetSelectedProject: (state, action: SetIsLoadingGetSelectedProjectAction) => {
+        setIsLoadingGetSelectedProject: (
+            state,
+            action: SetIsLoadingGetSelectedProjectAction,
+        ) => {
             state.isLoadingGetSelectedProject = action.payload
-        }
-    }
+        },
+    },
 })
 
 export default projectSlice.reducer
