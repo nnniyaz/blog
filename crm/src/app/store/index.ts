@@ -1,4 +1,4 @@
-import {configureStore} from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 
 import authorReducer from './reducers/author/authorSlice'
 import bioReducer from './reducers/bio/bioSlice'
@@ -17,7 +17,7 @@ export const store = configureStore({
         contact: contactReducer,
         project: projectReducer,
         user: userReducer,
-    }
+    },
 })
 
 export type RootState = ReturnType<typeof store.getState>

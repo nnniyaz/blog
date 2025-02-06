@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import {Lang} from '../../../../domain/base/mlString/mlString'
+import { Lang } from '@domain/base/mlString/mlString'
 
 type State = {
     lang: Lang
@@ -9,7 +9,7 @@ type State = {
 
 const initialState: State = {
     lang: Lang.EN,
-    isLoadingChangeLang: false
+    isLoadingChangeLang: false,
 }
 
 type ChangeLangAction = {
@@ -29,10 +29,13 @@ export const systemSlice = createSlice({
         changeLang: (state, action: ChangeLangAction) => {
             state.lang = action.payload
         },
-        setIsLoadingChangeLang: (state, action: SetIsLoadingChangeLangAction) => {
+        setIsLoadingChangeLang: (
+            state,
+            action: SetIsLoadingChangeLangAction,
+        ) => {
             state.isLoadingChangeLang = action.payload
-        }
-    }
+        },
+    },
 })
 
 export default systemSlice.reducer

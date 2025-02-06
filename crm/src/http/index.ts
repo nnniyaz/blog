@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {Lang} from '../domain/base/mlString/mlString'
+import { Lang } from '../domain/base/mlString/mlString'
 
 export enum ApiRoutes {
     // Auth routes
@@ -73,7 +73,10 @@ export enum ApiRoutes {
 }
 
 const validateStatus = (status: number) => {
-    return (status >= 200 && status < 401) || (status > 401 && status !== 403 && status !== 404 && status < 500)
+    return (
+        (status >= 200 && status < 401) ||
+        (status > 401 && status !== 403 && status !== 404 && status < 500)
+    )
 }
 
 export type Request<T> = {
@@ -82,28 +85,28 @@ export type Request<T> = {
     controller?: AbortController
 }
 
-export const $api = (lang: Lang) => axios.create({
-    // @ts-ignore
-    baseURL: import.meta.env.VITE_API_URL || '',
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept-Language': lang
-    },
-    timeout: 120000,
-    timeoutErrorMessage: 'Timeout error',
-    validateStatus: validateStatus
-})
+export const $api = (lang: Lang) =>
+    axios.create({
+        baseURL: import.meta.env.VITE_API_URL || '',
+        withCredentials: true,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang,
+        },
+        timeout: 120000,
+        timeoutErrorMessage: 'Timeout error',
+        validateStatus: validateStatus,
+    })
 
-export const $apiFormData = (lang: Lang) => axios.create({
-    // @ts-ignore
-    baseURL: import.meta.env.VITE_API_URL || '',
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'multipart/form-data',
-        'Accept-Language': lang
-    },
-    timeout: 120000,
-    timeoutErrorMessage: 'Timeout error',
-    validateStatus: validateStatus
-})
+export const $apiFormData = (lang: Lang) =>
+    axios.create({
+        baseURL: import.meta.env.VITE_API_URL || '',
+        withCredentials: true,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Accept-Language': lang,
+        },
+        timeout: 120000,
+        timeoutErrorMessage: 'Timeout error',
+        validateStatus: validateStatus,
+    })

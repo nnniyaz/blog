@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import {Bio} from '../../../../domain/bio/bio'
+import { Bio } from '@domain/bio/bio'
 
 type State = {
     bio: Bio | null
@@ -9,7 +9,7 @@ type State = {
 
 const initialState: State = {
     bio: null,
-    isLoadingGetBio: false
+    isLoadingGetBio: false,
 }
 
 type SetBioAction = {
@@ -31,8 +31,8 @@ export const bioSlice = createSlice({
         },
         setIsLoadingGetBio: (state, action: SetIsLoadingGetBioAction) => {
             state.isLoadingGetBio = action.payload
-        }
-    }
+        },
+    },
 })
 
 export default bioSlice.reducer

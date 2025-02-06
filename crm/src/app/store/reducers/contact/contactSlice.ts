@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import {Contact} from '../../../../domain/contact/contact'
+import { Contact } from '@domain/contact/contact'
 
 type State = {
     contacts: Contact[]
@@ -13,7 +13,7 @@ const initialState: State = {
     contacts: [],
     isLoadingGetContacts: false,
     selectedContact: null,
-    isLoadingGetSelectedContact: false
+    isLoadingGetSelectedContact: false,
 }
 
 type SetContactsAction = {
@@ -43,16 +43,22 @@ export const contactSlice = createSlice({
         setContacts: (state, action: SetContactsAction) => {
             state.contacts = action.payload
         },
-        setIsLoadingGetContacts: (state, action: SetIsLoadingGetContactsAction) => {
+        setIsLoadingGetContacts: (
+            state,
+            action: SetIsLoadingGetContactsAction,
+        ) => {
             state.isLoadingGetSelectedContact = action.payload
         },
         setSelectedContact: (state, action: SetSelectedContactAction) => {
             state.selectedContact = action.payload
         },
-        setIsLoadingSelectedContact: (state, action: SetIsLoadingGetSelectedContactAction) => {
+        setIsLoadingSelectedContact: (
+            state,
+            action: SetIsLoadingGetSelectedContactAction,
+        ) => {
             state.isLoadingGetSelectedContact = action.payload
-        }
-    }
+        },
+    },
 })
 
 export default contactSlice.reducer

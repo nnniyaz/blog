@@ -1,10 +1,10 @@
 export type User = {
-    id: string;
-    email: string;
-    role: UserRole;
-    isDeleted: boolean;
-    createdAt: string;
-    updatedAt: string;
+    id: string
+    email: string
+    role: UserRole
+    isDeleted: boolean
+    createdAt: string
+    updatedAt: string
 }
 
 export enum UserRole {

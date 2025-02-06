@@ -1,9 +1,9 @@
-import {AxiosResponse} from 'axios'
+import { AxiosResponse } from 'axios'
 
-import {MlString} from '../../domain/base/mlString/mlString'
-import {Project} from '../../domain/project/project'
-import {$api, ApiRoutes, Request} from '../index'
-import {ErrorResponse, SuccessResponse} from '../response/response'
+import { MlString } from '@domain/base/mlString/mlString'
+import { Project } from '@domain/project/project'
+import { $api, ApiRoutes, Request } from '../index'
+import { ErrorResponse, SuccessResponse } from '../response/response'
 
 type ProjectServiceGetAllOut = {
     count: number
@@ -40,27 +40,65 @@ type ProjectServiceRestoreIn = {
 }
 
 export class ProjectService {
-    static async getAll(request: Request<null>): Promise<AxiosResponse<SuccessResponse<ProjectServiceGetAllOut> | ErrorResponse>> {
-        return $api(request.lang).post<SuccessResponse<ProjectServiceGetAllOut> | ErrorResponse>(ApiRoutes.PROJECT_GET_ALL, null, {signal: request.controller?.signal})
+    static async getAll(
+        request: Request<null>,
+    ): Promise<
+        AxiosResponse<SuccessResponse<ProjectServiceGetAllOut> | ErrorResponse>
+    > {
+        return $api(request.lang).post<
+            SuccessResponse<ProjectServiceGetAllOut> | ErrorResponse
+        >(ApiRoutes.PROJECT_GET_ALL, null, {
+            signal: request.controller?.signal,
+        })
     }
 
-    static async getById(request: Request<ProjectServiceGetByIdIn>): Promise<AxiosResponse<SuccessResponse<Project> | ErrorResponse>> {
-        return $api(request.lang).post<SuccessResponse<Project> | ErrorResponse>(ApiRoutes.PROJECT_GET_BY_ID.replace(':id', request.body.id), null, {signal: request.controller?.signal})
+    static async getById(
+        request: Request<ProjectServiceGetByIdIn>,
+    ): Promise<AxiosResponse<SuccessResponse<Project> | ErrorResponse>> {
+        return $api(request.lang).post<
+            SuccessResponse<Project> | ErrorResponse
+        >(ApiRoutes.PROJECT_GET_BY_ID.replace(':id', request.body.id), null, {
+            signal: request.controller?.signal,
+        })
     }
 
-    static async create(request: Request<ProjectServiceCreateIn>): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
-        return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(ApiRoutes.PROJECT_CREATE, null, {signal: request.controller?.signal})
+    static async create(
+        request: Request<ProjectServiceCreateIn>,
+    ): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
+        return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(
+            ApiRoutes.PROJECT_CREATE,
+            null,
+            { signal: request.controller?.signal },
+        )
     }
 
-    static async update(request: Request<ProjectServiceUpdateIn>): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
-        return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(ApiRoutes.PROJECT_UPDATE.replace(':id', request.body.id), null, {signal: request.controller?.signal})
+    static async update(
+        request: Request<ProjectServiceUpdateIn>,
+    ): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
+        return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(
+            ApiRoutes.PROJECT_UPDATE.replace(':id', request.body.id),
+            null,
+            { signal: request.controller?.signal },
+        )
     }
 
-    static async delete(request: Request<ProjectServiceDeleteIn>): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
-        return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(ApiRoutes.PROJECT_DELETE.replace(':id', request.body.id), null, {signal: request.controller?.signal})
+    static async delete(
+        request: Request<ProjectServiceDeleteIn>,
+    ): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
+        return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(
+            ApiRoutes.PROJECT_DELETE.replace(':id', request.body.id),
+            null,
+            { signal: request.controller?.signal },
+        )
     }
 
-    static async restore(request: Request<ProjectServiceRestoreIn>): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
-        return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(ApiRoutes.PROJECT_RESTORE.replace(':id', request.body.id), null, {signal: request.controller?.signal})
+    static async restore(
+        request: Request<ProjectServiceRestoreIn>,
+    ): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
+        return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(
+            ApiRoutes.PROJECT_RESTORE.replace(':id', request.body.id),
+            null,
+            { signal: request.controller?.signal },
+        )
     }
 }

@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import {User} from '../../../../domain/user/user'
+import { User } from '@domain/user/user'
 
 type State = {
     users: User[]
@@ -13,7 +13,7 @@ const initialState: State = {
     users: [],
     isLoadingGetUsers: false,
     selectedUser: null,
-    isLoadingGetSelectedUser: false
+    isLoadingGetSelectedUser: false,
 }
 
 type SetUsersAction = {
@@ -49,10 +49,13 @@ export const usersSlice = createSlice({
         setSelectedUser: (state, action: SetSelectedUserAction) => {
             state.selectedUser = action.payload
         },
-        setIsLoadingGetSelectedUser: (state, action: SetIsLoadingGetSelectedUserAction) => {
+        setIsLoadingGetSelectedUser: (
+            state,
+            action: SetIsLoadingGetSelectedUserAction,
+        ) => {
             state.isLoadingGetSelectedUser = action.payload
-        }
-    }
+        },
+    },
 })
 
 export default usersSlice.reducer
