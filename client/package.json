@@ -1,0 +1,31 @@
+{
+    "name": "client",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "format": "prettier --write --cache .",
+        "lint": "next lint --fix",
+        "clean": "npm run format && npm run lint",
+        "dev": "npm run clean && next dev --turbopack",
+        "build": "next build",
+        "start": "next start"
+    },
+    "dependencies": {
+        "@next/font": "^14.2.15",
+        "next": "15.1.6",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "sass": "^1.84.0"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "15.1.6",
+        "prettier": "^3.0.3",
+        "typescript": "^5"
+    }
+}
