@@ -49,3 +49,17 @@ export function NewInternal(req: NextRequest, error: Error) {
         }),
     )
 }
+
+export function NewError(req: NextRequest, error: Error) {
+    return response(
+        req,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        JSON.stringify({
+            messages: error.message,
+            success: false,
+            traceId: req.headers.get('x-trace-id'),
+        }),
+    )
+}
+
+

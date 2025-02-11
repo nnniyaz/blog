@@ -1,5 +1,5 @@
 import { getLocale } from '@lib/utils/locale'
-import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 
 const locales = ['en', 'ru', 'kz']
