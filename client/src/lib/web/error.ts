@@ -1,5 +1,5 @@
 import { HttpStatus } from '@domain/base/http-status-code'
-import { response } from '@lib/response/response'
+import { response } from '@lib/web/response'
 import { NextRequest } from 'next/server'
 
 export function NewBad(req: NextRequest, error: Error) {
