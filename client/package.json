@@ -6,15 +6,17 @@
         "format": "prettier --write --cache .",
         "lint": "next lint --fix",
         "clean": "npm run format && npm run lint",
-        "dev": "npm run clean && next dev --turbopack",
+        "dev": "next dev --turbopack",
         "build": "next build",
         "start": "next start"
     },
     "dependencies": {
+        "mongodb": "^6.13.0",
         "next": "15.1.6",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "sass": "^1.84.0"
+        "sass": "^1.84.0",
+        "uuid": "^11.0.5"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
