@@ -1,4 +1,4 @@
-import { Lang } from '@domain/base/mlString'
+import { Lang } from '@domain/base/ml-string'
 import Blog from '@pages/Blog'
 
 export default function BlogPage() {

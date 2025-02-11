@@ -1,4 +1,4 @@
-import { Lang } from '@domain/base/mlString'
+import { Lang } from '@domain/base/ml-string'
 
 interface HeaderProps {
     lang: Lang

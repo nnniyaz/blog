@@ -1,6 +1,6 @@
 import Footer from '@components/footer'
 import Header from '@components/header'
-import { Lang } from '@domain/base/mlString'
+import { Lang } from '@domain/base/ml-string'
 
 import './layout.scss'
 

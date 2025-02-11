@@ -1,5 +1,5 @@
 import Layout from '@components/layout'
-import { Lang } from '@domain/base/mlString'
+import { Lang } from '@domain/base/ml-string'
 import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
