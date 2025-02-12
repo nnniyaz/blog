@@ -1,0 +1,31 @@
+@use '../../../styles/vars';
+
+.footer {
+    width: 100%;
+    height: 75px;
+    padding: 25px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .footer__contacts {
+        display: flex;
+        gap: 8px;
+        list-style: none;
+    }
+
+    .footer__copyright {
+        text-decoration: underline;
+        text-decoration-thickness: 0.5px;
+        font-size: vars.$small-font-size;
+        color: vars.$primary-font-light-theme;
+
+        &:hover {
+            color: vars.$link-font-hover;
+        }
+
+        &:active {
+            color: vars.$link-font-hover;
+        }
+    }
+}

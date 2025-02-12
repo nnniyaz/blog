@@ -1,0 +1,26 @@
+{
+    "semi": false,
+    "singleQuote": true,
+    "overrides": [
+        {
+            "files": ["*.json5"],
+            "options": {
+                "singleQuote": false,
+                "quoteProps": "preserve"
+            }
+        },
+        {
+            "files": ["*.yml"],
+            "options": {
+                "singleQuote": false
+            }
+        }
+    ],
+    "printWidth": 80,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "plugins": ["@trivago/prettier-plugin-sort-imports"]
+}
