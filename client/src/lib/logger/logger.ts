@@ -1,4 +1,4 @@
-import { currentTimeRFC3339 } from '@lib/time/time'
+import { currentTimeRFC3339 } from '@lib/utils/time'
 import { NextRequest } from 'next/server'
 
 enum LogLevel {

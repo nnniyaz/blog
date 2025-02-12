@@ -6,6 +6,6 @@ interface HomeProps {
     lang: Lang
 }
 
-export default function Home(props: HomeProps) {
+export default async function Home(props: HomeProps) {
     return <div className={classes.home}>{props.lang}</div>
 }

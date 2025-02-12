@@ -1,5 +1,5 @@
 import { Lang } from '@domain/base/ml-string'
-import { getArticleDb } from '@lib/mongo/mongo'
+import { getBookDb } from '@lib/mongo/mongo'
 import { parseIntQueryParam } from '@lib/utils/parse-query-params'
 import { NewError, NewInternal } from '@lib/web/error'
 import { NewSuccess } from '@lib/web/success'
@@ -28,14 +28,14 @@ export async function GET(req: NextRequest) {
             })
         }
 
-        const { collection, error } = await getArticleDb()
+        const { collection, error } = await getBookDb()
         if (error instanceof Error) {
             return NewInternal(req, error)
         }
 
         const cur = collection!.find(filter, { limit: limit, skip: offset })
-        const articles = await cur.toArray()
-        return NewSuccess(req, articles)
+        const books = await cur.toArray()
+        return NewSuccess(req, books)
     } catch (error: unknown) {
         console.error(error)
         if (typeof error === 'string') return NewError(req, new Error(error))

@@ -1,0 +1,15 @@
+@use '../../../styles/vars';
+
+.link {
+    text-decoration: underline;
+    text-decoration-thickness: 0.5px;
+    color: vars.$link-font;
+
+    &:hover {
+        color: vars.$link-font-hover;
+    }
+
+    &:active {
+        color: vars.$link-font-hover;
+    }
+}

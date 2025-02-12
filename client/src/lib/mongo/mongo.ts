@@ -53,7 +53,9 @@ export async function connectToDatabase(): Promise<MongoConnect> {
         }
 
         // Connect to cluster
-        const client: MongoClient = new MongoClient(MONGO_URI, {serverSelectionTimeoutMS: 5000})
+        const client: MongoClient = new MongoClient(MONGO_URI, {
+            serverSelectionTimeoutMS: 100,
+        })
         await client.connect()
 
         // set cache

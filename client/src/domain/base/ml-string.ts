@@ -1,7 +1,8 @@
 export enum Lang {
-    KZ = 'kz',
-    RU = 'ru',
-    EN = 'en',
+    key = 'key',
+    KZ = 'KZ',
+    RU = 'RU',
+    EN = 'EN',
 }
 
 export type MlString = Record<Lang, string>

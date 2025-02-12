@@ -1,0 +1,69 @@
+@use '../../../styles/vars';
+
+.header {
+    width: 100%;
+    height: 120px;
+    padding: 38px 0;
+    display: flex;
+    justify-content: space-between;
+
+    .header__group {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .header__group__author {
+            color: vars.$primary-font-light-theme;
+            font-weight: bold;
+            text-decoration: none;
+
+            &:hover {
+                color: vars.$link-font-hover;
+            }
+
+            &:active {
+                color: vars.$link-font-hover;
+            }
+        }
+
+        .header__group__nav_list {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .header__group__lang__list {
+            height: 15px;
+            display: flex;
+            list-style: none;
+
+            li {
+                display: flex;
+                align-items: center;
+                height: 100%;
+                padding: 0 6px;
+                border-right: 1px solid vars.$primary-font-light-theme;
+
+                &:last-child {
+                    border-right: none;
+                }
+
+                .header__group__lang {
+                    text-decoration: underline;
+                    text-decoration-thickness: 0.5px;
+                    font-size: vars.$small-font-size;
+                    color: vars.$primary-font-light-theme;
+
+                    &:hover {
+                        color: vars.$link-font-hover;
+                    }
+
+                    &:active {
+                        color: vars.$link-font-hover;
+                    }
+                }
+            }
+        }
+    }
+}

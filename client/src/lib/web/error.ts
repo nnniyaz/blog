@@ -7,7 +7,7 @@ export function NewBad(req: NextRequest, error: Error) {
         req,
         HttpStatus.BAD_REQUEST,
         JSON.stringify({
-            messages: error.message,
+            messages: [error.message],
             success: false,
             traceId: req.headers.get('x-trace-id'),
         }),
@@ -19,7 +19,7 @@ export function NewForbidden(req: NextRequest, error: Error) {
         req,
         HttpStatus.FORBIDDEN,
         JSON.stringify({
-            messages: error.message,
+            messages: [error.message],
             success: false,
             traceId: req.headers.get('x-trace-id'),
         }),
@@ -31,7 +31,7 @@ export function NewNotFound(req: NextRequest, error: Error) {
         req,
         HttpStatus.NOT_FOUND,
         JSON.stringify({
-            messages: error.message,
+            messages: [error.message],
             success: false,
             traceId: req.headers.get('x-trace-id'),
         }),
@@ -43,7 +43,7 @@ export function NewInternal(req: NextRequest, error: Error) {
         req,
         HttpStatus.INTERNAL_SERVER_ERROR,
         JSON.stringify({
-            messages: error.message,
+            messages: [error.message],
             success: false,
             traceId: req.headers.get('x-trace-id'),
         }),
@@ -55,11 +55,9 @@ export function NewError(req: NextRequest, error: Error) {
         req,
         HttpStatus.INTERNAL_SERVER_ERROR,
         JSON.stringify({
-            messages: error.message,
+            messages: [error.message],
             success: false,
             traceId: req.headers.get('x-trace-id'),
         }),
     )
 }
-
-
