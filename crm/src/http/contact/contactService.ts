@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios'
 
-import { MlString } from '@domain/base/mlString/mlString'
-import { Contact } from '@domain/contact/contact'
-import { $api, ApiRoutes, Request } from '../index'
-import { ErrorResponse, SuccessResponse } from '../response/response'
+import { MlString } from '@domain/base/mlString/mlString.ts'
+import { Contact } from '@domain/contact/contact.ts'
+import { $api, ApiRoutes, Request } from '@http/index.ts'
+import { ErrorResponse, SuccessResponse } from '@http/response/response.ts'
 
 type ContactServiceGetAllOut = {
     count: number

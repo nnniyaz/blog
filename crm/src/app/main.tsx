@@ -1,4 +1,4 @@
-import { AppRoutes } from '@routes/index'
+import { AppRoutes } from '@/routes'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Bio } from '@domain/bio/bio'
+import { Bio } from '@domain/bio/bio.ts'
 
 type State = {
     bio: Bio | null

@@ -1,4 +1,4 @@
-import { MlString } from '../base/mlString/mlString'
+import { MlString } from '@domain/base/mlString/mlString.ts'
 
 export type Article = {
     id: string

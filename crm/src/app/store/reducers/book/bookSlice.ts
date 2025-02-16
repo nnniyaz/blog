@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Book } from '@domain/book/book'
+import { Book } from '@domain/book/book.ts'
 
 type State = {
     books: Book[]

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Project } from '@domain/project/project'
+import { Project } from '@domain/project/project.ts'
 
 type State = {
     projects: Project[]

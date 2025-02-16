@@ -1,4 +1,6 @@
 dist/
+.next/
+.git/
 LICENSE.md
 package.json
 package-lock.json

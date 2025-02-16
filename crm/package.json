@@ -1,66 +1,44 @@
 {
-    "name": "crm",
-    "private": true,
-    "version": "0.0.0",
-    "type": "module",
-    "scripts": {
-        "format": "prettier --write --cache .",
-        "lint": "eslint --fix .",
-        "clean": "npm run format && npm run lint",
-        "dev": "npm run clean && vite --port 3000",
-        "start": "npm run lint && npm run dev",
-        "build": "tsc -b && vite build",
-        "preview": "vite preview"
-    },
-    "dependencies": {
-        "@reduxjs/toolkit": "^2.5.0",
-        "@tailwindcss/vite": "^4.0.3",
-        "axios": "^1.7.9",
-        "class-variance-authority": "^0.7.1",
-        "clsx": "^2.1.1",
-        "lucide-react": "^0.474.0",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "react-redux": "^9.2.0",
-        "react-router-dom": "^7.1.3",
-        "redux": "^5.0.1",
-        "sass": "^1.83.4",
-        "tailwind-merge": "^3.0.1",
-        "tailwindcss": "^4.0.3",
-        "tailwindcss-animate": "^1.0.7"
-    },
-    "devDependencies": {
-        "@eslint-types/import": "^2.29.1",
-        "@eslint-types/typescript-eslint": "^7.5.0",
-        "@eslint/js": "^9.17.0",
-        "@types/node": "^22.10.7",
-        "@types/react": "^18.3.18",
-        "@types/react-dom": "^18.3.5",
-        "@vitejs/plugin-react": "^4.3.4",
-        "eslint": "^9.19.0",
-        "eslint-plugin-import": "^2.31.0",
-        "eslint-plugin-react-hooks": "^5.1.0",
-        "eslint-plugin-react-refresh": "^0.4.18",
-        "globals": "^15.14.0",
-        "lint-staged": "^15.2.10",
-        "prettier": "^3.0.3",
-        "typescript": "^5.7.3",
-        "typescript-eslint": "^8.18.2",
-        "vite": "^6.0.5",
-        "vite-tsconfig-paths": "^5.1.4"
-    },
-    "lint-staged": {
-        "*": [
-            "prettier --write --cache --ignore-unknown"
-        ],
-        "packages/*/{src,types}/**/*.ts": [
-            "eslint --cache --fix"
-        ],
-        "packages/**/*.d.ts": [
-            "eslint --cache --fix"
-        ],
-        "playground/**/__tests__/**/*.ts": [
-            "eslint --cache --fix"
-        ]
-    }
+  "name": "crm",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write --cache ..",
+    "lint": "eslint --fix .",
+    "clean": "npm run format && npm run lint",
+    "dev": "npm run clean && vite --port 3000",
+    "start": "npm run lint && npm run dev",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@reduxjs/toolkit": "^2.5.0",
+    "axios": "^1.7.9",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.1.3",
+    "redux": "^5.0.1",
+    "sass": "^1.83.4"
+  },
+  "devDependencies": {
+    "@eslint-types/import": "^2.29.1",
+    "@eslint-types/typescript-eslint": "^7.5.0",
+    "@eslint/js": "^9.19.0",
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.19.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.18",
+    "globals": "^15.14.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.22.0",
+    "vite": "^6.1.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "prettier": "^3.0.3"
+  }
 }
