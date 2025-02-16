@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import authorReducer from './reducers/author/authorSlice'
-import bioReducer from './reducers/bio/bioSlice'
-import bookReducer from './reducers/book/bookSlice'
-import contactReducer from './reducers/contact/contactSlice'
-import projectReducer from './reducers/project/projectSlice'
-import systemReducer from './reducers/system/systemSlice'
-import userReducer from './reducers/user/userSlice'
+import authorReducer from './reducers/author/authorSlice.ts'
+import bioReducer from './reducers/bio/bioSlice.ts'
+import bookReducer from './reducers/book/bookSlice.ts'
+import contactReducer from './reducers/contact/contactSlice.ts'
+import projectReducer from './reducers/project/projectSlice.ts'
+import systemReducer from './reducers/system/systemSlice.ts'
+import userReducer from './reducers/user/userSlice.ts'
 
 export const store = configureStore({
     reducer: {

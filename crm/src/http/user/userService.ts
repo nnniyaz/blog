@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios'
 
-import { User, UserRole } from '@domain/user/user'
-import { $api, ApiRoutes, Request } from '../index'
-import { ErrorResponse, SuccessResponse } from '../response/response'
+import { User, UserRole } from '@domain/user/user.ts'
+import { $api, ApiRoutes, Request } from '@http/index.ts'
+import { ErrorResponse, SuccessResponse } from '@http/response/response.ts'
 
 type UserServiceGetAllOut = {
     count: number

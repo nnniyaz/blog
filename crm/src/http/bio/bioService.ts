@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios'
 
-import { MlString } from '@domain/base/mlString/mlString'
-import { Bio } from '@domain/bio/bio'
-import { $api, ApiRoutes, Request } from '../index'
-import { ErrorResponse, SuccessResponse } from '../response/response'
+import { MlString } from '@domain/base/mlString/mlString.ts'
+import { Bio } from '@domain/bio/bio.ts'
+import { $api, ApiRoutes, Request } from '@http/index.ts'
+import { ErrorResponse, SuccessResponse } from '@http/response/response.ts'
 
 type BioServiceGetAllOut = {
     count: number

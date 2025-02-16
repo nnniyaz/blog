@@ -1,0 +1,18 @@
+@use '../../styles/vars';
+
+.layout {
+    width: 1100px;
+    min-height: 100dvh;
+    display: flex;
+
+    .content {
+        flex: 1;
+    }
+}
+
+@media (max-width: vars.$layout-width) {
+    .layout {
+        width: 100%;
+        padding: 0 20px;
+    }
+}

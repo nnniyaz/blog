@@ -5,12 +5,12 @@ import { Provider } from 'react-redux'
 
 import { store } from '@app/store'
 
-import './main.css'
+import './main.scss'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider store={store}>
-            <AppRoutes></AppRoutes>
+            <AppRoutes />
         </Provider>
     </StrictMode>,
 )
