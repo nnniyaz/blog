@@ -1,2 +1,20 @@
 .home {
+    width: 100%;
+    height: 100%;
+    grid-row: 1 / -1;
+
+    .home__bio {
+        width: 60%;
+        height: 100%;
+
+        .home__group__cover {
+            width: 100%;
+            aspect-ratio: 1.5;
+            box-shadow: 0 1px 3px var(--color-adornment);
+            background-color: #333333;
+            block-size: auto;
+            max-inline-size: 100%;
+            max-block-size: 65vh;
+        }
+    }
 }
