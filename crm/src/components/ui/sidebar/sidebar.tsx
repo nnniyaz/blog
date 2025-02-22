@@ -15,7 +15,9 @@ export const Sidebar = ({ lang }: SidebarProps) => {
     }
     return (
         <section className={classes.sidebar}>
-            <h1 className={classes.sidebar__header} onClick={changeTheme}>Blog</h1>
+            <h1 className={classes.sidebar__header} onClick={changeTheme}>
+                {translate(lang, 'blog')}
+            </h1>
             <nav className={classes.sidebar__body}>
                 <ul className={classes.sidebar__body__list}>
                     {RoutesList.map((route) => {
