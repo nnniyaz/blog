@@ -1,0 +1,13 @@
+.link {
+    text-decoration: underline;
+    text-decoration-thickness: 0.5px;
+    color: var(--link-font);
+
+    &:hover {
+        color: var(--link-font-hover);
+    }
+
+    &:active {
+        color: var(--link-font-hover);
+    }
+}

@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 
 import { Author } from '@domain/author/author.ts'
-import { MlString } from '@domain/base/mlString/mlString.ts'
+import { MlString } from '@domain/base/ml-string'
 import { $api, ApiRoutes, Request } from '@http/index.ts'
 import { ErrorResponse, SuccessResponse } from '@http/response/response.ts'
 

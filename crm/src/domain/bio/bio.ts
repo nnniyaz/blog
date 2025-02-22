@@ -1,4 +1,4 @@
-import { MlString } from '@domain/base/mlString/mlString.ts'
+import { MlString } from '@domain/base/ml-string'
 
 export type Bio = {
     id: string
