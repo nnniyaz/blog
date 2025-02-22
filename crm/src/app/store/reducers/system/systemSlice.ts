@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Lang } from '@domain/base/mlString/mlString.ts'
+import { Lang } from '@domain/base/ml-string'
 
 type State = {
     lang: Lang

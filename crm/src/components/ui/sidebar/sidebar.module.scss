@@ -1,5 +1,23 @@
-@use '../../../styles/vars';
-
 .sidebar {
     width: 200px;
+    display: flex;
+    flex-direction: column;
+
+    .sidebar__header {
+        padding: 20px 0;
+    }
+
+    .sidebar__body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .sidebar__body__list {
+            width: 100%;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
 }

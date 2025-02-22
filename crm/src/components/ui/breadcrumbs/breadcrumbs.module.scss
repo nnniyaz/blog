@@ -1,0 +1,33 @@
+.crumbs ol {
+    list-style-type: none;
+    padding-left: 0;
+
+    .crumb {
+        display: inline-block;
+        color: var(--primary-font);
+
+        a {
+            text-decoration: none;
+            color: var(--secondary-font);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &::before {
+            display: inline-block;
+            content: '•';
+            color: var(--secondary-font);
+            padding: 0 10px;
+        }
+
+        &:first-child::before {
+            display: none;
+        }
+
+        &:last-child::before {
+            color: var(--primary-font);
+        }
+    }
+}

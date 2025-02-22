@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { Lang } from '@domain/base/mlString/mlString.ts'
+import { Lang } from '@domain/base/ml-string'
 
 export enum ApiRoutes {
     // Auth routes

@@ -8,9 +8,5 @@ export const SidebarMobile = () => {
         setCollapsed(!collapsed)
     }
 
-    return (
-        <Drawer open={!collapsed} onClose={toggleCollapsed}>
-
-        </Drawer>
-    )
+    return <Drawer open={!collapsed} onClose={toggleCollapsed}></Drawer>
 }

@@ -1,0 +1,36 @@
+:root {
+    /* Layout width */
+    --layout-width: 1000px;
+    --sidebar-width: 200px;
+
+    /* Font sizes */
+    --h1-font-size: 2em;
+    --h2-font-size: 1.5em;
+    --h3-font-size: 1.17em;
+    --regular-font-size: 16px;
+    --small-font-size: 12px;
+
+    /* ------------------- Light Theme ------------------- */
+
+    /* Background colors light */
+    --primary-bg: #fff;
+
+    /* Text colors light */
+    --primary-font: #000;
+    --secondary-font: rgba(0, 0, 0, 0.5);
+
+    /* Link colors */
+    --link-font: #0078e8;
+    --link-font-hover: #f40008;
+}
+
+.dark-theme {
+    /* -------------------- Dark Theme ------------------- */
+
+    /* Background colors dark */
+    --primary-bg: #000;
+
+    /* Text colors dark */
+    --primary-font: #fff;
+    --secondary-font: rgba(255, 255, 255, 0.5);
+}

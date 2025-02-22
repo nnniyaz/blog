@@ -1,18 +1,24 @@
-@use '../../styles/vars';
+$sidebar-width: var(--sidebar-width);
 
 .layout {
-    width: 1100px;
+    width: var(--layout-width);
     min-height: 100dvh;
     display: flex;
 
     .content {
+        padding: 40px 0;
+        width: calc(100% - $sidebar-width);
         flex: 1;
     }
 }
 
-@media (max-width: vars.$layout-width) {
+@media (max-width: var(--layout-width)) {
     .layout {
         width: 100%;
         padding: 0 20px;
+
+        .content {
+            width: 100%;
+        }
     }
 }

@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 
-import { MlString } from '@domain/base/mlString/mlString.ts'
+import { MlString } from '@domain/base/ml-string'
 import { Bio } from '@domain/bio/bio.ts'
 import { $api, ApiRoutes, Request } from '@http/index.ts'
 import { ErrorResponse, SuccessResponse } from '@http/response/response.ts'

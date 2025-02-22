@@ -1,6 +1,10 @@
 dist/
 .next/
 .git/
+.gitignore
+client/
+README.md
+SECURITY.md
 LICENSE.md
 package.json
 package-lock.json
