@@ -10,12 +10,9 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ lang }: SidebarProps) => {
-    const changeTheme = () => {
-        document.body.classList.toggle('dark-theme')
-    }
     return (
         <section className={classes.sidebar}>
-            <h1 className={classes.sidebar__header} onClick={changeTheme}>
+            <h1 className={classes.sidebar__header}>
                 {translate(lang, 'blog')}
             </h1>
             <nav className={classes.sidebar__body}>
