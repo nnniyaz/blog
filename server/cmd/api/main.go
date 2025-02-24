@@ -31,7 +31,7 @@ import (
 //	@contact.name	API Support
 //	@contact.url	https://t.me/niyaznassyrov
 
-//	@host		http://localhost:8080
+//	@host		https://api.nassyrov.net
 //	@schemes	https
 
 // @securityDefinitions.apikey	ApiKeyAuth

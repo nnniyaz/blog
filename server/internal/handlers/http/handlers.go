@@ -4,6 +4,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	_ "github.com/nnniyaz/blog/internal/docs"
 	"github.com/nnniyaz/blog/internal/handlers/http/article"
 	authHandler "github.com/nnniyaz/blog/internal/handlers/http/auth"
 	"github.com/nnniyaz/blog/internal/handlers/http/author"
@@ -77,8 +78,7 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 	} else {
 		r.Use(cors.Handler(cors.Options{
 			AllowedOrigins: []string{
-				"",
-				"",
+				"admin.nassyrov.net",
 			},
 			AllowedMethods: []string{
 				http.MethodHead,
@@ -125,93 +125,77 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 
 	r.Route("/about", func(r chi.Router) {
 		r.Route("/author", func(r chi.Router) {
-			r.Get("/{id}", h.author.GetAuthor)
-
 			r.Use(h.middleware.UserAuth)
-
 			r.Post("/", h.author.CreateAuthor)
 			r.Put("/{id}", h.author.UpdateAuthor)
-			r.Delete("/{id}", h.author.DeleteAuthor)
 			r.Put("/restore/{id}", h.author.RestoreAuthor)
+			r.Delete("/{id}", h.author.DeleteAuthor)
+			r.Get("/{id}", h.author.GetAuthor)
 			r.With(h.middleware.PaginationParams).Get("/", h.author.GetAllAuthors)
 		})
 
 		r.Route("/bio", func(r chi.Router) {
-			r.Get("/{id}", h.bio.GetBio)
-
 			r.Use(h.middleware.UserAuth)
-
 			r.Post("/", h.bio.CreateBio)
 			r.Put("/{id}", h.bio.UpdateBio)
-			r.Delete("/{id}", h.bio.DeleteBio)
 			r.Put("/restore/{id}", h.bio.RestoreBio)
+			r.Delete("/{id}", h.bio.DeleteBio)
+			r.Get("/{id}", h.bio.GetBio)
 			r.Get("/active", h.bio.GetActiveBio)
 			r.Get("/", h.bio.GetAllBios)
 		})
 
 		r.Route("/contact", func(r chi.Router) {
-			r.With(h.middleware.PaginationParams).Get("/", h.contact.GetAllContacts)
-
 			r.Use(h.middleware.UserAuth)
-
 			r.Post("/", h.contact.CreateContact)
 			r.Put("/{id}", h.contact.UpdateContact)
-			r.Delete("/{id}", h.contact.DeleteContact)
 			r.Put("/restore/{id}", h.contact.RestoreContact)
+			r.Delete("/{id}", h.contact.DeleteContact)
 			r.Get("/{id}", h.contact.GetContact)
+			r.With(h.middleware.PaginationParams).Get("/", h.contact.GetAllContacts)
 		})
 	})
 
 	r.Route("/project", func(r chi.Router) {
-		r.With(h.middleware.PaginationParams).Get("/", h.project.GetAllProjects)
-
 		r.Use(h.middleware.UserAuth)
-
 		r.Post("/", h.project.CreateProject)
 		r.Put("/{id}", h.project.UpdateProject)
-		r.Delete("/{id}", h.project.DeleteProject)
 		r.Put("/restore/{id}", h.project.RestoreProject)
+		r.Delete("/{id}", h.project.DeleteProject)
 		r.Get("/{id}", h.project.GetProject)
+		r.With(h.middleware.PaginationParams).Get("/", h.project.GetAllProjects)
 	})
 
 	r.Route("/article", func(r chi.Router) {
-		r.With(h.middleware.PaginationParams).Get("/", h.article.GetAllArticles)
-
 		r.Use(h.middleware.UserAuth)
-
 		r.Post("/", h.article.CreateArticle)
 		r.Put("/{id}", h.article.UpdateArticle)
-		r.Delete("/{id}", h.article.DeleteArticle)
 		r.Put("/restore/{id}", h.article.RestoreArticle)
+		r.Delete("/{id}", h.article.DeleteArticle)
 		r.Get("/{id}", h.article.GetArticle)
+		r.With(h.middleware.PaginationParams).Get("/", h.article.GetAllArticles)
 	})
 
 	r.Route("/book", func(r chi.Router) {
-		r.With(h.middleware.PaginationParams).Get("/", h.book.GetAllBooks)
-
 		r.Use(h.middleware.UserAuth)
-
 		r.Post("/", h.book.CreateBook)
 		r.Put("/{id}", h.book.UpdateBook)
-		r.Delete("/{id}", h.book.DeleteBook)
 		r.Put("/restore/{id}", h.book.RestoreBook)
+		r.Delete("/{id}", h.book.DeleteBook)
 		r.Get("/{id}", h.book.GetBook)
+		r.With(h.middleware.PaginationParams).Get("/", h.book.GetAllBooks)
 	})
 
 	r.Route("/user", func(r chi.Router) {
-		r.Use(h.middleware.UserAuth)
-
-		r.Put("/", h.user.GetAllUsers)
-		r.Put("/{id}", h.user.GetUser)
-
 		r.Use(h.middleware.AdminCheck)
-
 		r.Post("/", h.user.CreateUser)
 		r.Put("/email/{id}", h.user.UpdateUserEmail)
 		r.Put("/password/{id}", h.user.UpdateUserPassword)
 		r.Put("/role/{id}", h.user.UpdateUserRole)
-		r.Delete("/{id}", h.user.DeleteUser)
 		r.Put("/restore/{id}", h.user.RestoreUser)
+		r.Delete("/{id}", h.user.DeleteUser)
+		r.Get("/{id}", h.user.GetUser)
+		r.Get("/", h.user.GetAllUsers)
 	})
 
 	return r

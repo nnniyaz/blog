@@ -19,6 +19,8 @@ spec:
           env:
             - name: IS_DEV_MODE
               value: "true"
+            - name: PORT
+              value: "8080"
             - name: SMTP_USER
               valueFrom:
                 secretKeyRef:
@@ -44,6 +46,11 @@ spec:
                 secretKeyRef:
                   name: blog-secret
                   key: MONGO_URI
+            - name: SPACE_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: blog-secret
+                  key: SPACE_BUCKET
             - name: SPACE_KEY
               valueFrom:
                 secretKeyRef:
@@ -77,4 +84,3 @@ spec:
           ports:
             - containerPort: 8080
       dnsPolicy: ClusterFirstWithHostNet
-

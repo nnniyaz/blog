@@ -1,0 +1,1509 @@
+definitions:
+  articleHandler.CreateArticleIn:
+    type: object
+  articleHandler.UpdateArticleIn:
+    type: object
+  authHandler.LoginIn:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  authorHandler.CreateAuthorIn:
+    type: object
+  authorHandler.UpdateAuthorIn:
+    type: object
+  bioHandler.CreateBioIn:
+    type: object
+  bioHandler.UpdateBioIn:
+    type: object
+  bookHandler.CreateBookIn:
+    type: object
+  bookHandler.UpdateBookIn:
+    type: object
+  contactHandler.CreateContactIn:
+    type: object
+  contactHandler.UpdateContactIn:
+    type: object
+  currentUserHandler.GetCurrentUserOut:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      isDeleted:
+        type: boolean
+      updatedAt:
+        type: string
+    type: object
+  currentUserHandler.UpdateCurrentUserEmailIn:
+    properties:
+      email:
+        type: string
+    type: object
+  currentUserHandler.UpdateCurrentUserPasswordIn:
+    properties:
+      password:
+        type: string
+    type: object
+  projectHandler.CreateProjectIn:
+    type: object
+  projectHandler.UpdateProjectIn:
+    type: object
+  response.Error:
+    properties:
+      messages:
+        example:
+          - error message
+        items:
+          type: string
+        type: array
+      success:
+        example: false
+        type: boolean
+      traceId:
+        example: string
+        type: string
+    type: object
+  response.Success:
+    properties:
+      data: {}
+      success:
+        example: true
+        type: boolean
+      traceId:
+        example: string
+        type: string
+    type: object
+  userHandler.CreateUserIn:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+    type: object
+  userHandler.GetUserOut:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      isDeleted:
+        type: boolean
+      updatedAt:
+        type: string
+    type: object
+  userHandler.UpdateUserEmailIn:
+    properties:
+      email:
+        type: string
+    type: object
+  userHandler.UpdateUserPasswordIn:
+    properties:
+      password:
+        type: string
+    type: object
+  userHandler.UpdateUserRoleIn:
+    properties:
+      role:
+        type: string
+    type: object
+host: https://api.nassyrov.net
+info:
+  contact:
+    name: API Support
+    url: https://t.me/niyaznassyrov
+  description: Detailed info about all endpoints
+  title: Personal Blog API
+  version: 0.0.1
+paths:
+  /article:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Offset
+          in: query
+          name: offset
+          type: integer
+        - description: Limit
+          in: query
+          name: limit
+          type: integer
+        - description: Is deleted
+          in: query
+          name: is_deleted
+          type: boolean
+        - description: Search
+          in: query
+          name: search
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get all articles
+      tags:
+        - Articles
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Create Article Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/articleHandler.CreateArticleIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Create article
+      tags:
+        - Articles
+  /article/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Article ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Delete article
+      tags:
+        - Articles
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Article ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get article
+      tags:
+        - Articles
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Article ID
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Update Article Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/articleHandler.UpdateArticleIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update article
+      tags:
+        - Articles
+  /article/restore/{id}:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Article ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Restore article
+      tags:
+        - Articles
+  /auth/login:
+    post:
+      consumes:
+        - application/json
+      description: This can be done by a user who has an account
+      parameters:
+        - description: Login information
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/authHandler.LoginIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Login
+      tags:
+        - Authorization
+  /auth/logout:
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Logout
+      tags:
+        - Authorization
+  /author:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Offset
+          in: query
+          name: offset
+          type: integer
+        - description: Limit
+          in: query
+          name: limit
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get authors
+      tags:
+        - Author
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Create Author Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/authorHandler.CreateAuthorIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Create author
+      tags:
+        - Author
+  /author/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Author ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Delete author
+      tags:
+        - Author
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Author ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get author
+      tags:
+        - Author
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Author ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Restore author
+      tags:
+        - Author
+  /bio:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Offset
+          in: query
+          name: offset
+          type: integer
+        - description: Limit
+          in: query
+          name: limit
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get bios
+      tags:
+        - Bio
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Create Bio Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/bioHandler.CreateBioIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Create bio
+      tags:
+        - Bio
+  /bio/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Bio ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Delete bio
+      tags:
+        - Bio
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Bio ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get bio
+      tags:
+        - Bio
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Bio ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Restore bio
+      tags:
+        - Bio
+  /bio/active:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get active bio
+      tags:
+        - Bio
+  /book:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Offset
+          in: query
+          name: offset
+          type: integer
+        - description: Limit
+          in: query
+          name: limit
+          type: integer
+        - description: Is deleted
+          in: query
+          name: is_deleted
+          type: boolean
+        - description: Search Title, Description, Author
+          in: query
+          name: search
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get books by filters
+      tags:
+        - Book
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Create Book Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/bookHandler.CreateBookIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Create book
+      tags:
+        - Book
+  /book/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Book ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Delete book
+      tags:
+        - Book
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Book ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get book
+      tags:
+        - Book
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Book ID
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Update Book Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/bookHandler.UpdateBookIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update book
+      tags:
+        - Book
+  /book/restore/{id}:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Book ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Restore book
+      tags:
+        - Book
+  /contact:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Offset
+          in: query
+          name: offset
+          type: integer
+        - description: Limit
+          in: query
+          name: limit
+          type: integer
+        - description: Is Deleted
+          in: query
+          name: isDeleted
+          type: boolean
+        - description: Search
+          in: query
+          name: search
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get all contacts
+      tags:
+        - Contacts
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Create Contact Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/contactHandler.CreateContactIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Create contact
+      tags:
+        - Contacts
+  /contact/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Contact ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Delete contact
+      tags:
+        - Contacts
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Contact ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get contact by ID
+      tags:
+        - Contacts
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Contact ID
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Update Contact Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/contactHandler.UpdateContactIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update contact
+      tags:
+        - Contacts
+  /contact/restore/{id}:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Contact ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Restore contact
+      tags:
+        - Contacts
+  /me:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/currentUserHandler.GetCurrentUserOut"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get current user
+      tags:
+        - Me
+  /me/email:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Email
+          in: body
+          name: email
+          required: true
+          schema:
+            $ref: "#/definitions/currentUserHandler.UpdateCurrentUserEmailIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update current user email
+      tags:
+        - Me
+  /me/password:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Password
+          in: body
+          name: password
+          required: true
+          schema:
+            $ref: "#/definitions/currentUserHandler.UpdateCurrentUserPasswordIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update current user password
+      tags:
+        - Me
+  /project:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Offset
+          in: query
+          name: offset
+          type: integer
+        - description: Limit
+          in: query
+          name: limit
+          type: integer
+        - description: Is Deleted
+          in: query
+          name: isDeleted
+          type: boolean
+        - description: Search
+          in: query
+          name: search
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Find all projects
+      tags:
+        - Project
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Create Project Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/projectHandler.CreateProjectIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Create project
+      tags:
+        - Project
+  /project/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Project ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Delete project
+      tags:
+        - Project
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Project ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Find project by ID
+      tags:
+        - Project
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Project ID
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Update Project Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/projectHandler.UpdateProjectIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update project
+      tags:
+        - Project
+  /project/restore/{id}:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Project ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Restore project
+      tags:
+        - Project
+  /upload/article:
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: file to upload
+          in: formData
+          name: data
+          required: true
+          type: file
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Upload article
+      tags:
+        - Upload
+  /upload/author-avatar:
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: file to upload
+          in: formData
+          name: data
+          required: true
+          type: file
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Upload author-avatar
+      tags:
+        - Upload
+  /upload/book:
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: file to upload
+          in: formData
+          name: data
+          required: true
+          type: file
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Upload book
+      tags:
+        - Upload
+  /upload/project:
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: file to upload
+          in: formData
+          name: data
+          required: true
+          type: file
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Upload project
+      tags:
+        - Upload
+  /user:
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Limit
+          in: query
+          name: limit
+          type: integer
+        - description: Offset
+          in: query
+          name: offset
+          type: integer
+        - description: Is Deleted
+          in: query
+          name: isDeleted
+          type: boolean
+        - description: Search
+          in: query
+          name: search
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get users
+      tags:
+        - User
+    post:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: Create User Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/userHandler.CreateUserIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Create user
+      tags:
+        - User
+  /user/{id}:
+    delete:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Delete user
+      tags:
+        - User
+    get:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/userHandler.GetUserOut"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Get user
+      tags:
+        - User
+  /user/email/{id}:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Update User Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/userHandler.UpdateUserEmailIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update user
+      tags:
+        - User
+  /user/password/{id}:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Update User Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/userHandler.UpdateUserPasswordIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update user
+      tags:
+        - User
+  /user/restore/{id}:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Restore user
+      tags:
+        - User
+  /user/role/{id}:
+    put:
+      consumes:
+        - application/json
+      description: This can only be done by the logged-in user.
+      parameters:
+        - description: User ID
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Update User Structure
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/userHandler.UpdateUserRoleIn"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/response.Success"
+        default:
+          description: ""
+          schema:
+            $ref: "#/definitions/response.Error"
+      summary: Update user
+      tags:
+        - User
+schemes:
+  - https
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Cookie
+    type: apiKey
+swagger: "2.0"

@@ -230,7 +230,7 @@ type GetAllUsersOut struct {
 	Count int64         `json:"count"`
 }
 
-func newGetUsersOut(users []*user.User, count int64) *GetAllUsersOut {
+func newGetAllUsersOut(users []*user.User, count int64) *GetAllUsersOut {
 	var usersOut []*GetUserOut
 	for _, u := range users {
 		usersOut = append(usersOut, newGetUserOut(u))
@@ -252,7 +252,7 @@ func newGetUsersOut(users []*user.User, count int64) *GetAllUsersOut {
 //	@Param			offset		query		int		false	"Offset"
 //	@Param			isDeleted	query		bool	false	"Is Deleted"
 //	@Param			search		query		string	false	"Search"
-//	@Success		200			{object}	GetUsersOut{GetAllUsersOut}
+//	@Success		200			{object}	response.Success{GetAllUsersOut}
 //	@Failure		default		{object}	response.Error
 //	@Router			/user [get]
 func (hd *HttpDelivery) GetAllUsers(w http.ResponseWriter, r *http.Request) {
@@ -265,5 +265,5 @@ func (hd *HttpDelivery) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 		response.NewError(hd.logger, w, r, err)
 		return
 	}
-	response.NewSuccess(hd.logger, w, r, newGetUsersOut(users, count))
+	response.NewSuccess(hd.logger, w, r, newGetAllUsersOut(users, count))
 }
