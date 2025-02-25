@@ -17,7 +17,10 @@ export const Breadcrumbs = ({ lang }: BreadcrumbsProps) => {
             <ol>
                 {pathname.map((item, index) => {
                     const route = RoutesList.find((route) => {
-                        return matchRoute(route.path, `/${pathname.slice(0, index + 1).join('/')}`)
+                        return matchRoute(
+                            route.path,
+                            `/${pathname.slice(0, index + 1).join('/')}`,
+                        )
                     })
 
                     if (!route) {

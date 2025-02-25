@@ -17,35 +17,31 @@ export const Settings = () => {
                     className={classes.select}
                     popupClassName={classes.select__dropdown}
                     defaultValue={lang}
-                    options={
-                        Object.values(Lang).map((lang) => ({
-                            label: translate(lang, lang),
-                            value: lang
-                        }))
-                    }
+                    options={Object.values(Lang).map((lang) => ({
+                        label: translate(lang, lang),
+                        value: lang,
+                    }))}
                 />
             </div>
 
             <div className={classes.settings__group}>
                 <h3>{translate(lang, 'select_theme')}</h3>
-                {
-                    ['light', 'dark'].map((t) => (
-                        <div key={t} className={classes.radio__input__group}>
-                            <input
-                                className={classes.radio__input}
-                                type={'radio'}
-                                name={'theme'}
-                                id={t}
-                                value={t}
-                                checked={theme === t}
-                                onChange={() => setTheme(t as 'light' | 'dark')}
-                            />
-                            <label htmlFor={t}>
-                                {translate(lang, t + '_theme')}
-                            </label>
-                        </div>
-                    ))
-                }
+                {['light', 'dark'].map((t) => (
+                    <div key={t} className={classes.radio__input__group}>
+                        <input
+                            className={classes.radio__input}
+                            type={'radio'}
+                            name={'theme'}
+                            id={t}
+                            value={t}
+                            checked={theme === t}
+                            onChange={() => setTheme(t as 'light' | 'dark')}
+                        />
+                        <label htmlFor={t}>
+                            {translate(lang, t + '_theme')}
+                        </label>
+                    </div>
+                ))}
             </div>
         </>
     )

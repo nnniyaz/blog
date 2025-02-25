@@ -16,7 +16,5 @@ export const PageHeader = ({ lang }: PageHeaderProps) => {
     if (!route) {
         return 'Page header not identified'
     }
-    return (
-        <h2>{translate(lang, route.name)}</h2>
-    )
+    return <h2>{translate(lang, route.name)}</h2>
 }

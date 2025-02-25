@@ -11,8 +11,8 @@ export const Layout = () => {
         <main className={classes.layout}>
             <Sidebar lang={lang} />
             <section className={classes.content}>
-                <Breadcrumbs lang={lang}/>
-                <PageHeader lang={lang}/>
+                <Breadcrumbs lang={lang} />
+                <PageHeader lang={lang} />
                 <Outlet />
             </section>
         </main>
