@@ -2,10 +2,13 @@ package userService
 
 import (
 	"context"
+	"errors"
 	"github.com/nnniyaz/blog/internal/domain/base/email"
 	"github.com/nnniyaz/blog/internal/domain/base/uuid"
 	"github.com/nnniyaz/blog/internal/domain/user"
+	"github.com/nnniyaz/blog/internal/domain/user/exceptions"
 	"github.com/nnniyaz/blog/internal/repos"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type UserService interface {
@@ -28,8 +31,16 @@ func NewUserService(userRepo repos.User) UserService {
 	return &userService{repo: userRepo}
 }
 
-func (s *userService) Create(ctx context.Context, email, password, role string) error {
-	u, err := user.NewUser(email, password, role)
+func (s *userService) Create(ctx context.Context, rawEmail, password, role string) error {
+	foundUser, err := s.repo.FindByEmail(ctx, email.Email(rawEmail))
+	if err != nil && !errors.Is(err, mongo.ErrNoDocuments) {
+		return err
+	}
+	if foundUser != nil {
+		return exceptions.ErrUserWithEmailExists
+	}
+
+	u, err := user.NewUser(rawEmail, password, role)
 	if err != nil {
 		return err
 	}

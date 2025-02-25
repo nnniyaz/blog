@@ -29,6 +29,7 @@ const (
 	TXT_USER_ROLE_INVALID                  TxtKey = 24
 	TXT_USER_IS_NOT_ADMIN                  TxtKey = 25
 	TXT_MAX_FILE_SIZE_IS_5MB               TxtKey = 26
+	TXT_USER_WITH_EMAIL_EXISTS             TxtKey = 27
 )
 
 var Txts = TxtResource{
@@ -162,6 +163,11 @@ var Txts = TxtResource{
 		RU: `Максимальный размер файла 5 МБ`,
 		EN: `Max file size is 5 MB`,
 	},
+	TXT_USER_WITH_EMAIL_EXISTS: MlString{
+		KZ: `Бұндай email-мен пайдаланушы бар`,
+		RU: `Пользователь с таким email уже существует`,
+		EN: `User with this email exists`,
+	},
 }
 
 func GetTxtKeyAsString(k TxtKey) string {
@@ -218,6 +224,8 @@ func GetTxtKeyAsString(k TxtKey) string {
 		return "user_is_not_admin"
 	case TXT_MAX_FILE_SIZE_IS_5MB:
 		return "max_file_size_is_5mb"
+	case TXT_USER_WITH_EMAIL_EXISTS:
+		return "user_with_email_exists"
 
 	default:
 		return ""
