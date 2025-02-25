@@ -19,7 +19,7 @@ func NewRepoSession(client *mongo.Client) *SessionRepo {
 }
 
 func (r *SessionRepo) Coll() *mongo.Collection {
-	return r.client.Database("blog").Collection("sessions")
+	return r.client.Database("main").Collection("sessions")
 }
 
 type mongoSession struct {

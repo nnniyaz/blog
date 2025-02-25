@@ -1,1975 +1,2291 @@
 {
-  "schemes": ["https"],
-  "swagger": "2.0",
-  "info": {
-    "description": "Detailed info about all endpoints",
-    "title": "Personal Blog API",
-    "contact": {
-      "name": "API Support",
-      "url": "https://t.me/niyaznassyrov"
+    "schemes": [
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Detailed info about all endpoints",
+        "title": "Personal Blog API",
+        "contact": {
+            "name": "API Support",
+            "url": "https://t.me/niyaznassyrov"
+        },
+        "version": "0.0.1"
     },
-    "version": "0.0.1"
-  },
-  "host": "https://api.nassyrov.net",
-  "paths": {
-    "/article": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Articles"],
-        "summary": "Get all articles",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "Limit",
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "description": "Is deleted",
-            "name": "is_deleted",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Search",
-            "name": "search",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
+    "host": "https://api.nassyrov.net",
+    "paths": {
+        "/article": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all articles",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Is deleted",
+                        "name": "is_deleted",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Create article",
+                "parameters": [
+                    {
+                        "description": "Create Article Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/articleHandler.CreateArticleIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
             }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
+        },
+        "/article/restore/{id}": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Restore article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
             }
-          }
+        },
+        "/article/{id}": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Update article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Article Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/articleHandler.UpdateArticleIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Delete article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "description": "This can be done by a user who has an account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Login information",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/authHandler.LoginIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Logout",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/author": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Get authors",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Create author",
+                "parameters": [
+                    {
+                        "description": "Create Author Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/authorHandler.CreateAuthorIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/author/{id}": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Get author",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Restore author",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Delete author",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/bio": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bio"
+                ],
+                "summary": "Get bios",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bio"
+                ],
+                "summary": "Create bio",
+                "parameters": [
+                    {
+                        "description": "Create Bio Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bioHandler.CreateBioIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/bio/active": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bio"
+                ],
+                "summary": "Get active bio",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/bio/{id}": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bio"
+                ],
+                "summary": "Get bio",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bio ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bio"
+                ],
+                "summary": "Restore bio",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bio ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bio"
+                ],
+                "summary": "Delete bio",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bio ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/book": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Get books by filters",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Is deleted",
+                        "name": "is_deleted",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search Title, Description, Author",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Create book",
+                "parameters": [
+                    {
+                        "description": "Create Book Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bookHandler.CreateBookIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/book/restore/{id}": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Restore book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/book/{id}": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Get book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Update book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Book Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/bookHandler.UpdateBookIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Delete book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/contact": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Get all contacts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Is Deleted",
+                        "name": "isDeleted",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Create contact",
+                "parameters": [
+                    {
+                        "description": "Create Contact Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/contactHandler.CreateContactIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/contact/restore/{id}": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Restore contact",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Contact ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/contact/{id}": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Get contact by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Contact ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Update contact",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Contact ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Contact Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/contactHandler.UpdateContactIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Contacts"
+                ],
+                "summary": "Delete contact",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Contact ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/me": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Me"
+                ],
+                "summary": "Get current user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/currentUserHandler.GetCurrentUserOut"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/me/email": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Me"
+                ],
+                "summary": "Update current user email",
+                "parameters": [
+                    {
+                        "description": "Email",
+                        "name": "email",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/currentUserHandler.UpdateCurrentUserEmailIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/me/password": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Me"
+                ],
+                "summary": "Update current user password",
+                "parameters": [
+                    {
+                        "description": "Password",
+                        "name": "password",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/currentUserHandler.UpdateCurrentUserPasswordIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/project": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Find all projects",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Is Deleted",
+                        "name": "isDeleted",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Create project",
+                "parameters": [
+                    {
+                        "description": "Create Project Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/projectHandler.CreateProjectIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/project/restore/{id}": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Restore project",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/project/{id}": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Find project by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Update project",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Project Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/projectHandler.UpdateProjectIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Delete project",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload/article": {
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload article",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file to upload",
+                        "name": "data",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload/author-avatar": {
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload author-avatar",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file to upload",
+                        "name": "data",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload/book": {
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload book",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file to upload",
+                        "name": "data",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload/project": {
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload project",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file to upload",
+                        "name": "data",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get users",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Is Deleted",
+                        "name": "isDeleted",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create user",
+                "parameters": [
+                    {
+                        "description": "Create User Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userHandler.CreateUserIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/email/{id}": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update User Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userHandler.UpdateUserEmailIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/password/{id}": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update User Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userHandler.UpdateUserPasswordIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/restore/{id}": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Restore user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/role/{id}": {
+            "put": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update User Structure",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userHandler.UpdateUserRoleIn"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userHandler.GetUserOut"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This can only be done by the logged-in user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
         }
-      },
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Articles"],
-        "summary": "Create article",
-        "parameters": [
-          {
-            "description": "Create Article Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/articleHandler.CreateArticleIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
     },
-    "/article/restore/{id}": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Articles"],
-        "summary": "Restore article",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Article ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
+    "definitions": {
+        "articleHandler.CreateArticleIn": {
+            "type": "object"
+        },
+        "articleHandler.UpdateArticleIn": {
+            "type": "object"
+        },
+        "authHandler.LoginIn": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
             }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
+        },
+        "authorHandler.CreateAuthorIn": {
+            "type": "object"
+        },
+        "authorHandler.UpdateAuthorIn": {
+            "type": "object"
+        },
+        "bioHandler.CreateBioIn": {
+            "type": "object"
+        },
+        "bioHandler.UpdateBioIn": {
+            "type": "object"
+        },
+        "bookHandler.CreateBookIn": {
+            "type": "object"
+        },
+        "bookHandler.UpdateBookIn": {
+            "type": "object"
+        },
+        "contactHandler.CreateContactIn": {
+            "type": "object"
+        },
+        "contactHandler.UpdateContactIn": {
+            "type": "object"
+        },
+        "currentUserHandler.GetCurrentUserOut": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isDeleted": {
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
             }
-          }
+        },
+        "currentUserHandler.UpdateCurrentUserEmailIn": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "currentUserHandler.UpdateCurrentUserPasswordIn": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "projectHandler.CreateProjectIn": {
+            "type": "object"
+        },
+        "projectHandler.UpdateProjectIn": {
+            "type": "object"
+        },
+        "response.Error": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "error message"
+                    ]
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "traceId": {
+                    "type": "string",
+                    "example": "string"
+                }
+            }
+        },
+        "response.Success": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "traceId": {
+                    "type": "string",
+                    "example": "string"
+                }
+            }
+        },
+        "userHandler.CreateUserIn": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "userHandler.GetUserOut": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isDeleted": {
+                    "type": "boolean"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "userHandler.UpdateUserEmailIn": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "userHandler.UpdateUserPasswordIn": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "userHandler.UpdateUserRoleIn": {
+            "type": "object",
+            "properties": {
+                "role": {
+                    "type": "string"
+                }
+            }
         }
-      }
     },
-    "/article/{id}": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Articles"],
-        "summary": "Get article",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Article ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Cookie",
+            "in": "header"
         }
-      },
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Articles"],
-        "summary": "Update article",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Article ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Update Article Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/articleHandler.UpdateArticleIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Articles"],
-        "summary": "Delete article",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Article ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "description": "This can be done by a user who has an account",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Authorization"],
-        "summary": "Login",
-        "parameters": [
-          {
-            "description": "Login information",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/authHandler.LoginIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/auth/logout": {
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Authorization"],
-        "summary": "Logout",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/author": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Author"],
-        "summary": "Get authors",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "Limit",
-            "name": "limit",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Author"],
-        "summary": "Create author",
-        "parameters": [
-          {
-            "description": "Create Author Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/authorHandler.CreateAuthorIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/author/{id}": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Author"],
-        "summary": "Get author",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Author ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Author"],
-        "summary": "Restore author",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Author ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Author"],
-        "summary": "Delete author",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Author ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/bio": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Bio"],
-        "summary": "Get bios",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "Limit",
-            "name": "limit",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Bio"],
-        "summary": "Create bio",
-        "parameters": [
-          {
-            "description": "Create Bio Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/bioHandler.CreateBioIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/bio/active": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Bio"],
-        "summary": "Get active bio",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/bio/{id}": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Bio"],
-        "summary": "Get bio",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Bio ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Bio"],
-        "summary": "Restore bio",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Bio ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Bio"],
-        "summary": "Delete bio",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Bio ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/book": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Book"],
-        "summary": "Get books by filters",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "Limit",
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "description": "Is deleted",
-            "name": "is_deleted",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Search Title, Description, Author",
-            "name": "search",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Book"],
-        "summary": "Create book",
-        "parameters": [
-          {
-            "description": "Create Book Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/bookHandler.CreateBookIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/book/restore/{id}": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Book"],
-        "summary": "Restore book",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Book ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/book/{id}": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Book"],
-        "summary": "Get book",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Book ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Book"],
-        "summary": "Update book",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Book ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Update Book Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/bookHandler.UpdateBookIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Book"],
-        "summary": "Delete book",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Book ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/contact": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Contacts"],
-        "summary": "Get all contacts",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "Limit",
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "description": "Is Deleted",
-            "name": "isDeleted",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Search",
-            "name": "search",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Contacts"],
-        "summary": "Create contact",
-        "parameters": [
-          {
-            "description": "Create Contact Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/contactHandler.CreateContactIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/contact/restore/{id}": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Contacts"],
-        "summary": "Restore contact",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Contact ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/contact/{id}": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Contacts"],
-        "summary": "Get contact by ID",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Contact ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Contacts"],
-        "summary": "Update contact",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Contact ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Update Contact Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/contactHandler.UpdateContactIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Contacts"],
-        "summary": "Delete contact",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Contact ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/me": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Me"],
-        "summary": "Get current user",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/currentUserHandler.GetCurrentUserOut"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/me/email": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Me"],
-        "summary": "Update current user email",
-        "parameters": [
-          {
-            "description": "Email",
-            "name": "email",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/currentUserHandler.UpdateCurrentUserEmailIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/me/password": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Me"],
-        "summary": "Update current user password",
-        "parameters": [
-          {
-            "description": "Password",
-            "name": "password",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/currentUserHandler.UpdateCurrentUserPasswordIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/project": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Project"],
-        "summary": "Find all projects",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "Limit",
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "description": "Is Deleted",
-            "name": "isDeleted",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Search",
-            "name": "search",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Project"],
-        "summary": "Create project",
-        "parameters": [
-          {
-            "description": "Create Project Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/projectHandler.CreateProjectIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/project/restore/{id}": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Project"],
-        "summary": "Restore project",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Project ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/project/{id}": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Project"],
-        "summary": "Find project by ID",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Project ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Project"],
-        "summary": "Update project",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Project ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Update Project Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/projectHandler.UpdateProjectIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Project"],
-        "summary": "Delete project",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Project ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/upload/article": {
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Upload"],
-        "summary": "Upload article",
-        "parameters": [
-          {
-            "type": "file",
-            "description": "file to upload",
-            "name": "data",
-            "in": "formData",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/upload/author-avatar": {
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Upload"],
-        "summary": "Upload author-avatar",
-        "parameters": [
-          {
-            "type": "file",
-            "description": "file to upload",
-            "name": "data",
-            "in": "formData",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/upload/book": {
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Upload"],
-        "summary": "Upload book",
-        "parameters": [
-          {
-            "type": "file",
-            "description": "file to upload",
-            "name": "data",
-            "in": "formData",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/upload/project": {
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["Upload"],
-        "summary": "Upload project",
-        "parameters": [
-          {
-            "type": "file",
-            "description": "file to upload",
-            "name": "data",
-            "in": "formData",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/user": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Get users",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Limit",
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "description": "Is Deleted",
-            "name": "isDeleted",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Search",
-            "name": "search",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Create user",
-        "parameters": [
-          {
-            "description": "Create User Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userHandler.CreateUserIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/user/email/{id}": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Update user",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Update User Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userHandler.UpdateUserEmailIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/user/password/{id}": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Update user",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Update User Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userHandler.UpdateUserPasswordIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/user/restore/{id}": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Restore user",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/user/role/{id}": {
-      "put": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Update user",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Update User Structure",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userHandler.UpdateUserRoleIn"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
-    },
-    "/user/{id}": {
-      "get": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Get user",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/userHandler.GetUserOut"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "This can only be done by the logged-in user.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Delete user",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/response.Success"
-            }
-          },
-          "default": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/response.Error"
-            }
-          }
-        }
-      }
     }
-  },
-  "definitions": {
-    "articleHandler.CreateArticleIn": {
-      "type": "object"
-    },
-    "articleHandler.UpdateArticleIn": {
-      "type": "object"
-    },
-    "authHandler.LoginIn": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      }
-    },
-    "authorHandler.CreateAuthorIn": {
-      "type": "object"
-    },
-    "authorHandler.UpdateAuthorIn": {
-      "type": "object"
-    },
-    "bioHandler.CreateBioIn": {
-      "type": "object"
-    },
-    "bioHandler.UpdateBioIn": {
-      "type": "object"
-    },
-    "bookHandler.CreateBookIn": {
-      "type": "object"
-    },
-    "bookHandler.UpdateBookIn": {
-      "type": "object"
-    },
-    "contactHandler.CreateContactIn": {
-      "type": "object"
-    },
-    "contactHandler.UpdateContactIn": {
-      "type": "object"
-    },
-    "currentUserHandler.GetCurrentUserOut": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "isDeleted": {
-          "type": "boolean"
-        },
-        "updatedAt": {
-          "type": "string"
-        }
-      }
-    },
-    "currentUserHandler.UpdateCurrentUserEmailIn": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        }
-      }
-    },
-    "currentUserHandler.UpdateCurrentUserPasswordIn": {
-      "type": "object",
-      "properties": {
-        "password": {
-          "type": "string"
-        }
-      }
-    },
-    "projectHandler.CreateProjectIn": {
-      "type": "object"
-    },
-    "projectHandler.UpdateProjectIn": {
-      "type": "object"
-    },
-    "response.Error": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "example": ["error message"]
-        },
-        "success": {
-          "type": "boolean",
-          "example": false
-        },
-        "traceId": {
-          "type": "string",
-          "example": "string"
-        }
-      }
-    },
-    "response.Success": {
-      "type": "object",
-      "properties": {
-        "data": {},
-        "success": {
-          "type": "boolean",
-          "example": true
-        },
-        "traceId": {
-          "type": "string",
-          "example": "string"
-        }
-      }
-    },
-    "userHandler.CreateUserIn": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "role": {
-          "type": "string"
-        }
-      }
-    },
-    "userHandler.GetUserOut": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "isDeleted": {
-          "type": "boolean"
-        },
-        "updatedAt": {
-          "type": "string"
-        }
-      }
-    },
-    "userHandler.UpdateUserEmailIn": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        }
-      }
-    },
-    "userHandler.UpdateUserPasswordIn": {
-      "type": "object",
-      "properties": {
-        "password": {
-          "type": "string"
-        }
-      }
-    },
-    "userHandler.UpdateUserRoleIn": {
-      "type": "object",
-      "properties": {
-        "role": {
-          "type": "string"
-        }
-      }
-    }
-  },
-  "securityDefinitions": {
-    "ApiKeyAuth": {
-      "type": "apiKey",
-      "name": "Cookie",
-      "in": "header"
-    }
-  }
 }

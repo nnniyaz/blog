@@ -108,7 +108,6 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 
 	r.Route("/me", func(r chi.Router) {
 		r.Use(h.middleware.UserAuth)
-
 		r.Get("/", h.currentUser.GetCurrentUser)
 		r.Put("/email", h.currentUser.UpdateCurrentUserEmail)
 		r.Put("/password", h.currentUser.UpdateCurrentUserPassword)
@@ -116,7 +115,6 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 
 	r.Route("/upload", func(r chi.Router) {
 		r.Use(h.middleware.UserAuth)
-
 		r.Post("/author-avatar", h.upload.UploadAuthor)
 		r.Post("/project", h.upload.UploadProject)
 		r.Post("/article", h.upload.UploadArticle)
@@ -124,8 +122,8 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 	})
 
 	r.Route("/about", func(r chi.Router) {
+		r.Use(h.middleware.UserAuth)
 		r.Route("/author", func(r chi.Router) {
-			r.Use(h.middleware.UserAuth)
 			r.Post("/", h.author.CreateAuthor)
 			r.Put("/{id}", h.author.UpdateAuthor)
 			r.Put("/restore/{id}", h.author.RestoreAuthor)
@@ -135,7 +133,6 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 		})
 
 		r.Route("/bio", func(r chi.Router) {
-			r.Use(h.middleware.UserAuth)
 			r.Post("/", h.bio.CreateBio)
 			r.Put("/{id}", h.bio.UpdateBio)
 			r.Put("/restore/{id}", h.bio.RestoreBio)
@@ -146,7 +143,6 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 		})
 
 		r.Route("/contact", func(r chi.Router) {
-			r.Use(h.middleware.UserAuth)
 			r.Post("/", h.contact.CreateContact)
 			r.Put("/{id}", h.contact.UpdateContact)
 			r.Put("/restore/{id}", h.contact.RestoreContact)
@@ -187,7 +183,8 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 	})
 
 	r.Route("/user", func(r chi.Router) {
-		r.Use(h.middleware.AdminCheck)
+		//r.Use(h.middleware.UserAuth)
+		//r.Use(h.middleware.AdminCheck)
 		r.Post("/", h.user.CreateUser)
 		r.Put("/email/{id}", h.user.UpdateUserEmail)
 		r.Put("/password/{id}", h.user.UpdateUserPassword)
@@ -195,7 +192,7 @@ func (h *Handler) InitRoutes(isDevMode bool) *chi.Mux {
 		r.Put("/restore/{id}", h.user.RestoreUser)
 		r.Delete("/{id}", h.user.DeleteUser)
 		r.Get("/{id}", h.user.GetUser)
-		r.Get("/", h.user.GetAllUsers)
+		r.With(h.middleware.PaginationParams).Get("/", h.user.GetAllUsers)
 	})
 
 	return r

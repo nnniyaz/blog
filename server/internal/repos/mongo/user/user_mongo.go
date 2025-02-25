@@ -21,7 +21,7 @@ func NewUserRepo(client *mongo.Client) *UserRepo {
 }
 
 func (r *UserRepo) Coll() *mongo.Collection {
-	return r.client.Database("blog").Collection("users")
+	return r.client.Database("main").Collection("users")
 }
 
 type passwordMongo struct {
