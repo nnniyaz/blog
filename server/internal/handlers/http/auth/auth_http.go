@@ -57,7 +57,7 @@ func (hd *HttpDelivery) Login(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		SameSite: http.SameSiteNoneMode,
 	})
-	response.NewSuccess(hd.logger, w, r, token)
+	response.NewSuccess(hd.logger, w, r, nil)
 }
 
 // Logout godoc

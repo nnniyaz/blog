@@ -37,6 +37,7 @@ export default tseslint.config(
             ],
             'import/no-relative-parent-imports': 'error',
             '@typescript-eslint/no-duplicate-enum-values': 'off',
+            'no-useless-catch': 'off',
         },
     },
 )

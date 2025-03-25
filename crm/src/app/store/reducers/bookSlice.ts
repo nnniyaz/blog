@@ -4,16 +4,12 @@ import { Book } from '@domain/book/book.ts'
 
 type State = {
     books: Book[]
-    isLoadingGetBooks: boolean
     selectedBook: Book | null
-    isLoadingGetSelectedBook: boolean
 }
 
 const initialState: State = {
     books: [],
-    isLoadingGetBooks: false,
     selectedBook: null,
-    isLoadingGetSelectedBook: false,
 }
 
 type SetBooksAction = {
@@ -21,19 +17,9 @@ type SetBooksAction = {
     payload: Book[]
 }
 
-type SetIsLoadingGetBooksAction = {
-    type: string
-    payload: boolean
-}
-
 type SetSelectedBookAction = {
     type: string
     payload: Book | null
-}
-
-type SetIsLoadingGetSelectedBookAction = {
-    type: string
-    payload: boolean
 }
 
 export const bookSlice = createSlice({
@@ -43,17 +29,8 @@ export const bookSlice = createSlice({
         setBooks(state, action: SetBooksAction) {
             state.books = action.payload
         },
-        setIsLoadingGetBooks: (state, action: SetIsLoadingGetBooksAction) => {
-            state.isLoadingGetBooks = action.payload
-        },
         setSelectedBook(state, action: SetSelectedBookAction) {
             state.selectedBook = action.payload
-        },
-        setIsLoadingGetSelectedBook(
-            state,
-            action: SetIsLoadingGetSelectedBookAction,
-        ) {
-            state.isLoadingGetSelectedBook = action.payload
         },
     },
 })

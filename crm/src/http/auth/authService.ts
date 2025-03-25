@@ -9,7 +9,7 @@ type AuthServiceLoginIn = {
 }
 
 export class AuthService {
-    static async login(
+    static async signIn(
         request: Request<AuthServiceLoginIn>,
     ): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
         return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(
@@ -18,7 +18,7 @@ export class AuthService {
         )
     }
 
-    static async logout(
+    static async signOut(
         request: Request<null>,
     ): Promise<AxiosResponse<SuccessResponse<null> | ErrorResponse>> {
         return $api(request.lang).post<SuccessResponse<null> | ErrorResponse>(

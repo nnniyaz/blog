@@ -2,6 +2,8 @@ export enum RoutesPaths {
     // New entity routes must have only one slash in the path
     // Nested routes must have more than one slash in the path
 
+    SIGN_IN = '/sign-in',
+
     DASHBOARD = '/',
 
     BIO = '/bio',

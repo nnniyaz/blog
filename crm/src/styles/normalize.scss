@@ -71,3 +71,9 @@ p {
     white-space: nowrap;
     width: 1px;
 }
+
+.ant-form-item {
+    label {
+        color: var(--primary-font) !important;
+    }
+}

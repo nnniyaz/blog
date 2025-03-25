@@ -21,19 +21,9 @@ type SetProjectsAction = {
     payload: Project[]
 }
 
-type SetIsLoadingGetProjectsAction = {
-    type: string
-    payload: boolean
-}
-
 type SetSelectedProjectAction = {
     type: string
     payload: Project | null
-}
-
-type SetIsLoadingGetSelectedProjectAction = {
-    type: string
-    payload: boolean
 }
 
 export const projectSlice = createSlice({
@@ -43,20 +33,8 @@ export const projectSlice = createSlice({
         setProjects: (state, action: SetProjectsAction) => {
             state.projects = action.payload
         },
-        setIsLoadingGetProjects: (
-            state,
-            action: SetIsLoadingGetProjectsAction,
-        ) => {
-            state.isLoadingGetProjects = action.payload
-        },
         setSelectedProject: (state, action: SetSelectedProjectAction) => {
             state.selectedProject = action.payload
-        },
-        setIsLoadingGetSelectedProject: (
-            state,
-            action: SetIsLoadingGetSelectedProjectAction,
-        ) => {
-            state.isLoadingGetSelectedProject = action.payload
         },
     },
 })

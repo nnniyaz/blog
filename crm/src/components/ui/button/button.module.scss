@@ -1,0 +1,45 @@
+.button {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    background-color: var(--secondary-bg);
+    border-radius: 40px;
+    border: none;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--primary-font);
+    cursor: pointer;
+    transition: 0.1s linear;
+    user-select: none;
+
+    &:hover {
+        background-color: var(--secondary-bg-hover);
+    }
+}
+
+.button__transparent {
+    @extend .button;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.button__loading__wrapper {
+    animation: appear 0.3s ease;
+
+    .button__loading {
+        margin-left: 10px;
+        font-size: 17px;
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

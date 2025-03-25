@@ -24,8 +24,8 @@ type Middleware struct {
 	authService authService.AuthService
 }
 
-func New(l logger.Logger, client *mongo.Client) *Middleware {
-	return &Middleware{logger: l, client: *client}
+func New(l logger.Logger, client *mongo.Client, authService authService.AuthService) *Middleware {
+	return &Middleware{logger: l, client: *client, authService: authService}
 }
 
 func (m *Middleware) Recover(next http.Handler) http.Handler {

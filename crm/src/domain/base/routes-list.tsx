@@ -19,8 +19,18 @@ import { UserEdit } from '@routes/pages/users/pages/user_edit.tsx'
 import { Profile } from '@routes/pages/profile'
 import { Settings } from '@routes/pages/settings'
 import { RoutesPaths } from '@domain/base/routes-paths.ts'
+import { SignIn } from '@routes/pages/sign-in'
 
-export const RoutesList = [
+export const PublicRoutesList = [
+    // --------------------------------- Login ---------------------------------
+    {
+        name: 'sign-in',
+        path: RoutesPaths.SIGN_IN,
+        element: <SignIn />,
+    },
+]
+
+export const PrivateRoutesList = [
     // ------------------------------- Dashboard -------------------------------
     {
         name: 'dashboard',

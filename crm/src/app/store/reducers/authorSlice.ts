@@ -4,22 +4,15 @@ import { Author } from '@domain/author/author.ts'
 
 type State = {
     author: Author | null
-    isLoadingGetAuthor: boolean
 }
 
 const initialState: State = {
     author: null,
-    isLoadingGetAuthor: false,
 }
 
 type SetAuthorAction = {
     type: string
     payload: Author | null
-}
-
-type SetIsLoadingGetAuthorAction = {
-    type: string
-    payload: boolean
 }
 
 export const authorSlice = createSlice({
@@ -28,9 +21,6 @@ export const authorSlice = createSlice({
     reducers: {
         setAuthor: (state, action: SetAuthorAction) => {
             state.author = action.payload
-        },
-        setIsLoadingGetAuthor: (state, action: SetIsLoadingGetAuthorAction) => {
-            state.isLoadingGetAuthor = action.payload
         },
     },
 })

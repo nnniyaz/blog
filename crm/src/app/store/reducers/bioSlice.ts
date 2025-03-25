@@ -4,22 +4,15 @@ import { Bio } from '@domain/bio/bio.ts'
 
 type State = {
     bio: Bio | null
-    isLoadingGetBio: boolean
 }
 
 const initialState: State = {
     bio: null,
-    isLoadingGetBio: false,
 }
 
 type SetBioAction = {
     type: string
     payload: Bio | null
-}
-
-type SetIsLoadingGetBioAction = {
-    type: string
-    payload: boolean
 }
 
 export const bioSlice = createSlice({
@@ -28,9 +21,6 @@ export const bioSlice = createSlice({
     reducers: {
         setBio: (state, action: SetBioAction) => {
             state.bio = action.payload
-        },
-        setIsLoadingGetBio: (state, action: SetIsLoadingGetBioAction) => {
-            state.isLoadingGetBio = action.payload
         },
     },
 })

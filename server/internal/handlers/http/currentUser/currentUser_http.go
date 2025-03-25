@@ -48,8 +48,8 @@ func newGetCurrentUserOut(user *user.User) GetCurrentUserOut {
 //	@Failure		default	{object}	response.Error
 //	@Router			/me [get]
 func (hd *HttpDelivery) GetCurrentUser(w http.ResponseWriter, r *http.Request) {
-	user := r.Context().Value("user").(*user.User)
-	response.NewSuccess(hd.logger, w, r, newGetCurrentUserOut(user))
+	user := r.Context().Value("user").(user.User)
+	response.NewSuccess(hd.logger, w, r, newGetCurrentUserOut(&user))
 }
 
 type UpdateCurrentUserEmailIn struct {
