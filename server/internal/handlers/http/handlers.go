@@ -39,7 +39,7 @@ type Handler struct {
 
 func NewHandler(l logger.Logger, client *mongo.Client, services *services.Service) *Handler {
 	return &Handler{
-		middleware:  middleware.New(l, client),
+		middleware:  middleware.New(l, client, services.Auth),
 		article:     articleHandler.NewHttpDelivery(l, services.Article),
 		contact:     contactHandler.NewHttpDelivery(l, services.Contact),
 		author:      authorHandler.NewHttpDelivery(l, services.Author),
