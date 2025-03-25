@@ -1,0 +1,29 @@
+.sign_in {
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .sign_in__block {
+        width: 400px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+
+        .sign_in__heading {
+            margin: 0 0 20px 0;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .sign_in {
+        .sign_in__block {
+            width: 100%;
+            border: none;
+        }
+    }
+}

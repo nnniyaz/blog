@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Lang } from '@domain/base/ml-string'
+import { Lang } from '@domain/base/ml-string.ts'
 
 type State = {
     lang: Lang
@@ -19,11 +19,6 @@ type ChangeLangAction = {
     payload: Lang
 }
 
-type SetIsLoadingChangeLangAction = {
-    type: string
-    payload: boolean
-}
-
 type SetThemeAction = {
     type: string
     payload: 'light' | 'dark'
@@ -35,12 +30,6 @@ export const systemSlice = createSlice({
     reducers: {
         changeLang: (state, action: ChangeLangAction) => {
             state.lang = action.payload
-        },
-        setIsLoadingChangeLang: (
-            state,
-            action: SetIsLoadingChangeLangAction,
-        ) => {
-            state.isLoadingChangeLang = action.payload
         },
         setTheme: (state, action: SetThemeAction) => {
             if (action.payload === 'light') {

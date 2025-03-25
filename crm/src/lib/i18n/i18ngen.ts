@@ -61,4 +61,47 @@ export const txts: { [key: string]: { [key: string]: string } } = {
         RU: 'Темная тема',
         EN: 'Dark theme',
     },
+    email: {
+        key: 'email',
+        KZ: 'Электрондық пошта',
+        RU: 'Электронная почта',
+        EN: 'Email',
+    },
+    type_your_email: {
+        key: 'type_your_email',
+        KZ: 'Электрондық поштаңызды енгізіңіз',
+        RU: 'Введите вашу электронную почту',
+        EN: 'Type your email',
+    },
+    password: {
+        key: 'password',
+        KZ: 'Құпия сөз',
+        RU: 'Пароль',
+        EN: 'Password',
+    },
+    type_your_password: {
+        key: 'type_your_password',
+        KZ: 'Құпия сөзді енгізіңіз',
+        RU: 'Введите ваш пароль',
+        EN: 'Type your password',
+    },
+    sign_in: { key: 'sign_in', KZ: 'Кіру', RU: 'Войти', EN: 'Sign in' },
+    please_type_email: {
+        key: 'please_type_email',
+        KZ: 'Өтініш, электрондық пошта енгізіңіз',
+        RU: 'Пожалуйста, введите электронную почту',
+        EN: 'Please, type email',
+    },
+    type_valid_email: {
+        key: 'type_valid_email',
+        KZ: 'Дұрыс электрондық пошта енгізіңіз',
+        RU: 'Введите правильную электронную почту',
+        EN: 'Type valid email',
+    },
+    please_type_your_password: {
+        key: 'please_type_your_password',
+        KZ: 'Өтініш, құпия сөзді енгізіңіз',
+        RU: 'Пожалуйста, введите ваш пароль',
+        EN: 'Please, type your password',
+    },
 }

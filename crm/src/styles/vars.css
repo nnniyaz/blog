@@ -10,27 +10,61 @@
     --regular-font-size: 16px;
     --small-font-size: 12px;
 
+    /* Link colors */
+    --link-font: #0078e8;
+    --link-font-hover: #f40008;
+
     /* ------------------- Light Theme ------------------- */
 
     /* Background colors light */
     --primary-bg: #fff;
+    --secondary-bg: #0000000a;
+    --secondary-bg-hover: #0000001f;
+
+    --accent-bg: #00000070;
+
+    /* Border colors light */
+    --border-color: #0000001f;
+    --secondary-border-color: #e5e7eb;
 
     /* Text colors light */
     --primary-font: #000;
-    --secondary-font: rgba(0, 0, 0, 0.5);
+    --secondary-font: #00000070;
+    --not-active-link-font: rgb(110, 110, 128);
+}
 
-    /* Link colors */
-    --link-font: #0078e8;
-    --link-font-hover: #f40008;
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* -------------------- Dark Theme ------------------- */
+
+        /* Background colors dark */
+        --primary-bg: #000;
+        --secondary-bg: #ffffff1f;
+        --secondary-bg-hover: #ffffff33;
+        --accent-bg: #ffffff70;
+
+        /* Border colors light */
+        --border-color: #1f2228;
+
+        /* Text colors dark */
+        --primary-font: #fff;
+        --secondary-font: #7d8187;
+        --not-active-link-font: rgba(255, 255, 255, 0.5);
+    }
 }
 
 .dark-theme {
     /* -------------------- Dark Theme ------------------- */
 
     /* Background colors dark */
-    --primary-bg: #000;
+    --primary-bg: rgb(10, 10, 10);
+    --secondary-bg: rgb(38, 38, 38);
+
+    --border-color: #ffffff33;
 
     /* Text colors dark */
     --primary-font: #fff;
-    --secondary-font: rgba(255, 255, 255, 0.5);
+    --secondary-font: #7d8187;
+
+    --not-active-link-font: rgba(255, 255, 255, 0.5);
 }

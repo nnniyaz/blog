@@ -18,9 +18,8 @@ export class CurrentUserService {
     static async getCurrentUser(
         request: Request<null>,
     ): Promise<AxiosResponse<SuccessResponse<User> | ErrorResponse>> {
-        return $api(request.lang).post<SuccessResponse<User> | ErrorResponse>(
+        return $api(request.lang).get<SuccessResponse<User> | ErrorResponse>(
             ApiRoutes.ME_GET,
-            null,
             { signal: request.controller?.signal },
         )
     }

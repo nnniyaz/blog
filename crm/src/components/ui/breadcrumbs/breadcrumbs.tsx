@@ -1,7 +1,7 @@
 import classes from './breadcrumbs.module.scss'
 import { StyledLink } from '@components/ui/styled-link/styled-link.tsx'
 import { useLocation } from 'react-router-dom'
-import { RoutesList } from '@domain/base/routes-list.tsx'
+import { PrivateRoutesList } from '@domain/base/routes-list.tsx'
 import { translate } from '@lib/utils/translate.ts'
 import { Lang } from '@domain/base/ml-string.ts'
 import { matchRoute } from '@lib/utils/match-route.ts'
@@ -16,7 +16,7 @@ export const Breadcrumbs = ({ lang }: BreadcrumbsProps) => {
         <nav className={classes.crumbs}>
             <ol>
                 {pathname.map((item, index) => {
-                    const route = RoutesList.find((route) => {
+                    const route = PrivateRoutesList.find((route) => {
                         return matchRoute(
                             route.path,
                             `/${pathname.slice(0, index + 1).join('/')}`,

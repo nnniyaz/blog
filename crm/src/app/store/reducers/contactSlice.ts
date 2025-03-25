@@ -4,16 +4,12 @@ import { Contact } from '@domain/contact/contact.ts'
 
 type State = {
     contacts: Contact[]
-    isLoadingGetContacts: boolean
     selectedContact: Contact | null
-    isLoadingGetSelectedContact: boolean
 }
 
 const initialState: State = {
     contacts: [],
-    isLoadingGetContacts: false,
     selectedContact: null,
-    isLoadingGetSelectedContact: false,
 }
 
 type SetContactsAction = {
@@ -21,19 +17,9 @@ type SetContactsAction = {
     payload: Contact[]
 }
 
-type SetIsLoadingGetContactsAction = {
-    type: string
-    payload: boolean
-}
-
 type SetSelectedContactAction = {
     type: string
     payload: Contact | null
-}
-
-type SetIsLoadingGetSelectedContactAction = {
-    type: string
-    payload: boolean
 }
 
 export const contactSlice = createSlice({
@@ -43,20 +29,8 @@ export const contactSlice = createSlice({
         setContacts: (state, action: SetContactsAction) => {
             state.contacts = action.payload
         },
-        setIsLoadingGetContacts: (
-            state,
-            action: SetIsLoadingGetContactsAction,
-        ) => {
-            state.isLoadingGetSelectedContact = action.payload
-        },
         setSelectedContact: (state, action: SetSelectedContactAction) => {
             state.selectedContact = action.payload
-        },
-        setIsLoadingSelectedContact: (
-            state,
-            action: SetIsLoadingGetSelectedContactAction,
-        ) => {
-            state.isLoadingGetSelectedContact = action.payload
         },
     },
 })

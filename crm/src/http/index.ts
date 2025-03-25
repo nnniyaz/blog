@@ -87,11 +87,11 @@ export type Request<T> = {
 
 export const $api = (lang: Lang) =>
     axios.create({
-        baseURL: import.meta.env.VITE_API_URL || '',
+        baseURL: import.meta.env.VITE_API_URI || '',
         withCredentials: true,
         headers: {
             'Content-Type': 'application/json',
-            'Accept-Language': lang,
+            'Accept-Language': lang.toLowerCase(),
         },
         timeout: 120000,
         timeoutErrorMessage: 'Timeout error',
@@ -100,11 +100,11 @@ export const $api = (lang: Lang) =>
 
 export const $apiFormData = (lang: Lang) =>
     axios.create({
-        baseURL: import.meta.env.VITE_API_URL || '',
+        baseURL: import.meta.env.VITE_API_URI || '',
         withCredentials: true,
         headers: {
             'Content-Type': 'multipart/form-data',
-            'Accept-Language': lang,
+            'Accept-Language': lang.toLowerCase(),
         },
         timeout: 120000,
         timeoutErrorMessage: 'Timeout error',
