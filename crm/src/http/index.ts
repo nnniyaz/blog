@@ -38,12 +38,12 @@ export enum ApiRoutes {
     CONTACT_RESTORE = '/about/contact/restore/:id',
 
     // Project routes
-    PROJECT_GET_ALL = '/about/contact',
-    PROJECT_GET_BY_ID = '/about/contact/:id',
-    PROJECT_CREATE = '/about/contact',
-    PROJECT_UPDATE = '/about/contact/:id',
-    PROJECT_DELETE = '/about/contact/:id',
-    PROJECT_RESTORE = '/about/contact/restore/:id',
+    PROJECT_GET_ALL = '/project',
+    PROJECT_GET_BY_ID = '/project/:id',
+    PROJECT_CREATE = '/project',
+    PROJECT_UPDATE = '/project/:id',
+    PROJECT_DELETE = '/project/:id',
+    PROJECT_RESTORE = '/project/restore/:id',
 
     // Article routes
     ARTICLE_GET_ALL = '/article',

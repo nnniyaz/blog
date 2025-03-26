@@ -10,7 +10,7 @@ import {
     currentUserSlice,
     getCurrentUser,
 } from '@app/store/reducers/currentUserSlice.ts'
-import { projectSlice } from '@app/store/reducers/projectSlice.ts'
+import { getProjects, projectSlice } from '@app/store/reducers/projectSlice.ts'
 import { systemSlice } from '@app/store/reducers/systemSlice.ts'
 import { userSlice } from '@app/store/reducers/userSlice.ts'
 
@@ -44,6 +44,7 @@ export const useActions = () => {
             getCurrentUser,
 
             // Project Slice
+            getProjects,
 
             // System Slice
 

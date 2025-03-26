@@ -2,26 +2,41 @@ import { Layout } from '@components/layout'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import {
     PrivateRoutesList,
-    PublicRoutesList,
+    PublicRoutesList
 } from '@domain/base/routes-list.tsx'
 import { useTypedSelector } from '@lib/hooks/useTypedSelector.ts'
 import { RoutesPaths } from '@domain/base/routes-paths.ts'
 import { useActions } from '@lib/hooks/useActions.tsx'
 import { useEffect } from 'react'
+import { LoadingOutlined } from '@ant-design/icons'
 
 export const AppRoutes = () => {
     const { isAuth, isLoadingSignIn } = useTypedSelector((state) => state.auth)
-    const { currentUser, isLoadingGetCurrentUser } = useTypedSelector((state) => state.currentUser)
+    const { currentUser, isLoadingGetCurrentUser } = useTypedSelector(
+        (state) => state.currentUser
+    )
     const { getCurrentUser } = useActions()
 
     useEffect(() => {
         if (!currentUser) {
             getCurrentUser()
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (isLoadingGetCurrentUser && !isLoadingSignIn) {
-        return <div>Loading...</div>
+        return (
+            <div style={{
+                width: '100%',
+                height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <LoadingOutlined style={{ fontSize: '40px' }} />
+            </div>
+        )
     }
 
     return (

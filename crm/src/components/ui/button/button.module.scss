@@ -1,4 +1,28 @@
-.button {
+.button__rectangular {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    background-color: var(--primary-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--primary-font);
+    cursor: pointer;
+    transition: 0.1s linear;
+    user-select: none;
+
+    &:hover {
+        border-color: var(--link-font);
+        background-color: var(--link-font);
+        color: var(--primary-bg);
+    }
+}
+
+.button__rounded {
     width: 100%;
     height: 40px;
     display: flex;
@@ -20,8 +44,8 @@
     }
 }
 
-.button__transparent {
-    @extend .button;
+.button__rounded__transparent {
+    @extend .button__rounded;
     background-color: transparent;
     border-radius: 0;
 }

@@ -5,6 +5,7 @@ import { PrivateRoutesList } from '@domain/base/routes-list.tsx'
 import { translate } from '@lib/utils/translate.ts'
 import { Lang } from '@domain/base/ml-string.ts'
 import { matchRoute } from '@lib/utils/match-route.ts'
+import { RoutesPaths } from '@domain/base/routes-paths.ts'
 
 interface BreadcrumbsProps {
     lang: Lang
@@ -15,6 +16,12 @@ export const Breadcrumbs = ({ lang }: BreadcrumbsProps) => {
     return (
         <nav className={classes.crumbs}>
             <ol>
+                <li className={classes.crumb}>
+                    <StyledLink
+                        href={RoutesPaths.DASHBOARD}
+                        label={translate(lang, 'home')}
+                    />
+                </li>
                 {pathname.map((item, index) => {
                     const route = PrivateRoutesList.find((route) => {
                         return matchRoute(
